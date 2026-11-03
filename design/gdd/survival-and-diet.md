@@ -23,7 +23,7 @@ Each kind's body reacts to places, weather, time of day and food. Hazards cost H
 | Hazard | When | HP per action | Condition chance | Fix shown to the player |
 |---|---|---|---|---|
 | Can't breathe | Underwater (Aethwyn Mere), not a water breather | 8 | — | Water affinity 30 |
-| Drying out | Sea kinds away from water, not raining or storming | 6 | — | Rain or storms |
+| Drying out | Sea kinds away from water, not raining or storming | 4 | — | Rain or storms |
 | Weak element land | Land has the kind's weakness | 6 | — | — |
 | Weak element weather | Weather boosts the weakness (outside such lands) | 4 | Sick 15% | — |
 | Lava | Cindral Wastes, not lava-safe | 5 | Burned 30% | Fire or Magma 30 |
@@ -52,7 +52,7 @@ Each kind's body reacts to places, weather, time of day and food. Hazards cost H
 
 ## Formulas
 
-- HP loss per action = Σ hazard HP + Σ condition HP. Example: a Merfolk in Cindral on a clear day: drying 6 + Fire land 6 = 12 per action.
+- HP loss per action = Σ hazard HP + Σ condition HP. Example: a Merfolk in Cindral on a clear day: drying 4 + Fire land 6 = 10 per action.
 - Condition roll per hazard per action: `rand < chance`.
 - Gains multiplier: see [Stats and Daily Actions](stats-and-actions.md).
 

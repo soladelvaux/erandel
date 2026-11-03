@@ -757,7 +757,7 @@ const ACTS={
  rest:{n:'Rest',d:'Restore 25 HP',run(){L(`You rest. +${heal(25)} HP.`);}},
  work:{n:'Work',d:'Earn gold and job experience',check:()=>S.job?null:'Take up a job at the guild in Thorngate first.',run(){
   const J=JOBS[S.job];const before=jobRank();
-  let gold=8+before.i*6+S.stats[J.s]*0.3;if(S.regRep[S.region]<=-40)gold/=2;gold=Math.round(gold);S.gold+=gold;
+  let gold=8+before.i*8+S.stats[J.s]*0.4;if(S.regRep[S.region]<=-40)gold/=2;gold=Math.round(gold);S.gold+=gold;
   const xp=J.el&&REG[S.region].els.includes(J.el)?4.5:3;S.jobXp+=xp;
   const g=gains([[J.s,1]]);const a=J.el?addAff(J.el,1,{quiet:true}):0;
   if(J.dark){addCorr(2);addFate(-1);}
@@ -837,9 +837,9 @@ function actionDef(kind,arg){
  if(kind==='job')return{cost:0,check:()=>S.region!=='vael'?'Jobs are taken up at the guild in Thorngate.':!JOBS[arg]?'Choose a job.':arg===S.job?'You already work this job.':null,run(){S.job=arg;S.jobXp=0;L(`You join the guild as an Apprentice ${JOBS[arg].n}.`,'gold');}};
  if(kind==='help')return{check:()=>npcHere()!==arg?'They are not here.':S.npcs[arg].helped===S.day?`You already helped ${NPCS[arg].name} today.`:null,kind:'kind',run(){
   const N=NPCS[arg];const need=needOf(arg);S.npcs[arg].helped=S.day;
-  addFate(4);addCorr(-1);addRep(arg,10);addReg(S.region,5);
+  addFate(5);addCorr(-1);addRep(arg,10);addReg(S.region,5);
   const g=gains([['cha',1],[N.stat,1]]);npcMem(arg,`you helped: ${need.toLowerCase()}`);
-  L(`You help ${N.name}: ${need.toLowerCase()}. Fate +4 · ${g}.`,'good');
+  L(`You help ${N.name}: ${need.toLowerCase()}. Fate +5 · ${g}.`,'good');
   const st=S.npcs[arg];
   if(st.rep>=60&&!st.gifted){st.gifted=true;S.stats[N.stat]+=4;const el=REG[S.region].els[0];const a=el?addAff(el,6,{quiet:true}):0;L(`${N.name} trusts you completely and teaches you a secret. ${SN[N.stat]} +4${a?` · ${affText(el,a)}`:''}.`,'evo');chron(`${N.name} became a devoted ally.`);}
  }};
@@ -893,7 +893,7 @@ function hazards(rid,player){
  const aff=e=>player?S.aff[e]:0;
  const home=player?S.home:r.home;
  if(reg.under&&!WATER_BREATH.includes(rid)&&aff('water')<30)out.push({n:8,t:'Cannot breathe underwater',fix:'Water affinity 30 grows gills'});
- if(r.group==='sea'&&!reg.els.includes('water')&&!['rain','storm'].includes(w))out.push({n:6,t:'Drying out away from water',fix:'Rain or storms keep you wet'});
+ if(r.group==='sea'&&!reg.els.includes('water')&&!['rain','storm'].includes(w))out.push({n:4,t:'Drying out away from water',fix:'Rain or storms keep you wet'});
  if(r.weak&&reg.els.includes(r.weak))out.push({n:6,t:`${ELEM[r.weak].name} here weakens a ${r.sing}`});
  else if(r.weak&&W.boost.includes(r.weak))out.push({n:4,t:`The ${W.name.toLowerCase()} saps a ${r.sing}`,cond:'sick',chance:0.15});
  if(S.region==='ember'&&!FIRE_SAFE.includes(rid)&&home!=='fire'&&home!=='magma'&&aff('fire')<30&&aff('magma')<30&&r.weak!=='fire')out.push({n:5,t:'The lava ground scorches',cond:'burned',chance:0.3,fix:'Fire or Magma affinity 30'});
@@ -1084,7 +1084,7 @@ function renderAct(){
    <p>${N.name} ${npcLine}</p>
    <p class="mut">Today: ${needOf(npc)}.</p>
    <div class="acts">
-    ${btn('help',npc,'Help',st.helped===S.day?'Already helped today':'Fate +4, reputation +10','kind',1,st.helped===S.day)}
+    ${btn('help',npc,'Help',st.helped===S.day?'Already helped today':'Fate +5, reputation +10','kind',1,st.helped===S.day)}
     ${btn('trade',npc,'Trade','Gold and Charm',null,1)}
     ${btn('steal',npc,'Steal',`Gold, Corruption +6. ${Math.round(Math.min(0.9,0.35+S.stats.agi*0.012)*100)}% unseen`,'dark',1)}
    </div>
@@ -1293,8 +1293,8 @@ const CATALOG={
  toro:{n:'Stone lantern',cost:{stone:3},amb:4,layer:'obj',where:'any',light:.6,d:'An old stone lantern.'},
  garland:{n:'Light garland',cost:{gold:12},amb:4,layer:'obj',where:'any',light:.9,d:'String lights between two posts.'},
  torii:{n:'Torii gate',cost:{gold:50,wood:6},amb:12,layer:'obj',where:'any',size:[3,1],d:'A red gate for travelers.'},
- stall:{n:'Market stall',cost:{gold:70,wood:8},amb:6,layer:'obj',where:'any',size:[2,2],sells:6,light:1.1,d:'Sells to travelers at the night market.'},
- teahouse:{n:'Tea house',cost:{gold:140,wood:12,stone:4},amb:10,layer:'obj',where:'any',size:[2,2],sells:10,light:1.3,d:'Sells more, earns more.'},
+ stall:{n:'Market stall',cost:{gold:70,wood:8},amb:6,layer:'obj',where:'any',size:[2,2],sells:5,light:1.1,d:'Sells to travelers at the night market.'},
+ teahouse:{n:'Tea house',cost:{gold:140,wood:12,stone:4},amb:10,layer:'obj',where:'any',size:[2,2],sells:8,light:1.3,d:'Sells more, earns more.'},
  parasol:{n:'Parasol table',cost:{gold:20,wood:2},amb:4,layer:'obj',where:'any',d:'A paper parasol over a table.'},
  flowers:{n:'Flower bed',cost:{gold:6},amb:2,layer:'obj',where:'land',d:'A patch of night flowers.'},
  wisteria:{n:'Wisteria arch',cost:{gold:14,wood:1},amb:5,layer:'obj',where:'any',d:'Hanging purple blossoms.'},
@@ -1327,13 +1327,17 @@ function canPlace(t,c,r,rot){
 function costText(cost){return Object.entries(cost).map(([k,v])=>`${v} ${k}`).join(' · ');}
 function canAfford(cost){return(S.gold>=(cost.gold||0))&&(S.mat.wood>=(cost.wood||0))&&(S.mat.stone>=(cost.stone||0));}
 function pay(cost,sign){S.gold-=(cost.gold||0)*sign;S.mat.wood-=(cost.wood||0)*sign;S.mat.stone-=(cost.stone||0)*sign;}
-function ambience(){return S.build.reduce((a,it)=>a+(CATALOG[it.t]?CATALOG[it.t].amb:0),0);}
+const AMB_DECAY=.8,COST_GROWTH=1.1;
+/** Ambience: each extra copy of the same item counts AMB_DECAY times the previous copy. */
+function ambience(){const n={};let a=0;S.build.forEach(it=>{const C=CATALOG[it.t];if(!C)return;const k=n[it.t]=(n[it.t]||0)+1;a+=C.amb*Math.pow(AMB_DECAY,k-1);});return Math.round(a);}
+/** Cost of the next copy of an item: decorations grow by COST_GROWTH per copy already placed; floors never grow. */
+function itemCost(t){const C=CATALOG[t];if(C.layer==='floor')return C.cost;const k=S.build.filter(i=>i.t===t).length;const f=Math.pow(COST_GROWTH,k);const o={};for(const r in C.cost)o[r]=Math.ceil(C.cost[r]*f);return o;}
 function sellers(){return S.build.filter(it=>CATALOG[it.t]&&CATALOG[it.t].sells);}
 function applyStarter(){STARTER.forEach(([t,c,r])=>{if(!canPlace(t,c,r,0))S.build.push({t,c,r,rot:0,id:'s'+c+'_'+r+t});});S.flags.starter=true;}
 function buildPlace(t,c,r,rot){
  const C=CATALOG[t];const err=canPlace(t,c,r,rot);if(err)return err;
- if(!canAfford(C.cost))return`You need ${costText(C.cost)}.`;
- pay(C.cost,1);const it={t,c,r,rot,id:Date.now().toString(36)+Math.floor(Math.random()*1e4)};S.build.push(it);
+ const cost=itemCost(t);if(!canAfford(cost))return`You need ${costText(cost)}.`;
+ pay(cost,1);const it={t,c,r,rot,id:Date.now().toString(36)+Math.floor(Math.random()*1e4)};S.build.push(it);
  if(W3)addItemMesh(it);save();return null;
 }
 function buildRemove(c,r){
@@ -1344,8 +1348,8 @@ function buildRemove(c,r){
 }
 
 /* ---------- night market ---------- */
-function salesCap(){return Math.min(40,sellers().reduce((a,it)=>a+(it.t==='teahouse'?6:4),0)+Math.floor(ambience()/8));}
-function salePrice(it){const a=ambience();return Math.max(1,Math.round(CATALOG[it.t].sells*(1+a/200)*(1+Math.max(0,S.regRep.vael)/200)*(1+S.stats.cha/200)));}
+function salesCap(){return Math.min(24,sellers().reduce((a,it)=>a+(it.t==='teahouse'?5:3),0)+Math.floor(ambience()/10));}
+function salePrice(it){const a=ambience();return Math.max(1,Math.round(CATALOG[it.t].sells*(1+a/300)*(1+Math.max(0,S.regRep.vael)/200)*(1+S.stats.cha/200)));}
 function marketCheck(){
  if(S.region!=='vael')return'The night market is held in Thorngate.';
  if(!sellers().length)return'Build a market stall or tea house on your plot first.';
@@ -1830,7 +1834,7 @@ function loop(){
  if(w.lightT<=0){w.lightT=.3;assignLights(w.look.x,w.look.z,nf);}
  // build helpers
  w.grid.visible=!!ui.build;
- if(ui.build&&w.hover){const t2=w.hover;const isRem=ui.build.tool==='remove';const it={t:ui.build.sel,c:t2.c,r:t2.r,rot:ui.build.rot};const[sw,sd]=isRem?[1,1]:itemSize(it);const ok=isRem?true:!canPlace(it.t,t2.c,t2.r,it.rot)&&canAfford(CATALOG[it.t].cost);
+ if(ui.build&&w.hover){const t2=w.hover;const isRem=ui.build.tool==='remove';const it={t:ui.build.sel,c:t2.c,r:t2.r,rot:ui.build.rot};const[sw,sd]=isRem?[1,1]:itemSize(it);const ok=isRem?true:!canPlace(it.t,t2.c,t2.r,it.rot)&&canAfford(itemCost(it.t));
   w.hilite.visible=true;w.hilite.scale.set(sw*PLOT.t,sd*PLOT.t,1);w.hilite.position.set(PLOT.x0+(t2.c+sw/2)*PLOT.t,PLOT.land+.05,PLOT.z0+(t2.r+sd/2)*PLOT.t);w.hilite.material.color.set(isRem?'#ff8a6a':ok?'#9af0a0':'#ff6a6a');
   if(w.ghost){w.ghost.visible=!isRem;const[gx,gz]=itemCenter(it);w.ghost.position.set(gx,CATALOG[it.t].where==='water'?0:(hasFloor(t2.c,t2.r)&&CATALOG[it.t].layer==='obj'?PLOT.deck:PLOT.land),gz);}}
  else{w.hilite.visible=false;if(w.ghost)w.ghost.visible=false;}
@@ -1894,7 +1898,7 @@ function renderBuildBar(){
  return `<div class="buildtop pe"><div><b>Building your plot</b><span class="kicker">Ambience ${a} · ${sellers().length} seller${sellers().length===1?'':'s'}</span></div><span class="mut">${b.tool==='remove'?'Tap something to remove it. You get half the cost back.':`Tap a tile to place: ${esc(CATALOG[b.sel].n)}. ${esc(CATALOG[b.sel].d)}`}</span></div>
  <div class="buildbar pe">
   <div class="btools"><button class="ibtn${b.tool==='remove'?' on':''}" data-act="b-remove" aria-label="Remove">${ic('trash')}</button><button class="ibtn" data-act="b-rotate" aria-label="Rotate">${ic('rotate')}</button><button class="ibtn ok" data-act="build-close" aria-label="Done">${ic('check')}</button></div>
-  <div class="cat">${Object.entries(CATALOG).map(([k,C])=>`<button class="citem${b.sel===k&&b.tool!=='remove'?' on':''}${canAfford(C.cost)?'':' poor'}" data-act="b-sel" data-arg="${k}"><b>${esc(C.n)}</b><small>${esc(costText(C.cost))}</small><small class="amb">+${C.amb} ambience${C.sells?` · sells ${C.sells}`:''}</small></button>`).join('')}</div>
+  <div class="cat">${Object.entries(CATALOG).map(([k,C])=>`<button class="citem${b.sel===k&&b.tool!=='remove'?' on':''}${canAfford(itemCost(k))?'':' poor'}" data-act="b-sel" data-arg="${k}"><b>${esc(C.n)}</b><small>${esc(costText(itemCost(k)))}</small><small class="amb">+${C.amb} ambience${C.sells?` · sells ${C.sells}`:''}</small></button>`).join('')}</div>
  </div>`;
 }
 function tabsNav(){return `<nav class="tabs" aria-label="Pages">${[['act','Act'],['self','Self'],['magic','Magic'],['world','World'],['log','Chronicle']].map(([k,n])=>`<button class="tab${ui.tab===k?' on':''}" data-act="tab" data-arg="${k}" aria-current="${ui.tab===k}">${n}</button>`).join('')}</nav>`;}
@@ -1969,6 +1973,21 @@ function render(){
 /* ============ EVENTS ============ */
 function dlgAct(kind,arg){const n=S.log.length;doAction(kind,arg);const lines=S.log.slice(n).map(x=>x.t);if(ui.dialog&&lines.length)ui.dialog.result=lines.join(' ');render();}
 function openTalk(n){if(!n)return;if(n.special)ui.dialog={type:'ael',text:`Welcome back, ${S.name}. ${AEL_LORE[0]}`,page:0};else ui.dialog={type:'npc',id:n.id,result:''};render();}
+/** Aelarion's first advice, tailored to the new character's body and diet. */
+function spawnTip(){
+ const r=R(),tips=[];
+ if(r.group==='sea')tips.push('Your kind dries out on land: stay near water, or travel when it rains.');
+ if(r.group==='night')tips.push(S.race==='vampires'?'The sun burns you: act at night or underground in Runekar\u2019s Deep.':'The sun stings you: act at night or underground in Runekar\u2019s Deep.');
+ if(r.weak&&!tips.length)tips.push(`${ELEM[r.weak].name} places and weather sicken you; avoid them until you are stronger.`);
+ const d=dietOf(S.race);
+ if(d==='blood')tips.push('You live on blood: win a hunt, then drink from it.');
+ else if(d==='carrion')tips.push('You eat the dead: the Veilmoor has grave offerings.');
+ else if(d==='fire')tips.push('You eat fire: Ysolde sells brazier coals.');
+ else if(d==='ore')tips.push('You eat metal: Ysolde sells iron filings.');
+ else if(d==='sun')tips.push('You feed on sunlight on clear days, or on nectar in Erelian.');
+ else if(d==='none')tips.push('You need no food at all.');
+ return tips.slice(0,2).join(' ');
+}
 function evoText(){
  if(S.tier>=4)return `You have become ${S.legendName}. There is no higher form, only what you do with this one.`;
  const reqs=evoReqs(S.tier+1);const r=R();const lean=S.tier===1?r.paths[bestPath()].n:title();
@@ -1984,7 +2003,7 @@ document.addEventListener('click',e=>{
    newChar((ui.cname||'').trim().slice(0,24)||'Wanderer',ui.pick);S.pos={x:SPAWN.x,z:SPAWN.z};window.__teleport=true;applyStarter();
    if(W3){Object.values(W3.itemMeshes).forEach(m=>W3.buildGroup.remove(m));W3.itemMeshes={};W3.glows=W3.glows.filter(o=>!o.item);W3.LIGHTS=W3.LIGHTS.filter(o=>!o.item);S.build.forEach(addItemMesh);}
    ui.screen='game';ui.tab='act';ui.confirm=false;ui.journal=false;
-   ui.dialog=HAS3D?{type:'ael',text:`Welcome, ${S.name} the ${R().sing}. Erandel lies north, through this gate. Walk with the stick, by tapping the ground, or with W A S D. Talk with E. The lantern plot east of the road is yours: build on it with the hammer, and open a night market for travelers.`,page:-1}:null;
+   ui.dialog=HAS3D?{type:'ael',text:`Welcome, ${S.name} the ${R().sing}. Erandel lies north, through this gate. Walk with the stick, by tapping the ground, or with W A S D. Talk with E. The lantern plot east of the road is yours: build on it with the hammer, and open a night market for travelers.${spawnTip()?' '+spawnTip():''}`,page:-1}:null;
    save();render();break;}
   case'tab':ui.tab=g;ui.confirm=false;render();break;
   case'travel':doAction('travel',ui.travel);break;

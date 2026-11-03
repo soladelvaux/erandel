@@ -24,7 +24,7 @@ The player owns a lantern plot east of the Thorngate road: a 14 × 10 grid, half
 - **Removing**: removes the object first, then the floor; a deck with something on it cannot be removed; refunds half of each cost (rounded down).
 - **Rotation**: 4 directions; multi-tile items swap width and depth.
 - **Cost**: building takes no actions; gold, wood and stone are paid on placement.
-- **Starter plot**: new characters get 30 free pieces (boardwalk into the pond, a market stall, lanterns, a paper lantern, a stone lantern, a moon ring, a garland, a parasol, flowers, bamboo, lilies, floating lanterns) for ambience 82.
+- **Starter plot**: new characters get 30 free pieces (boardwalk into the pond, a market stall, lanterns, a paper lantern, a stone lantern, a moon ring, a garland, a parasol, flowers, bamboo, lilies, floating lanterns) for ambience 69.
 - **Access**: hammer button or B key, only while in Thorngate. The camera moves overhead; drag to pan, pinch or wheel to zoom, tap a tile to place. Green highlight = allowed, red = not.
 
 **Catalog**:
@@ -38,8 +38,8 @@ The player owns a lantern plot east of the Thorngate road: a 14 × 10 grid, half
 | Stone lantern | 3 stone | 4 | 1×1 | any | light |
 | Light garland | 12 gold | 4 | 1×1 | any | string lights |
 | Torii gate | 50 gold, 6 wood | 12 | 3×1 | any | |
-| Market stall | 70 gold, 8 wood | 6 | 2×2 | any | sells 6 |
-| Tea house | 140 gold, 12 wood, 4 stone | 10 | 2×2 | any | sells 10 |
+| Market stall | 70 gold, 8 wood | 6 | 2×2 | any | sells 5 |
+| Tea house | 140 gold, 12 wood, 4 stone | 10 | 2×2 | any | sells 8 |
 | Parasol table | 20 gold, 2 wood | 4 | 1×1 | any | |
 | Flower bed | 6 gold | 2 | 1×1 | land | |
 | Wisteria arch | 14 gold, 1 wood | 5 | 1×1 | any | |
@@ -51,8 +51,9 @@ The player owns a lantern plot east of the Thorngate road: a 14 × 10 grid, half
 
 ## Formulas
 
-- `ambience = Σ catalog ambience of placed items`. Starter: 82.
-- Refund = `floor(cost / 2)` per resource. Example: lantern post 8 gold 1 wood → refund 4 gold 0 wood.
+- `ambience = round(Σ over items of amb × 0.8^(k − 1))`, where k is the item's copy number of its type (the 1st lantern counts 3, the 2nd 2.4, the 3rd 1.92...). One type repeated forever adds at most 5× its single value. Starter: 69.
+- Cost of the next copy of a decoration = `ceil(base × 1.1^n)` per resource, where n = copies already placed; floors (boardwalk, stone path) never grow. Example: the 4th lantern post costs 11 gold and 2 wood.
+- Refund = `floor(base cost / 2)` per resource. Example: lantern post → refund 4 gold 0 wood.
 - Dawn bonus: ambience ≥ 100 → Fate +1; ambience ≥ 150 → Thorngate reputation +2.
 
 ## Edge Cases
@@ -74,13 +75,15 @@ The player owns a lantern plot east of the Thorngate road: a 14 × 10 grid, half
 | Plot size | 14 × 10 | 10–20 per side | Creative space |
 | Item costs | table | ±50% | Build pacing |
 | Ambience values | table | 1–15 | Market strength |
-| Refund rate | 50% | 0–100% | Freedom to redesign |
+| Refund rate | 50% of base | 0–100% | Freedom to redesign |
+| Ambience decay per copy | 0.8 | 0.6–0.95 | Reward for variety |
+| Cost growth per copy | 1.1 | 1.0–1.3 | Late gold sink |
 | Ambience bonus thresholds | 100 / 150 | 80–250 | Long-term goals |
 
 ## Acceptance Criteria
 
 1. Placing a lantern on open water is refused with "Build a boardwalk over the water first."
 2. Lily pads on land are refused; bamboo on water is refused.
-3. Placing then removing a lantern post returns 4 of 8 gold.
+3. Removing a lantern post returns 4 gold (half the base cost); the 4th lantern post costs 11 gold.
 4. A torii does not fit where its 3 tiles would leave the plot.
-5. New characters start with ambience 82 and one market stall.
+5. New characters start with ambience 69 and one market stall.

@@ -76,7 +76,7 @@ For new work: Foundation → Core → Feature → Presentation → Polish. Chang
 
 | System | Risk | Mitigation |
 |---|---|---|
-| Night Market and Economy | Out-earns every other gold source | Prices halved in v0.3; daily cap; once per day; review with `/balance-check` |
+| Night Market and Economy | Out-earns every other gold source | Balance check 2026-11-03: market held to 2–5× work at start, ≤ 8× late; regression tests in `tests/unit/engine/economy-balance.test.js` |
 | Interface and Controls | Phone performance with bloom and point lights | Glow toggle; 4 point lights on phones; pixel ratio capped at 1.25 |
 | Survival and Diet | Can feel punishing for sea and night kinds | Every hazard names a fix in the UI; Aelarion's daily blessing |
 

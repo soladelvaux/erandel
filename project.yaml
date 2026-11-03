@@ -30,7 +30,7 @@ project:
   stage: Pre-Production
   name: Erandel
   genre: Cozy open-world JRPG
-  version: 0.3.0
+  version: 0.3.1
   kind: game
 
 modes:

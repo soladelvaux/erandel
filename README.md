@@ -16,6 +16,7 @@ Controls: joystick or tap the ground to walk · Talk button or E · book icon or
 |---|---|
 | `src/index.html` | The whole game |
 | `design/gdd/` | Game concept, systems index, 14 system design docs, cross-review |
+| `design/balance/` | Balance check reports |
 | `design/art/art-bible.md` | The cozy night-diorama look |
 | `design/ux/`, `design/accessibility-requirements.md` | Interaction patterns and accessibility |
 | `docs/architecture/` | Architecture, ADR-0001, control manifest, architecture review |
@@ -29,4 +30,4 @@ Open this folder in Claude Code and type `/help` to see the next step. Useful sk
 
 ## Status
 
-v0.3.0 · stage: Pre-Production (design docs complete; next: balance check, then epics and a first sprint for 1.0).
+v0.3.1 · stage: Pre-Production. Design docs complete; economy balance check done (`design/balance/`). Next: `/create-epics` and a first sprint for 1.0.

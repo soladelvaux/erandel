@@ -29,6 +29,10 @@
 - Canon: Caelithra's role (moon oracle?), Elash's role (warden of the white boughs?), the mermaid queen's name (Queen Maren?).
 - Saves are per browser. Add an export/import code?
 
+## Resolution (v0.3.1, same day)
+
+All three concerns were addressed by the economy balance check (`design/balance/balance-check-economy-2026-11-03.md`): the market now earns 4–7× work instead of 10–24×, ambience rewards variety, decorations cost more per copy, sea kinds dry out for 4 HP, Aelarion gives a kind-specific tip on spawn, and helping gives Fate +5.
+
 ## Next
 
-`/balance-check` on the economy; then `/create-epics` for 1.0.
+`/create-epics` for 1.0.

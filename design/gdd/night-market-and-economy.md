@@ -35,15 +35,15 @@ Three resources: gold, wood and stone. Gold comes from jobs, trading, hunting, e
 
 | Quantity | Formula | Example (starter plot) |
 |---|---|---|
-| Sales cap | `min(40, 4 × stalls + 6 × tea houses + floor(ambience / 8))` | 4 + 10 = 14 |
-| Price per sale | `round(sells × (1 + ambience/200) × (1 + max(0, repThorngate)/200) × (1 + Charm/200))` | 6 × 1.41 × 1 × 1.035 ≈ 9 |
-| Night income | cap × price | ≈ 120 gold for 1 action |
+| Sales cap | `min(24, 3 × stalls + 5 × tea houses + floor(ambience / 10))` | 3 + 6 = 9 |
+| Price per sale | `round(sells × (1 + ambience/300) × (1 + max(0, repThorngate)/200) × (1 + Charm/200))` | 5 × 1.23 × 1 × 1.035 ≈ 6 |
+| Night income | cap × price | ≈ 54 gold for 1 action (late rich plot ≈ 330) |
 | Spawn interval | `max(1.6, 5 − 0.03 × ambience)` s | 2.5 s |
-| Work pay | `round(8 + 6 × rank + 0.3 × stat)`, halved if land reputation ≤ −40 | Apprentice, stat 10 → 11 |
+| Work pay | `round(8 + 8 × rank + 0.4 × stat)`, halved if land reputation ≤ −40 | Apprentice, stat 10 → 12; Master, stat 30 → 44 |
 | Job experience | 3 per shift, 4.5 in a land matching the job's element | |
 | Fallback reputation | `+min(8, 0.3 × cap)` | |
 
-**Balance note**: the market (~120 gold per action at start, more with a tea house and ambience) is intentionally the best gold source; it is capped once per day and requires investment. Work pays 10–40 per action; hunting 10–40.
+**Balance targets** (balance check 2026-11-03, `design/balance/balance-check-economy-2026-11-03.md`): the market is the best gold action but earns 2–5× an apprentice work shift at the start and at most 8× a master shift late. Measured: 54 at start (work 12), 118 mid, 327 late (work 44). Pinned by `tests/unit/engine/economy-balance.test.js`.
 
 ## Edge Cases
 
@@ -61,15 +61,16 @@ Three resources: gold, wood and stone. Gold comes from jobs, trading, hunting, e
 
 | Knob | Current | Safe range | Affects |
 |---|---|---|---|
-| Stall / tea house sells | 6 / 10 | 3–15 | Market income |
-| Ambience price factor | /200 | /100–/400 | Value of decorating |
-| Cap per stall / tea house | 4 / 6 | 2–8 | Travelers per night |
+| Stall / tea house sells | 5 / 8 | 3–12 | Market income |
+| Ambience price factor | /300 | /150–/500 | Value of decorating |
+| Cap per stall / tea house | 3 / 5 | 2–8 | Travelers per night |
+| Travelers per night, max | 24 | 15–40 | Late-game market ceiling |
 | Starting materials | 10 wood, 4 stone | 0–20 | First builds |
 | Material buy prices | 10 / 12 per 3 | 6–20 | Gather vs buy |
 
 ## Acceptance Criteria
 
-1. With the starter plot, opening the market produces exactly 14 sales and then closes itself with a summary.
+1. With the starter plot, opening the market produces exactly 9 sales and then closes itself with a summary.
 2. The market cannot be opened outside Thorngate or twice on the same day.
 3. Gather wood in Erelian adds 3 wood; buying timber costs 10 gold for 3 wood.
 4. Leaving Thorngate during a market closes it and reports sales so far.

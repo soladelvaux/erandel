@@ -26,7 +26,7 @@ Ten residents (one per land) plus Aelarion at the gate. Each resident has a repu
 
 | Deed | Effect |
 |---|---|
-| Help (once per resident per day) | Fate +4, Corruption −1, resident +10, land +5, Charm +1, resident's stat +1, remembered |
+| Help (once per resident per day) | Fate +5, Corruption −1, resident +10, land +5, Charm +1, resident's stat +1, remembered |
 | Trade (refused if resident < −20 or land ≤ −40) | Gold, resident +2, Charm +1 |
 | Steal | Corruption +6, Fate −3; unseen: 15–35 gold; caught: resident −30, land −15, −5 HP, remembered |
 
@@ -66,7 +66,7 @@ Ten residents (one per land) plus Aelarion at the gate. Each resident has a repu
 
 | Knob | Current | Safe range | Affects |
 |---|---|---|---|
-| Help Fate gain | +4 | 2–6 | Speed of light legends |
+| Help Fate gain | +5 | 2–6 | Speed of light legends |
 | Steal Corruption | +6 | 3–10 | Speed of dark legends |
 | Ally threshold | 60 | 40–80 | Bond depth |
 | Luck base | 8% + 0.3×Fate | 5–15% base | Frequency of surprises |

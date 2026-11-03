@@ -100,26 +100,41 @@ test('companions: rivals refuse to travel together (companions AC1)', () => {
 test('building: placement rules and refunds (building AC1-AC5)', () => {
   const g = loadGame({ kind: 'humans' });
   assert.equal(g.run('S.build.length'), 30);
-  assert.equal(g.run('ambience()'), 82);
+  assert.equal(g.run('ambience()'), 69);
   assert.equal(g.run("canPlace('lantern',11,2,0)"), 'Build a boardwalk over the water first.');
   assert.equal(g.run("canPlace('lily',0,8,0)"), 'This goes on open water.');
   assert.equal(g.run("canPlace('bamboo',11,5,0)"), 'This needs dry land.');
   assert.equal(g.run("canPlace('torii',12,8,0)"), 'That does not fit on your plot.');
   g.run('S.gold=100;S.mat.wood=20');
+  const price = g.run("itemCost('lantern').gold"); // 4th lantern: 8 x 1.1^3, rounded up
+  assert.equal(price, 11);
   g.run("buildPlace('lantern',2,7,0)");
-  assert.equal(g.run('S.gold'), 92);
+  assert.equal(g.run('S.gold'), 100 - price);
   g.run('buildRemove(2,7)');
-  assert.equal(g.run('S.gold'), 96);
+  assert.equal(g.run('S.gold'), 100 - price + 4, 'refund is half the base cost');
 });
 
-test('market: starter plot sells 14 and cannot reopen the same day (night-market-and-economy AC1, AC2)', () => {
+test('market: starter plot sells 9 and cannot reopen the same day (night-market-and-economy AC1, AC2)', () => {
   const g = loadGame({ kind: 'humans' });
-  assert.equal(g.run('salesCap()'), 14);
+  assert.equal(g.run('salesCap()'), 9);
   const gold = g.run('S.gold');
   g.run("doAction('sp','market')");
-  assert.equal(g.run('S.salesToday'), 14);
+  assert.equal(g.run('S.salesToday'), 9);
   assert.ok(g.run('S.gold') > gold);
   assert.match(g.run('marketCheck()'), /already held the market/);
   g.run("S.region='greenmere'");
   assert.match(g.run('marketCheck()'), /held in Thorngate/);
+});
+
+test('survival: sea kinds dry out for 4 HP per action on land (survival-and-diet, balance 2026-11-03)', () => {
+  const g = loadGame({ kind: 'merfolk' });
+  g.run("S.region='vael';S.weather='clear'");
+  assert.equal(g.run("envWarnings().find(x=>/Drying/.test(x.t)).n"), 4);
+});
+
+test('onboarding: Aelarion gives a body tip that matches the kind (balance 2026-11-03)', () => {
+  assert.match(loadGame({ kind: 'merfolk' }).run('spawnTip()'), /dries out/);
+  assert.match(loadGame({ kind: 'vampires' }).run('spawnTip()'), /sun burns you/);
+  assert.match(loadGame({ kind: 'golems' }).run('spawnTip()'), /iron filings/);
+  assert.equal(loadGame({ kind: 'humans' }).run('spawnTip()'), '');
 });
