@@ -32,7 +32,7 @@ One entry per milestone: what changed, the breaking API changes met, the gate re
 | `npm run test:browser` | PASS |
 | `npm run test:p2p` | PASS |
 | Console | No warnings (r128 logged 6 `flatShading` warnings) |
-| Screenshots against the baseline | 14 of 21 differ by 1.2% of pixels or less. The larger ones (build mode 8.7%, phone combat 6.9%, Erelian night 4–6%, two-player 16.5%) were reviewed side by side. The differences are lantern flicker, creature and peer positions, and damage-number timing, not material or colour changes |
+| Screenshots against the baseline | 13 of 21 differ by 1.2% of pixels or less, and 3 more by 2–3%. The 5 above 4% were viewed side by side: build mode 8.7% (lantern flicker), phone combat 6.9% (golem pose and chat-bubble timing), two players 16.5% (peer positions), and Erelian at night, 6.0% desktop and 4.1% phone. **Erelian at night shows one real look change:** with per-pixel Lambert lighting (r144), the night lamp's highlight on the character's head is softer and that scene reads slightly darker. r147 offers per-vertex lighting only as an ES module, so it cannot be restored before the split. Recorded for Sola's review; no other material or colour change was seen |
 | Draw calls (perf probe) | Unchanged within noise. Desktop Veilmoor at night: 862 → 869 (creatures wander). Phone: 396 → 397 |
 | Save from v0.4.1 | `npm run test:save` PASS: a save made in the r128 build (merfolk, after two actions, 321 gold) loads in r147 with identical name, kind, day, gold, actions, buildings and stats, and keeps playing. Added to CI |
 
