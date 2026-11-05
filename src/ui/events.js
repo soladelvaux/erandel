@@ -81,7 +81,7 @@ document.addEventListener('input',e=>{const el=e.target;if(el.id==='vol'){PREFS.
 document.addEventListener('keydown',e=>{
  const tg=e.target.tagName;if(tg==='INPUT'||tg==='SELECT'||tg==='TEXTAREA')return;
  const k=e.key.toLowerCase();
- if(['w','a','s','d','arrowup','arrowdown','arrowleft','arrowright'].includes(k)){keys.add(k);if(k.startsWith('arrow'))e.preventDefault();}
+ if(['w','a','s','d','c','arrowup','arrowdown','arrowleft','arrowright'].includes(k)){keys.add(k);if(k.startsWith('arrow'))e.preventDefault();}
  if(!S||ui.screen!=='game')return;
  if(k==='escape'&&NET.open){openChat(false);return;}
  if(k==='escape'){if(ui.photo){ui.photo=false;document.body.classList.remove('photo');}else if(ui.dialog)ui.dialog=null;else if(ui.build)ui.build=null;else if(ui.journal)ui.journal=false;else ui.settings=false;render();}

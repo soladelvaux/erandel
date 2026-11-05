@@ -44,6 +44,7 @@
     "rendering/painted.js",
     "rendering/painted-materials.js",
     "world/region-erelian.js",
+    "entities/rigged.js",
     "ui/interface.js",
     "ui/events.js",
     "core/start.js",

@@ -2,8 +2,11 @@
   "name": "erandel-asset-tools",
   "private": true,
   "type": "module",
-  "description": "Authors Erandel's procedural GLB prefabs and painted textures (ERANDEL_ART_BIBLE.md §16). Run: npm install, then npm run erelian",
-  "scripts": { "erelian": "node author-erelian.mjs" },
+  "description": "Authors Erandel's procedural GLB prefabs and painted textures (ERANDEL_ART_BIBLE.md \u00a716). Run: npm install, then npm run erelian",
+  "scripts": {
+    "erelian": "node author-erelian.mjs",
+    "characters": "node author-characters.mjs"
+  },
   "dependencies": {
     "@gltf-transform/core": "4.5.1",
     "@gltf-transform/extensions": "4.5.1",

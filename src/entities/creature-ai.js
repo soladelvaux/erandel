@@ -22,12 +22,12 @@ function monsterStrike(m){
 function damagePlayer(n,m){
  const w=W3,p=w.player,t=w.clock.elapsedTime;
  if(t<p.iUntil||S.hp<=0){floatText(p.x,p.y+2.6,p.z,'Dodged','#bfe4ff');return;}
- hurt(n);floatText(p.x,p.y+2.6,p.z,'-'+n,'#ff6a5a',n>=12);
+ hurt(n);p.hitT=.35;floatText(p.x,p.y+2.6,p.z,'-'+n,'#ff6a5a',n>=12);
  document.body.classList.add('hurt');clearTimeout(w.hurtT);w.hurtT=setTimeout(()=>document.body.classList.remove('hurt'),220);
  if(S.hp<=0)playerDown(m);else render();
 }
 function playerDown(m){
- const w=W3;w.grace=w.clock.elapsedTime+5;w.target=null;w.monsters.forEach(o=>{if(o.alive)o.st='home';o.hit=false;if(o.tele)o.tele.material.opacity=0;});
+ const w=W3;w.player.downT=1.8;w.grace=w.clock.elapsedTime+5;w.target=null;w.monsters.forEach(o=>{if(o.alive)o.st='home';o.hit=false;if(o.tele)o.tele.material.opacity=0;});
  const n=S.log.length;faint();const lines=S.log.slice(n).map(l=>l.t);
  ui.dialog={type:'battle',title:'You fell',text:(m?`The ${m.b.n} overwhelms you. `:'')+lines.join(' '),el:m?m.b.el:null};render();
 }

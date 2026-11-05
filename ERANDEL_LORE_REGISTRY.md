@@ -126,7 +126,7 @@ This is the one place to review how every named piece of Erandel lore is classif
 | B17 | Fallen Templar (Dawnspire, light) | PROVISIONAL | Game |  |
 | B18 | Corrupted Acolyte (Dawnspire, shadow) | PROVISIONAL | Game |  |
 | B19 | Moon Moth Swarm (Caelithra’s Moonwell, moon) | PROVISIONAL | Game |  |
-| B20 | Lunar Stag (Caelithra’s Moonwell, moon) | PROVISIONAL | Game |  |
+| B20 | Lunar Stag (Caelithra’s Moonwell, moon) | PROVISIONAL | Game | Also appears in Erelian as neutral wildlife that grazes and flees (Sola chose this role for Phase 4, 2026-11-05; the role is PROVISIONAL) |
 
 ## 6. Magic and elements (game)
 
@@ -215,3 +215,4 @@ No story content has been deprecated. Only Sola can deprecate lore.
 |---|---|
 | 2026-11-05 | Registry created from the v0.4.1 game data, Sola's stated canon, and Volume I |
 | 2026-11-05 | L11–L14 added as PROVISIONAL: the Erelian benchmark region's layout (Phase 3) |
+| 2026-11-05 | B20 note: the Lunar Stag also appears in Erelian as neutral wildlife (Phase 4, Sola's choice; PROVISIONAL) |

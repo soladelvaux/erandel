@@ -55,7 +55,7 @@ function loop(){
  updatePlayerChar();updateComp();setGhost();
  const p=w.player;
  if(!w.ready){w.ready=true;p.mp=mpMax();respawnMonsters();}
- if(window.__teleport){p.x=S.pos.x;p.z=S.pos.z;p.y=groundY(p.x,p.z);p.vy=0;p.ground=true;p.climb=false;window.__teleport=false;w.camInit=false;p.tx=null;}
+ if(window.__teleport&&!(p.downT>0)){p.x=S.pos.x;p.z=S.pos.z;p.y=groundY(p.x,p.z);p.vy=0;p.ground=true;p.climb=false;window.__teleport=false;w.camInit=false;p.tx=null;}
  if(S.day!==w.lastDay){w.lastDay=S.day;respawnMonsters();}
  const blocked=!!(ui.dialog||ui.journal||ui.fadeText||ui.build||ui.photo||NET.open);
  // third-person movement: input is relative to the camera
@@ -67,7 +67,7 @@ function loop(){
  const ml=Math.hypot(ix,iz);let moving=ml>.12&&!blocked;p.inX=moving?ix/ml:0;p.inZ=moving?iz/ml:0;p.climbMove=false;
  if(p.dodgeT>0){p.dodgeT-=dt;const v=ACT.dodgeDist/ACT.dodgeTime;p.x+=p.dodgeX*v*dt;p.z+=p.dodgeZ*v*dt;}
  else if(moving){
-  let sp=ACT.runSpeed*Math.min(1,ml)*(p.ground?1:.85)*dt;const ux=ix/ml,uz=iz/ml;
+  let sp=ACT.runSpeed*Math.min(1,ml)*(p.ground?1:.85)*(keys.has('c')?.3:1)*dt;const ux=ix/ml,uz=iz/ml;
   // climbing: steep rock ahead slows you to a climb instead of a run
   const ahead=groundY(p.x+ux*.6,p.z+uz*.6)-groundY(p.x,p.z),steep=ahead/.6;
   if(p.ground&&steep>1.05){p.climb=true;p.climbMove=true;sp=Math.min(sp,2.6*dt/steep);}else if(steep<.7)p.climb=false;
@@ -77,7 +77,7 @@ function loop(){
  const gy=groundY(p.x,p.z);
  if(!p.ground||p.vy>0){p.vy-=ACT.gravity*dt;p.y+=p.vy*dt;if(p.y<=gy){p.y=gy;p.vy=0;p.ground=true;}}else p.y=gy;
  const py=p.y;
- animChibi(p.ch,dt,moving&&p.ground&&!p.climb);posePlayer(p,dt);p.ch.g.position.set(p.x,py,p.z);p.ry=p.ch.g.rotation.y;
+ animChibi(p.ch,dt,moving&&p.ground&&!p.climb);posePlayer(p,dt);p.ch.g.position.set(p.x,py,p.z);heroTick(p,dt);p.ry=p.ch.g.rotation.y;
  p.mp=Math.min(mpMax(),p.mp+ACT.mpRegen*dt);
  p.anim=p.dodgeT>0?'dodge':p.climb?'climb':p.atkAnim>0?'atk':p.castAnim>0?'cast':!p.ground?'jump':moving?'run':'idle';
  const c=w.comp;if(c.ch){const tx=p.x-Math.sin(p.ch.g.rotation.y)*1.6,tz=p.z-Math.cos(p.ch.g.rotation.y)*1.6;const dx=tx-c.x,dz=tz-c.z,d=Math.hypot(dx,dz);const cm=d>.3;if(cm){const s=Math.min(d,9*dt*(d>3?1.6:1));c.x+=dx/d*s;c.z+=dz/d*s;turnTo(c.ch,dx,dz,dt);}animChibi(c.ch,dt,cm);c.ch.g.position.set(c.x,groundY(c.x,c.z),c.z);}
@@ -107,9 +107,9 @@ function loop(){
   w.hilite.visible=true;w.hilite.scale.set(sw*PLOT.t,sd*PLOT.t,1);w.hilite.position.set(PLOT.x0+(t2.c+sw/2)*PLOT.t,PLOT.land+.05,PLOT.z0+(t2.r+sd/2)*PLOT.t);w.hilite.material.color.set(isRem?'#ff8a6a':ok?'#9af0a0':'#ff6a6a');
   if(w.ghost){w.ghost.visible=!isRem;const[gx,gz]=itemCenter(it);w.ghost.position.set(gx,CATALOG[it.t].where==='water'?0:(hasFloor(t2.c,t2.r)&&CATALOG[it.t].layer==='obj'?PLOT.deck:PLOT.land),gz);}}
  else{w.hilite.visible=false;if(w.ghost)w.ghost.visible=false;}
- w.saveT+=dt;if(w.saveT>1.5){w.saveT=0;S.pos={x:Math.round(p.x*10)/10,z:Math.round(p.z*10)/10};save();}
+ w.saveT+=dt;if(w.saveT>1.5){w.saveT=0;if(!window.__teleport)S.pos={x:Math.round(p.x*10)/10,z:Math.round(p.z*10)/10};save();} // a pending move (e.g. after a fall) keeps its destination
  FADE.value.set(p.x,ui.build?-999:py,p.z);w.plamp.position.set(p.x,py+2.4,p.z);w.plamp.intensity+=(Math.min(1,nf)*.9-w.plamp.intensity)*Math.min(1,dt*4);
- erelianTick(dt,t,nf);updateSky(nf,dt);drawTags();sweepTags();
+ erelianTick(dt,t,nf);charactersTick(dt);updateSky(nf,dt);drawTags();sweepTags();
  w.uiT-=dt;if(w.uiT<=0){w.uiT=.1;updateActionUi(t);drawMini();}
  w.netT-=dt;if(w.netT<=0){w.netT=2;renderNet();}
  netSend(dt);

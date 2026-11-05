@@ -131,6 +131,7 @@ function actionDef(kind,arg){
 }
 
 function doAction(kind,arg){
+ if(typeof W3!=='undefined'&&W3&&W3.player)W3.player.interactT=1.4; // animation only (docs/characters/character-system.md)
  if(!S)return;
  const def=actionDef(kind,arg);if(!def)return;
  const cost=def.cost===undefined?1:def.cost;

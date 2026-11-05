@@ -1,0 +1,68 @@
+{
+  "adventurer": {
+    "bytes": 139100,
+    "tris": 5386,
+    "parts": {
+      "skin": 1252,
+      "skin_ear_human": 160,
+      "skin_ear_elf": 64,
+      "hair": 1434,
+      "cloth": 888,
+      "trim": 192,
+      "leather": 944,
+      "metal": 116,
+      "face": 240,
+      "iris": 96
+    },
+    "bones": 24,
+    "clips": [
+      "idle",
+      "walk",
+      "run",
+      "jump",
+      "dodge",
+      "attack",
+      "hit",
+      "death",
+      "interact",
+      "cast",
+      "climb"
+    ]
+  },
+  "boar": {
+    "bytes": 36428,
+    "tris": 1290,
+    "parts": {
+      "body": 896,
+      "dark": 346,
+      "light": 48
+    },
+    "bones": 18,
+    "clips": [
+      "idle",
+      "walk",
+      "run",
+      "attack",
+      "hit",
+      "death"
+    ]
+  },
+  "stag": {
+    "bytes": 36244,
+    "tris": 1264,
+    "parts": {
+      "body": 896,
+      "dark": 256,
+      "light": 112
+    },
+    "bones": 18,
+    "clips": [
+      "idle",
+      "walk",
+      "run",
+      "attack",
+      "hit",
+      "death"
+    ]
+  }
+}

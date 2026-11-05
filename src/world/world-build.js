@@ -144,6 +144,7 @@ function initWorld(){
  scene.traverse(o=>{if(o.isMesh&&!o.isInstancedMesh&&o!==terrain&&o!==water&&o.material&&!o.material.transparent&&/Lambert|Phong|Standard/.test(o.material.type))nearFade(o.material);});
  setupComposer();
  erelianInit();
+ charactersInit();
  window.addEventListener('resize',()=>{renderer.setSize(window.innerWidth,window.innerHeight,false);camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix();if(W3.composer)W3.composer.setSize(window.innerWidth,window.innerHeight);});
  initPointer(canvas);
  requestAnimationFrame(loop);
