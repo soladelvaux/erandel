@@ -30,7 +30,7 @@ project:
   stage: Pre-Production
   name: Erandel
   genre: Open-world fantasy action RPG (third-person, online)
-  version: 0.4.0
+  version: 0.4.1
   kind: game
 
 modes:
