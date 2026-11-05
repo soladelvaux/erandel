@@ -12,7 +12,7 @@ const puppeteer = require('puppeteer-core');
 const { serveThree } = require('../helpers/serve-three');
 
 const ROOT = path.join(__dirname, '..', '..');
-const GAME = fs.readFileSync(process.env.PROBE_SRC || path.join(ROOT, 'src', 'index.html'), 'utf8');
+const GAME = process.env.PROBE_SRC ? fs.readFileSync(process.env.PROBE_SRC, 'utf8') : require('../../tools/build').assembleGame();
 const MODS = path.join(__dirname, '..', 'node_modules');
 const CHROME = process.env.CHROME || '/usr/bin/google-chrome';
 const LABEL = process.argv[2] || 'current';

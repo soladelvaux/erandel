@@ -9,7 +9,7 @@ const { serveThree } = require('../helpers/serve-three');
 
 const ROOT = path.join(__dirname, '..', '..');
 const CHROME = process.env.CHROME || '/usr/bin/google-chrome';
-const NEW = fs.readFileSync(path.join(ROOT, 'src', 'index.html'), 'utf8');
+const NEW = require('../../tools/build').assembleGame();
 const OLD = process.argv[2] ? fs.readFileSync(process.argv[2], 'utf8') : (() => {
   for (const ref of ['rollback/v0.4.1', 'origin/rollback/v0.4.1']) {
     try { return execSync(`git show ${ref}:src/index.html`, { cwd: ROOT, maxBuffer: 1 << 26 }).toString(); } catch (e) { /* try the next */ }

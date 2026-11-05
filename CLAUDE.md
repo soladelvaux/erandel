@@ -5,11 +5,11 @@ Each agent owns a specific domain, enforcing separation of concerns and quality.
 
 ## Technology Stack
 
-- **Engine**: Web browser, three.js r128 (UMD from cdnjs) + UnrealBloomPass from `three@0.128.0/examples/js` on jsDelivr
+- **Engine**: Web browser, three.js r147 (UMD from cdnjs) + UnrealBloomPass from `three@0.147.0/examples/js` on jsDelivr (r128 until milestone C1; migration plan: `docs/architecture/adr-0002-modernise-threejs.md`)
 - **Language**: JavaScript (ES2019), HTML, CSS — one self-contained page
-- **Code root**: `src/` — the whole game is `src/index.html` (engine, world, UI, music)
+- **Code root**: `src/` — the game is the module files under `src/`, joined in the order of `src/manifest.json` by `node tools/build.js` into `src/index.html` (generated; never edit it by hand). Module map: `docs/architecture/architecture.md` › Layers
 - **Version Control**: Git with trunk-based development
-- **Build System**: none — open `src/index.html` in a browser; it is published as a claude.ai Artifact
+- **Build System**: `node tools/build.js` (joins the modules, writes `src/index.html` and `dist/`); open `src/index.html` in a browser; production is the public site, the claude.ai Artifact is the dev preview
 - **Asset Pipeline**: none — all art is generated in code (3D primitives, canvas textures); no external assets
 - **Tests**: Node — `tests/` (jsdom engine playthrough, puppeteer-core real-browser smoke test, market simulation). Run `npm install` then `npm test` inside `tests/`
 

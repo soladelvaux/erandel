@@ -1,9 +1,10 @@
 {
   "name": "erandel-tests",
   "private": true,
-  "description": "Automated tests for Erandel (src/index.html)",
+  "description": "Automated tests for Erandel (the src/ modules, joined by tools/build.js)",
   "scripts": {
     "test": "node --test \"unit/**/*.test.js\" integration/playthrough.test.js",
+    "check:build": "node ../tools/build.js --check",
     "test:unit": "node --test \"unit/**/*.test.js\"",
     "test:playthrough": "node --test integration/playthrough.test.js",
     "test:browser": "node integration/browser-smoke.js",

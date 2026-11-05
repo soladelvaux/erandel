@@ -18,6 +18,8 @@ jobs:
         with:
           node-version: 22
       - run: npm install
+      - name: Generated page matches the src/ modules
+        run: npm run check:build
       - name: Unit rules and seeded playthrough of all 36 kinds
         run: npm test
       - name: Real-browser smoke test (headless Chrome)

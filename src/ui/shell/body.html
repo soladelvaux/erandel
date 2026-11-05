@@ -1,0 +1,27 @@
+</style>
+
+<canvas id="world" aria-label="The world of Erandel"></canvas>
+<div id="under"></div><div id="tilt"></div><div id="vignette"></div>
+<div id="app"></div>
+<div id="tags"></div>
+<canvas id="mini" width="132" height="148" hidden aria-label="Map of Erandel"></canvas>
+<div id="target" hidden></div>
+<div id="net" hidden><button class="pill" id="b-net" type="button">Solo</button><div id="chatlog" aria-live="polite"></div></div>
+<form id="chatbar" hidden autocomplete="off"><input id="chatin" maxlength="80" placeholder="Say something to everyone here" aria-label="Chat message"><button type="submit">Send</button></form>
+<div id="controls" hidden>
+ <div id="stick" aria-label="Move"><div id="knob"></div></div>
+ <div id="btns">
+  <button id="b-talk" type="button" class="away" disabled>Talk</button>
+  <button class="sk" type="button" data-slot="0"></button><button class="sk" type="button" data-slot="1"></button><button class="sk" type="button" data-slot="2"></button><button class="sk" type="button" data-slot="3"></button>
+  <div id="mpbar" aria-label="Focus"><i></i></div>
+  <div id="acts"><button id="b-dodge" type="button" aria-label="Dodge (Shift)">Dodge</button><button id="b-jump" type="button" aria-label="Jump (Space)">Jump</button><button id="b-atk" type="button" aria-label="Attack (F)">Attack</button></div>
+ </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.147.0/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/shaders/CopyShader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/postprocessing/EffectComposer.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/postprocessing/RenderPass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/postprocessing/ShaderPass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+<script>

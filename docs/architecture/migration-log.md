@@ -41,3 +41,29 @@ One entry per milestone: what changed, the breaking API changes met, the gate re
 **Remaining risk:** the r147 library is 4 KB larger. The JS heap after start-up is 16 MB on desktop against 12 MB before, measured in software rendering; recheck it on a real device.
 
 **Next:** U2, the module split (milestone D). Three.js stays at r147 during the split; r147 → r186.1 (C2: U3–U7) follows the split.
+
+## D — module split (ADR-0002 step U2) — 2026-11-05
+
+**Changed**
+- `src/`: the single file was cut at its 43 section comments into module files in the approved folders (`ui/`, `data/`, `core/`, `gameplay/`, `persistence/`, `world/`, `entities/`, `rendering/`, `net/`, `audio/`). No line of code was changed or moved. Module map: `architecture.md` › Layers.
+- `src/manifest.json` (new): the join order.
+- `tools/build.js`: joins the modules in manifest order; fails if a module file is missing from the manifest or listed twice; writes `src/index.html` (now generated) and `dist/`; `--check` only compares.
+- Tests: `helpers/load-game.js`, `browser-smoke`, `p2p-smoke`, `perf-probe` and the new side of `save-compat` now load the game joined from the modules. New guard `tests/unit/build/assembly.test.js` (2 tests; watched failing on a one-line drift first). CI runs `npm run check:build`.
+
+**Breaking API changes:** none. The modules stay classic scripts in one shared scope, so every global (`S`, `ui`, `W3`, `doAction`, …) is exactly where it was. Moving to ES modules with imports and exports comes with C2, because r163+ loads Three.js add-ons only as ES modules.
+
+**Proof that nothing changed:** the joined page is byte-for-byte the C1 file: 400,479 bytes, SHA-256 `26064d201212985d…` for both. So the deployed page is identical, and performance cannot have changed.
+
+**Gate**
+
+| Check | Result |
+|---|---|
+| `npm test` | 67 / 67 pass (the 65 originals + 2 split guards) |
+| `npm run test:browser` | PASS |
+| `npm run test:p2p` | PASS |
+| `npm run test:save` | PASS (v0.4.1 r128 save loads and plays) |
+| `npm run check:build` | PASS |
+
+**Rollback point:** branch `rollback/milestone-d`.
+
+**Remaining risk:** `src/index.html` is now generated but still in git, so someone could edit it by hand; the guard test and CI catch that. The modules depend on load order (shared scope), which the manifest pins; real imports come with C2.

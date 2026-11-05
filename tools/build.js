@@ -2,20 +2,48 @@
 // Erandel build: one source, two outputs (docs/architecture/deployment.md).
 //   dist/site/index.html     production page for https://soladelvaux.github.io/erandel/
 //   dist/preview/erandel.html development preview for the claude.ai page (a body fragment)
-// The game source is src/index.html. Once the code is split into modules (ADR-0002 U2),
-// this script assembles them; the outputs and their paths stay the same.
-// Usage: node tools/build.js   (prints sizes and the source commit)
+// The game source is the module files under src/ (ADR-0002 U2), joined in the order given by
+// src/manifest.json. The joined page is also written to src/index.html, the single page the
+// tests, the preview and "open it in a browser" use. Never edit src/index.html by hand: edit
+// the module file, then run this script (tests/unit/build/assembly.test.js fails if they differ).
+// Usage: node tools/build.js           build dist/ and regenerate src/index.html
+//        node tools/build.js --check   only check that src/index.html matches the modules
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
 const ROOT = path.join(__dirname, '..');
-const SRC = path.join(ROOT, 'src', 'index.html');
+const SRC_DIR = path.join(ROOT, 'src');
+const SRC = path.join(SRC_DIR, 'index.html');
+const MANIFEST = path.join(SRC_DIR, 'manifest.json');
 const DIST = path.join(ROOT, 'dist');
 
-/** Returns the game as one HTML body fragment (head tags, styles, layers, scripts). */
+/** Lists the module files in join order, and fails if a module file under src/ is missing from
+ *  the manifest or listed twice, so no part of the game can be silently left out. */
+function listParts() {
+  const parts = JSON.parse(fs.readFileSync(MANIFEST, 'utf8')).parts;
+  const seen = new Set();
+  for (const p of parts) {
+    if (seen.has(p)) throw new Error(`src/manifest.json lists ${p} twice`);
+    seen.add(p);
+  }
+  const onDisk = [];
+  (function walk(dir, rel) {
+    for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+      const r = rel ? rel + '/' + e.name : e.name;
+      if (e.isDirectory()) walk(path.join(dir, e.name), r);
+      else if (/\.(html|css|js)$/.test(e.name) && r !== 'index.html') onDisk.push(r);
+    }
+  })(SRC_DIR, '');
+  const missing = onDisk.filter((f) => !seen.has(f));
+  if (missing.length) throw new Error('module files not in src/manifest.json: ' + missing.join(', '));
+  return parts;
+}
+
+/** Returns the game as one HTML body fragment (head tags, styles, layers, scripts),
+ *  joined from the module files. The JS modules share one classic <script> scope. */
 function assembleGame() {
-  return fs.readFileSync(SRC, 'utf8');
+  return listParts().map((p) => fs.readFileSync(path.join(SRC_DIR, p), 'utf8')).join('');
 }
 
 const SITE_HEAD = `<!doctype html>
@@ -34,6 +62,7 @@ const SITE_HEAD = `<!doctype html>
 
 function build() {
   const game = assembleGame();
+  fs.writeFileSync(SRC, game);
   let commit = 'unknown';
   try { commit = execSync('git rev-parse --short HEAD', { cwd: ROOT }).toString().trim(); } catch (e) { /* not a git checkout */ }
   const stamp = `<!-- Erandel build from ${commit} -->\n`;
@@ -45,8 +74,12 @@ function build() {
   return { commit, siteBytes: Buffer.byteLength(site), previewBytes: Buffer.byteLength(game) };
 }
 
-if (require.main === module) {
+if (require.main === module && process.argv.includes('--check')) {
+  const same = fs.readFileSync(SRC, 'utf8') === assembleGame();
+  console.log(same ? 'src/index.html matches the modules' : 'src/index.html differs from the modules: run node tools/build.js');
+  process.exit(same ? 0 : 1);
+} else if (require.main === module) {
   const r = build();
   console.log(`built from ${r.commit}: dist/site/index.html ${r.siteBytes} bytes, dist/preview/erandel.html ${r.previewBytes} bytes`);
 }
-module.exports = { build, assembleGame };
+module.exports = { build, assembleGame, listParts };

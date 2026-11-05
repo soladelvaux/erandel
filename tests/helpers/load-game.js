@@ -1,10 +1,11 @@
-// Loads src/index.html in jsdom (no WebGL, so the game runs in its 2D fallback mode)
+// Loads the game (the src/ modules joined by tools/build.js) in jsdom (no WebGL, so the game runs in its 2D fallback mode)
 // with a seeded Math.random so every run is deterministic.
 const fs = require('fs');
 const path = require('path');
 const { JSDOM } = require('jsdom');
 
 const GAME = path.join(__dirname, '..', '..', 'src', 'index.html');
+const { assembleGame } = require('../../tools/build');
 
 /** Small seeded RNG (mulberry32). */
 function seeded(seed) {
@@ -25,7 +26,7 @@ function seeded(seed) {
  * @returns {{window: Window, document: Document, run: (code: string) => any, errors: string[]}}
  */
 function loadGame({ seed = 1, kind } = {}) {
-  const html = fs.readFileSync(GAME, 'utf8');
+  const html = assembleGame();
   const errors = [];
   const dom = new JSDOM(html, {
     runScripts: 'dangerously',
