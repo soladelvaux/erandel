@@ -18,7 +18,7 @@ Sola (creator), with Claude acting as technical director
 
 ## Summary
 
-Keep Three.js and upgrade it from r128 to r186.1 one step at a time. Change only one kind of thing per step: the Three.js version, the module system, or the look. Never combine a step with a gameplay rewrite. Every step ends with the 65 rule and playthrough tests passing and a tagged rollback point. This supersedes ADR-0001 in part: the "single file" decision ends at step U2 below, and the "three.js r128 pinned" decision ends at step U1.
+Keep Three.js and upgrade it from r128 to r186.1 one step at a time. Change only one kind of thing per step: the Three.js version, the module system, or the look. Never combine a step with a gameplay rewrite. Every step ends with the 65 rule and playthrough tests passing and a rollback point. This supersedes ADR-0001 in part: the "single file" decision ends at step U2 below, and the "three.js r128 pinned" decision ends at step U1.
 
 ## Engine Compatibility
 
@@ -58,8 +58,8 @@ Sola set five requirements:
   - Branch `rollback/v0.4.1` (commit `d7c4681`) is the baseline. It is a branch because tag pushes are refused from Claude's environment; Sola can also add a `v0.4.1` tag or release on GitHub.
   - Each passed step gets a branch `rollback/migrate-uN` at its merge commit (or a tag, if pushed from GitHub).
   - Work happens on a branch `migrate/uN` and merges to `main` only after its gate passes.
-  - The public site keeps serving the last passed tag until the next gate passes, so a failed step never reaches players.
-  - Rolling back means redeploying the previous tag.
+  - The public site keeps serving the last passed rollback point until the next gate passes, so a failed step never reaches players.
+  - Rolling back means redeploying the previous rollback point.
 
 ### Steps
 
@@ -107,7 +107,7 @@ No budget is set in this ADR. Draw calls (140–686 measured in the audit) are a
 
 ## Migration Plan
 
-U0 → U7 as above. Each step is one branch, one gate and one tag.
+U0 → U7 as above. Each step is one branch, one gate and one rollback point.
 
 ## Validation Criteria
 
@@ -115,7 +115,7 @@ At every rollback point `rollback/migrate-uN`:
 - 65 of 65 tests pass, and the browser and P2P tests pass.
 - Screenshots are compared and accepted.
 - A v0.4.1 save loads.
-- The public site is deployed from that tag.
+- The public site is deployed from that rollback point.
 
 ## Related
 
