@@ -52,11 +52,11 @@ Sola set five requirements:
 - **Gate, all must pass:**
   1. `npm test` passes 65 of 65.
   2. `npm run test:browser` and `npm run test:p2p` pass.
-  3. The screenshots in `production/qa/evidence/` are compared side by side with the baseline from tag `v0.4.1`, and any visible difference is either fixed or written down and accepted by Sola.
+  3. The screenshots in `production/qa/evidence/` are compared side by side with the baseline from `rollback/v0.4.1`, and any visible difference is either fixed or written down and accepted by Sola.
   4. A v0.4.1 save loads and plays.
 - **Rollback:**
-  - Tag `v0.4.1` (commit `d7c4681`) is the baseline.
-  - Each passed step gets a tag `migrate-uN`.
+  - Branch `rollback/v0.4.1` (commit `d7c4681`) is the baseline. It is a branch because tag pushes are refused from Claude's environment; Sola can also add a `v0.4.1` tag or release on GitHub.
+  - Each passed step gets a branch `rollback/migrate-uN` at its merge commit (or a tag, if pushed from GitHub).
   - Work happens on a branch `migrate/uN` and merges to `main` only after its gate passes.
   - The public site keeps serving the last passed tag until the next gate passes, so a failed step never reaches players.
   - Rolling back means redeploying the previous tag.
@@ -65,7 +65,7 @@ Sola set five requirements:
 
 | Step | Change | Three.js | What the game must adapt (from the Migration Guide, checked against our code) |
 |---|---|---|---|
-| U0 | Rollback point; record a baseline | r128 | Tag `v0.4.1`; keep the current screenshots as the baseline |
+| U0 | Rollback point; record a baseline | r128 | Branch `rollback/v0.4.1` at `d7c4681` (done 2026-11-05); keep the current screenshots as the baseline |
 | U1 | Version only, still one file with script tags | r128 → r147 (the last release with `examples/js`) | **r144:** `MeshLambertMaterial` switches to per-fragment shading. Chibis, props and creatures will look smoother; re-check the look. **r147:** `PointLight` default `decay` becomes 2. Our pool lights and night lamp already pass `decay` explicitly, so there is no change. **r140:** `fog` moved to the materials that support it, with no change for us. **r137:** sRGB decoding removed in GLSL, with no effect while output stays linear. Our `onBeforeCompile` patches (`#include <common>`, `<begin_vertex>`, `<color_fragment>`, `void main() {`) do not use renamed chunks |
 | U2 | Module system and build only, same r147 | r147 via npm | Vite 8 + TypeScript 7 (TypeScript in loose mode first). Use `three/examples/jsm` add-ons. Split into the target folders (`core/`, `rendering/`, `gameplay/`, `world/`, `entities/`, `ui/`, `persistence/`, `data/`, `audio/`, `net/`). Gameplay code is moved verbatim. Build a single-file export for the claude.ai page. No API changes in this step |
 | U3 | Version | r147 → r151 | **r148:** default segment counts rose for Circle, Ring, Cylinder, Cone and Torus geometries. All of our calls (about 50) pass their segment counts, so there is no change. **r150:** `ColorManagement.legacyMode` and `physicallyCorrectLights` are renamed; we use neither. **r151:** `InstancedMesh.frustumCulled` defaults to true. We set false explicitly, so it is unchanged. `Points` gain uv |
@@ -111,7 +111,7 @@ U0 → U7 as above. Each step is one branch, one gate and one tag.
 
 ## Validation Criteria
 
-At every tag `migrate-uN`:
+At every rollback point `rollback/migrate-uN`:
 - 65 of 65 tests pass, and the browser and P2P tests pass.
 - Screenshots are compared and accepted.
 - A v0.4.1 save loads.
