@@ -164,8 +164,8 @@ function adventurer() {
     parts.leather.push({ g: new THREE.BoxGeometry(0.1, 0.11, 0.05).translate(0.17, 0.86, 0.06), col: tone(hex('#ffffff'), hex('#8a8a8a')), w: (x, y) => [['hips', 0.6], ['upperLeg.L', 0.4]] });
   }
   // mantle: a cloth drape from the shoulders down the back, skinned to the cape chain
-  { const W = 0.36, rows = 10, cols = 8, pos = [], idx = [];
-    for (let j = 0; j <= rows; j++) { const t = j / rows, y = 1.37 - t * 0.68, w = W * (0.85 + 0.35 * t); for (let i = 0; i <= cols; i++) { const u = i / cols - 0.5, x = u * w * 2, z = -0.15 - t * 0.08 - Math.cos(u * Math.PI) * 0.05 * (1 - t * 0.5) + (j === 0 ? 0.04 : 0); pos.push(x, y, z); } }
+  { const W = 0.27, rows = 10, cols = 10, pos = [], idx = [];
+    for (let j = 0; j <= rows; j++) { const t = j / rows, y = 1.37 - t * 0.68, w = W * (0.7 + 0.45 * t); for (let i = 0; i <= cols; i++) { const u = i / cols - 0.5, a = u * Math.PI * (0.95 - 0.35 * t), x = Math.sin(a) * w * 1.1, z = -0.06 - Math.cos(a) * (0.11 + 0.05 * t) - t * 0.05 + (j === 0 ? 0.03 : 0) + 0.012 * Math.sin(u * 18) * t; pos.push(x, y, z); } }
     for (let j = 0; j < rows; j++) for (let i = 0; i < cols; i++) { const a = j * (cols + 1) + i, b = a + 1, c = a + cols + 1, d = c + 1; idx.push(a, b, c, b, d, c); }
     let g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setIndex(idx); g = g.toNonIndexed();
     parts.trim.push({ g, col: (x, y) => mix(hex('#8a8a8a'), hex('#ffffff'), smooth(0.7, 1.35, y)) , w: (x, y) => { const a = smooth(1.3, 1.1, y), b = smooth(1.0, 0.8, y); return [['chest', 1 - a], ['cape1', a * (1 - b) * 0.5 + 0.0], ['cape2', a * (1 - b) * 0.5 + b * 0.3], ['cape3', b * 0.7]]; }, double: true }); }

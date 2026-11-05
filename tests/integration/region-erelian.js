@@ -149,9 +149,12 @@ function frameStats() {
   const off = await open(browser, { width: 800, height: 600 }, { blockAssets: true });
   await off.page.waitForFunction(() => REGION.status === 'ready' || REGION.status === 'failed', { timeout: 60000 });
   await goTo(off.page, -46, 2, 0, 0.32, false);
-  const b0 = await off.page.evaluate(() => [W3.player.x, W3.player.z]); await off.page.keyboard.down('w'); await wait(1500); await off.page.keyboard.up('w');
-  const b1 = await off.page.evaluate(() => ({ p: [W3.player.x, W3.player.z], status: REGION.status }));
-  check(b1.status === 'failed' && Math.hypot(b1.p[0] - b0[0], b1.p[1] - b0[1]) > 1 && !off.errors.length, `assets blocked: region ${b1.status}, the game still plays (moved ${Math.hypot(b1.p[0] - b0[0], b1.p[1] - b0[1]).toFixed(1)} m), page errors ${off.errors.length}`);
+  // judged in game time, like check 2 (a slow CI runner gives few frames per wall second)
+  await off.page.evaluate(() => { window.__sim = 0; let last = performance.now(); const tick = (now) => { window.__sim += Math.min((now - last) / 1000, 0.05); last = now; if (window.__simOn) requestAnimationFrame(tick); }; window.__simOn = true; requestAnimationFrame(tick); });
+  const b0 = await off.page.evaluate(() => [W3.player.x, W3.player.z]); await off.page.keyboard.down('w'); await wait(2500); await off.page.keyboard.up('w');
+  const b1 = await off.page.evaluate(() => { window.__simOn = false; return { p: [W3.player.x, W3.player.z], status: REGION.status, sim: window.__sim }; });
+  const bm = Math.hypot(b1.p[0] - b0[0], b1.p[1] - b0[1]), bs = bm / Math.max(b1.sim, 0.01);
+  check(b1.status === 'failed' && bm > 0.2 && bs > 1.5 && !off.errors.length, `assets blocked: region ${b1.status}, the game still plays (${bm.toFixed(1)} m in ${b1.sim.toFixed(2)} s game time, ${bs.toFixed(1)} m/s), page errors ${off.errors.length}`);
   await off.page.close();
 
   await browser.close();

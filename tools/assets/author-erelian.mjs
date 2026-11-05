@@ -321,7 +321,8 @@ function bridge(o) {
   });
   const L = []; const rng = mulberry(o.seed);
   for (const sz of [-1, 1]) for (let x = -half + 0.5; x < half; x += 1.05) { const y = o.deckY + o.hump * (1 - (x / half) ** 2); if (rng() < 0.12) continue; L.push([1.0, 0.55, 0.38, x, y + 0.27, sz * (d / 2 - 0.2)]); }
-  for (let i = 1; i < 12; i++) { if (o.lod) break; const a = (i / 12) * Math.PI; L.push([0.4, 0.5, d + 0.06, Math.cos(a) * (span / 2 + 0.25), o.springY + Math.sin(a) * (rise + 0.25), 0, 0, a - Math.PI / 2]); }
+  // arch ring: flush voussoir faces on both sides of the arch (they used to stand out below the arch like teeth)
+  for (let i = 1; i < 12; i++) { if (o.lod) break; const a = (i / 12) * Math.PI; for (const sz of [-1, 1]) L.push([0.55, 0.42, 0.05, Math.cos(a) * (span / 2 + 0.24), o.springY + Math.sin(a) * (rise + 0.22), sz * (d / 2 + 0.01), 0, a - Math.PI / 2]); }
   return merge([body, masonry(L, o.seed + 3, P.ruinDark, P.ruin, 0.06)], false);
 }
 /** Fallen, mossy log. */

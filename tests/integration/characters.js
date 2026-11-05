@@ -52,7 +52,9 @@ const check = (ok, what) => { if (!ok) failures.push(what); console.log(`${ok ? 
   await goTo(-44, 2); await page.evaluate(() => { W3.zoom = 0.55; W3.cam.yaw = 0; W3.cam.pitch = 0.18; W3.player.ch.g.rotation.y = 0; }); await wait(2500);
   const shot = (n) => page.screenshot({ path: path.join(OUT, n + '.png') });
   const cur = () => page.evaluate(() => CHR.hero.cur);
-  await page.waitForFunction(() => CHR.hero.cur === 'idle', { timeout: 30000, polling: 100 }).catch(() => {});
+  // Time-based states are stepped with explicit frames (deterministic; software rendering is ~1 fps):
+  // 3 s of 0.05 s frames lets the welcome conversation's interact clip and the teleport settle.
+  await page.evaluate(() => { for (let i = 0; i < 60; i++) heroTick(W3.player, 0.05); });
   check((await cur()) === 'idle', `2 idle when standing (also right after a teleport): ${await cur()}`); await shot('01-idle');
 
   // 3 blending, checked deterministically: step the state machine with small frames
@@ -98,8 +100,7 @@ const check = (ok, what) => { if (!ok) failures.push(what); console.log(`${ok ? 
   await wait(2500); await shot('09-boar');
   const death = await page.evaluate(() => { const c = CHR.creatures[0], m = c.m; killMonster(m); creatureTick(c, 0.016); return { cur: c.cur, visible: m.mo.g.visible }; });
   await wait(400); await shot('10-boar-death');
-  await page.waitForFunction(() => !CHR.creatures[0].m.mo.g.visible, { timeout: 120000, polling: 200 }).catch(() => {});
-  const gone = await page.evaluate(() => !CHR.creatures[0].m.mo.g.visible);
+  const gone = await page.evaluate(() => { const c = CHR.creatures[0]; for (let i = 0; i < 40; i++) creatureTick(c, 0.05); return !c.m.mo.g.visible; });
   check(death.cur === 'death' && death.visible && gone, `6 boar death plays, then the body is hidden: ${death.cur}, shown ${death.visible}, hidden after ${gone}`);
   const stag = await page.evaluate(() => { const c = CHR.stags[0], s = c.s; const d0 = Math.hypot(s.x - s.hx, s.z - s.hz); S.pos = { x: s.x + 3, z: s.z }; window.__teleport = true; return { d0, targetable: W3.monsters.some((m) => m.b.n === 'Lunar Stag' && m.region === 'greenmere') }; });
   await wait(2500);
@@ -113,8 +114,12 @@ const check = (ok, what) => { if (!ok) failures.push(what); console.log(`${ok ? 
   const fall = await page.evaluate(() => { const m = W3.monsters.find((o) => o.alive); W3.player.iUntil = 0; const p = W3.player, x0 = p.x; damagePlayer(S.hp + 5, m); heroTick(p, 0.016); return { cur: CHR.hero.cur, x0, dialog: ui.dialog && ui.dialog.title }; });
   await wait(700); await shot('12-fall');
   const fell = await page.evaluate(() => ({ x: W3.player.x, z: W3.player.z }));
+  // 2 s of frames for the death clip (downT 1.8 s); the game loop then applies the pending return
+  const held = await page.evaluate(() => { for (let i = 0; i < 40; i++) heroTick(W3.player, 0.05); return { spos: S.pos, tp: !!window.__teleport }; });
+  check(held.tp && Math.hypot(held.spos.x - 2, held.spos.z - 46) < 3, `7 during the death clip the return to the Thorngate stays pending and its destination survives autosave: ${JSON.stringify(held)}`);
   await page.waitForFunction(() => Math.hypot(W3.player.x - 2, W3.player.z - 46) < 3, { timeout: 120000, polling: 200 }).catch(() => {});
-  const home = await page.evaluate(() => ({ x: W3.player.x, z: W3.player.z, hp: S.hp }));
+  const home = await page.evaluate(() => ({ x: W3.player.x, z: W3.player.z, hp: S.hp, downT: W3.player.downT, tp: !!window.__teleport, spos: S.pos, cur: CHR.hero.cur, t: W3.clock.elapsedTime }));
+  console.log('     fall trace', JSON.stringify(home));
   check(fall.cur === 'death' && fall.dialog === 'You fell', `7 falling plays the death clip with the existing dialog: ${fall.cur}, "${fall.dialog}"`);
   check(Math.hypot(fell.x + 44, fell.z - 2) < 2 && Math.hypot(home.x - 2, home.z - 46) < 3 && home.hp > 0, `7 the body stays down during the clip, then the existing return to the Thorngate happens: (${home.x.toFixed(1)}, ${home.z.toFixed(1)}), hp ${home.hp}`);
 
