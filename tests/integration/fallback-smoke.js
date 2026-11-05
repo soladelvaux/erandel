@@ -35,6 +35,16 @@ async function open(browser, block) {
   if (!noBloom.state.has3d || !noBloom.state.world || noBloom.state.bloom || !noBloom.state.begin) failures.push('bloom add-ons blocked: expected the 3D world without bloom, got ' + JSON.stringify(noBloom));
   const noThree = await open(browser, /three@[\d.]+\/build\//);
   if (noThree.state.has3d || noThree.state.world || !noThree.state.begin) failures.push('three.js blocked: expected the 2D journal mode, got ' + JSON.stringify(noThree));
+  // An attack, skill or dodge pressed before the first frame has built the player's character must do
+  // nothing rather than throw (seen intermittently in the two-player test on a slow machine, 2026-11-05).
+  { const page = await browser.newPage(); const errs = []; page.on('pageerror', (e) => errs.push(e.message));
+    await page.evaluateOnNewDocument(() => { try { localStorage.clear(); } catch (e) { /* ignore */ } });
+    await page.setRequestInterception(true);
+    page.on('request', (r) => { const u = r.url(); if (u.startsWith('https://erandel.test/')) return r.respond({ status: 200, contentType: 'text/html', body: '<!doctype html><html><head><meta charset="utf-8"></head><body>' + GAME + '</body></html>' }); if (serveThree(r)) return; return r.abort(); });
+    await page.setViewport({ width: 800, height: 600 }); await page.goto('https://erandel.test/', { waitUntil: 'load' }); await waitForStart(page); await wait(500);
+    const early = await page.evaluate(() => { document.querySelector('[data-act="begin"]').click(); ui.dialog = null; ui.fadeText = null; ui.banner = null; const p = W3.player, ch = p.ch; p.ch = null; try { W3.grace = 1e9; playerAttack(); playerDodge(); return { ok: true }; } catch (e) { return { ok: false, err: e.message }; } finally { p.ch = ch; } });
+    await page.close();
+    if (!early.ok || errs.length) failures.push('attack before the character exists threw: ' + JSON.stringify({ early, errs })); }
   await browser.close();
   if (failures.length) { console.error('FAIL\n' + failures.join('\n')); process.exit(1); }
   console.log('PASS - without bloom files the 3D world starts without bloom; without three.js the 2D journal starts');

@@ -88,3 +88,12 @@ Evidence: `production/qa/evidence/region-erelian/` (8 desktop and 4 phone screen
 - **Dissolve:** trees between the camera and the player still dissolve with a dither pattern. It's ordered now, so it reads as an even screen rather than noise, but it's visible on phones.
 - **The terrain mesh is about 1 m per cell,** so the cliff, the streams and the stair ramp are soft at close range. A finer terrain patch for the region is the next upgrade.
 - **The claude.ai preview** gets no region assets, because they aren't published with the preview. It runs the region without them. The public site is the production home and has them.
+
+## Defects found while testing, and fixed
+
+| Found by | Defect | Fix | Guard |
+|---|---|---|---|
+| Screenshot diff against the last release, then a prop count with the region on and off | My first version left the "skip Erelian's old props" switch on after the scatter loop, so **every lantern and lily pad placed after it disappeared world-wide** (Thorngate road lanterns, river lanterns and lilies) | The switch now applies to the scatter loop only, and skips a prop by where the prop stands | Acceptance check 8 compares every old prop outside Erelian with `?region=off`. It was watched failing (0/20 lanterns, 0/6 lily pads) before the fix |
+| The two-player test, failing 1 run in 3 | Attack or dodge pressed before the player's character model exists threw an error. In the test, a background tab had not drawn its first frame. In the game, the window is the first frame after "begin" | `canAct()` also requires the character to exist | `npm run test:fallback` presses attack and dodge with no character. It was watched failing without the guard. The two-player test now waits for each character and runs without background throttling: 6 of 6 passes |
+| The acceptance test's own numbers | At under 1 frame per second (software rendering), instance culling, which was timed in game seconds, lagged behind teleports | Culling refreshes on wall-clock time and at once when the camera jumps more than 4 m | Every view in the acceptance test |
+| Looking at the screenshots | The game's random-noise dissolve made big tree canopies near the camera a field of speckle, and the bridge deck turned see-through | Ordered (Bayer) dither for the new materials; walkable structures only fade right at the camera | Evidence screenshots |

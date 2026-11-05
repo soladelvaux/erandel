@@ -61,11 +61,13 @@ async function openPlayer(browser, name, kind, x, failures) {
   await page.evaluate((n, k, px) => { ui.cname = n; ui.pick = k; document.querySelector('[data-act="begin"]').click(); }, name, kind, x);
   await wait(800);
   await page.evaluate((px) => { ui.dialog = null; S.pos = { x: px, z: 58 }; window.__teleport = true; W3.grace = 1e9; render(); }, x);
+  // The next tab sends this one to the background, where frames may pause: wait until its character exists.
+  await page.waitForFunction(() => !!(W3.player && W3.player.ch), { timeout: 30000, polling: 100 });
   return page;
 }
 
 (async () => {
-  const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args: ['--no-sandbox', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+  const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args: ['--no-sandbox', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--disable-background-timer-throttling', '--disable-backgrounding-occluded-windows', '--disable-renderer-backgrounding'] });
   const failures = [];
   const a = await openPlayer(browser, 'Aster', 'elves', -1.5, failures);
   const b = await openPlayer(browser, 'Brook', 'merfolk', 1.5, failures);
@@ -76,7 +78,7 @@ async function openPlayer(browser, name, kind, x, failures) {
   if (sa.peers.join() !== 'Brook/merfolk' || sb.peers.join() !== 'Aster/elves') failures.push(`players did not see each other ${JSON.stringify({ sa, sb })}`);
   if (!/2 online/.test(sa.online)) failures.push(`online count wrong: ${sa.online}`);
   await b.evaluate(() => sendChat('Meet me at the gate'));
-  await a.evaluate(() => { const p = W3.player; p.cd.atk = 0; W3.grace = 1e9; playerAttack(); });
+  try { await a.evaluate(() => { const p = W3.player; p.cd.atk = 0; W3.grace = 1e9; playerAttack(); }); } catch (e) { failures.push('attack threw: ' + e.message); }
   let chat = [];
   for (let i = 0; i < 20 && !chat.length; i++) { await wait(200); chat = await a.evaluate(() => NET.chat.filter((c) => !c.me).map((c) => c.n + ': ' + c.t)); }
   if (chat.join() !== 'Brook: Meet me at the gate') failures.push(`chat did not cross: ${JSON.stringify(chat)}`);
