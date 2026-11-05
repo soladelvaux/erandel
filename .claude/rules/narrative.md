@@ -6,7 +6,11 @@ paths:
 # Narrative Rules
 
 - All new lore must be cross-referenced against existing lore for contradictions
-- Every lore entry must specify canon level: Established / Provisional / Under Review
+- Every lore entry must specify one category: CANON / PROVISIONAL / DEPRECATED (set by the creator; see `design/narrative/lore-bible.md`)
+  - CANON = confirmed by the creator's original worldbuilding; only the creator assigns it
+  - PROVISIONAL = any development idea, including content already shipped in the game; nothing PROVISIONAL becomes CANON without the creator's approval
+  - DEPRECATED = old prototype content that must not be treated as current lore
+- Never write a development invention into the lore as CANON, and never upgrade a category without the creator's explicit approval
 - Character dialogue must match the voice profile defined for that character
 - World rules (what is possible/impossible) must be explicitly documented and consistent
 - Mysteries must have documented "true answers" even if players never learn them

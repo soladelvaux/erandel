@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted
+Accepted. Superseded in part by ADR-0002 (2026-11-05): the r128 pin ends at step U1 and the single-file layout ends at step U2.
 
 ## Date
 
