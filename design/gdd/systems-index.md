@@ -29,6 +29,7 @@ Erandel is a cozy open-world life-sim JRPG. Fourteen systems make up the game. A
 | 14 | Audio and Atmosphere | [audio-and-atmosphere.md](audio-and-atmosphere.md) | Audio | Polish | Implemented |
 | 15 | Action Combat and Movement | [action-combat.md](action-combat.md) | Gameplay | Feature | Implemented |
 | 16 | Multiplayer | [multiplayer.md](multiplayer.md) | Meta | Feature | Implemented |
+| 17 | Accounts and Cloud Saves | [accounts.md](accounts.md) | Persistence | Feature | Implemented |
 
 ## Categories
 
@@ -45,7 +46,7 @@ Erandel is a cozy open-world life-sim JRPG. Fourteen systems make up the game. A
 |---|---|
 | P0 (the game does not exist without it) | Kinds, Stats and Actions, World, Evolution, Interface |
 | P1 (core identity) | Elements, Survival, People, Building, Night Market |
-| P2 (depth) | Combat, Action Combat and Movement, Magic, Companions, Multiplayer |
+| P2 (depth) | Combat, Action Combat and Movement, Magic, Companions, Multiplayer, Accounts and Cloud Saves |
 | P3 (polish) | Audio and Atmosphere |
 
 ## Dependency Map

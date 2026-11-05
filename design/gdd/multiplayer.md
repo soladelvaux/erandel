@@ -58,7 +58,7 @@ Everyone who has the published Erandel page open at the same time shares one wor
 
 ## Dependencies
 
-- **Reads**: [Kinds and Bodies](kinds-and-bodies.md) (character look), [World and Regions](world-and-regions.md) (bounds, lands), [Action Combat and Movement](action-combat.md) (animations, effects), [Evolution](evolution.md) (tier, title).
+- **Reads**: [Accounts and Cloud Saves](accounts.md) (unique names), [Kinds and Bodies](kinds-and-bodies.md) (character look), [World and Regions](world-and-regions.md) (bounds, lands), [Action Combat and Movement](action-combat.md) (animations, effects), [Evolution](evolution.md) (tier, title).
 - **Used by**: [Interface and Controls](interface-and-controls.md) (online pill, chat bar, name plates, minimap dots).
 
 ## Tuning Knobs

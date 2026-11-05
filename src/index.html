@@ -28,7 +28,7 @@ p{margin:0}
 button,select,input{font:inherit;color:inherit}
 button{cursor:pointer}
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-select,input[type=text]{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:8px 10px;min-width:0;max-width:100%}
+select,input[type=text],input[type=email],input[type=password]{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:8px 10px;min-width:0;max-width:100%}
 .btn{background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:8px 14px;white-space:nowrap}
 .btn:hover:not(:disabled){border-color:var(--gold)}
 .btn.primary{background:var(--gold);color:#1a1408;border-color:var(--gold);font-weight:700}
@@ -248,6 +248,12 @@ body.notilt #tilt{display:none}
  .citem{flex-basis:118px}
 }
 
+/* ===== accounts ===== */
+.acc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:12px}
+.acc-card{display:grid;gap:8px;align-content:start;background:rgba(14,18,34,.9);border:1px solid var(--gold);border-radius:10px;padding:14px}
+.acc-card h3{font-family:var(--display);color:var(--gold);font-size:1.25rem}
+.acc-card input,.dialog input{font-size:16px;width:100%;box-sizing:border-box}
+.acc-msg{color:#ffb4a0;background:rgba(80,20,20,.5);border:1px solid rgba(255,120,100,.5);border-radius:8px;padding:8px 12px}
 /* ===== action MMO layer ===== */
 #tags{position:fixed;inset:0;pointer-events:none;z-index:2;overflow:hidden}
 .tag{position:absolute;left:0;top:0;white-space:nowrap;will-change:transform}
@@ -1062,7 +1068,7 @@ function dawn(fromFaint){
 function sleep(){if(!S)return;OUT=[];SLOT=2;dawn(false);flush();save();render();}
 
 /* ============ SAVE ============ */
-function save(){try{localStorage.setItem(SAVE_KEY,JSON.stringify(S));}catch(e){}}
+function save(){try{localStorage.setItem(SAVE_KEY,JSON.stringify(S));}catch(e){}if(typeof accPush==='function')accPush(false);}
 function saveCodex(){try{localStorage.setItem(CODEX_KEY,JSON.stringify(CODEX));}catch(e){}}
 function loadSaved(){
  try{const c=JSON.parse(localStorage.getItem(CODEX_KEY)||'{}');if(c&&typeof c==='object')CODEX=c;}catch(e){}
@@ -2394,7 +2400,7 @@ function renderHud3(){
   <div class="hr">
    <div class="music pe"><div class="mcov"></div><div class="mt"><b>${T.n}</b><span>${T.sub}</span></div><button class="mb2" data-act="m-prev" aria-label="Previous track">${ic('prev')}</button><button class="mb2" data-act="m-play" aria-label="${MUS.playing?'Pause':'Play'} music">${ic(MUS.playing?'pause':'play')}</button><button class="mb2" data-act="m-next" aria-label="Next track">${ic('next')}</button></div>
    <div class="icol pe"><button class="ibtn" data-act="settings" aria-label="Settings">${ic('gear')}</button><button class="ibtn" data-act="journal-open" aria-label="Journal">${ic('book')}</button></div>
-   ${ui.settings?`<div class="settings pe"><div class="kicker">Settings</div><button class="btn" data-act="set-glow">Glow: ${PREFS.glow?'On':'Off'}</button><button class="btn" data-act="set-tilt">Tilt-shift: ${PREFS.tilt?'On':'Off'}</button><label for="vol" class="kicker">Music volume</label><input type="range" id="vol" min="0" max="1" step=".05" value="${PREFS.vol}"></div>`:''}
+   ${ui.settings?`<div class="settings pe"><div class="kicker">Settings</div><button class="btn" data-act="set-glow">Glow: ${PREFS.glow?'On':'Off'}</button><button class="btn" data-act="set-tilt">Tilt-shift: ${PREFS.tilt?'On':'Off'}</button><label for="vol" class="kicker">Music volume</label> <input type="range" id="vol" min="0" max="1" step=".05" value="${PREFS.vol}">${accountSettings()}</div>`:''}
   </div>
  </div>
  ${ui.build?'':`<div class="tools pe"><button class="ibtn${inTown?'':' dim'}" data-act="build-open" aria-label="Build">${ic('hammer')}</button><button class="ibtn" data-act="photo" aria-label="Photo mode">${ic('camera')}</button><button class="ibtn" data-act="sleep-ask" aria-label="Sleep">${ic('moon')}</button></div>`}`;
@@ -2459,13 +2465,14 @@ function renderThreshold(){
 }
 function render(){
  let html='';
- if(ui.screen==='create'||!S)html=renderThreshold();
+ if(ui.screen==='login')html=renderLogin();
+ else if(ui.screen==='create'||!S)html=renderThreshold();
  else{
   if(HAS3D&&!ui.photo)html+=renderHud3();
   if(ui.build&&HAS3D)html+=renderBuildBar();
   if(ui.banner&&HAS3D&&!ui.journal&&!ui.build&&!ui.photo)html+=`<div class="banner"><div class="kicker">Now entering</div><div class="bname">${esc(ui.banner.name)}</div><div class="bsub">${esc(ui.banner.sub)}</div></div>`;
   if(ui.journal||!HAS3D)html+=renderJournal();
-  if(ui.dialog)html+=renderDialog();
+  if(ui.dialog&&ui.dialog.type==='account')html+=renderAccountDialog();else if(ui.dialog)html+=renderDialog();
   if(ui.photo)html+=`<div class="photohint">Photo mode · tap to return</div>`;
  }
  if(ui.flash)html+=`<div class="flash"></div>`;
@@ -2510,11 +2517,15 @@ document.addEventListener('click',e=>{
   case'pick':ui.pick=g;render();break;
   case'random':ui.pick=pick(Object.keys(RACES));render();break;
   case'begin':{
-   newChar((ui.cname||'').trim().slice(0,24)||'Wanderer',ui.pick);S.pos={x:SPAWN.x,z:SPAWN.z};window.__teleport=true;applyStarter();
-   if(W3){Object.values(W3.itemMeshes).forEach(m=>W3.buildGroup.remove(m));W3.itemMeshes={};W3.glows=W3.glows.filter(o=>!o.item);W3.LIGHTS=W3.LIGHTS.filter(o=>!o.item);S.build.forEach(addItemMesh);}
-   ui.screen='game';ui.tab='act';ui.confirm=false;ui.journal=false;
-   ui.dialog=HAS3D?{type:'ael',text:`Welcome, ${S.name} the ${R().sing}. Erandel lies north, through this gate. ${IS_PHONE?'Move with the stick and drag the screen to look around. Attack, Jump, Dodge and your spells are on the right.':'Move with W A S D and drag with the mouse to look around. Space jumps, F attacks, Shift dodges, 1 to 4 cast your spells, E talks.'} Steep rock can be climbed. The lantern plot east of the road is yours: build on it with the hammer, and open a night market for travelers.${spawnTip()?' '+spawnTip():''}`,page:-1}:null;
-   save();render();break;}
+   if(ACC.user){const nm=cleanName(ui.cname||'');const prob=nameProblem(nm);if(prob){toast(prob);break;}if(ACC.busy)break;ACC.busy=true;
+    accClaimName(nm).then(err=>{ACC.busy=false;if(err){toast(err);render();return;}beginLife(nm);accPush(true);});break;}
+   beginLife((ui.cname||'').trim().slice(0,24)||'Wanderer');break;}
+  case'acc-guest':accGuest();break;
+  case'acc-signin':accEmail('signin');break;
+  case'acc-signup':accEmail('signup');break;
+  case'acc-link-open':ui.dialog={type:'account'};ACC.msg='';ui.settings=false;render();break;
+  case'acc-link':accLink();break;
+  case'acc-signout':accSignOut();break;
   case'tab':ui.tab=g;ui.confirm=false;render();break;
   case'travel':doAction('travel',ui.travel);break;
   case'practice':doAction('practice',ui.prac);break;
@@ -2525,10 +2536,10 @@ document.addEventListener('click',e=>{
   case'sleep':
    if(ui.market)closeMarket('you went to sleep');
    ui.journal=false;ui.dialog=null;ui.build=null;ui.fadeText=`Dawn · Day ${S.day+1}`;render();
-   setTimeout(()=>{sleep();setTimeout(()=>{ui.fadeText='';render();},900);},550);break;
+   setTimeout(()=>{sleep();accPush(true);setTimeout(()=>{ui.fadeText='';render();},900);},550);break;
   case'reset':ui.confirm=true;render();break;
   case'reset-no':ui.confirm=false;render();break;
-  case'reset-yes':if(ui.market)ui.market=null;if(W3)despawnCustomers();S=null;try{localStorage.removeItem(SAVE_KEY);}catch(err){}ui.screen='create';ui.confirm=false;ui.journal=false;ui.dialog=null;ui.build=null;render();break;
+  case'reset-yes':if(ui.market)ui.market=null;if(W3)despawnCustomers();S=null;try{localStorage.removeItem(SAVE_KEY);}catch(err){}if(ACC.user&&ACC.sb){ACC.sb.from('saves').delete().eq('user_id',ACC.user.id).then(()=>{},()=>{});if(ACC.name)ui.cname=ACC.name;}ui.screen='create';ui.confirm=false;ui.journal=false;ui.dialog=null;ui.build=null;render();break;
   case'journal-open':ui.journal=true;ui.settings=false;render();break;
   case'journal-close':ui.journal=false;render();break;
   case'dlg-close':ui.dialog=null;render();break;
@@ -2558,7 +2569,7 @@ document.addEventListener('click',e=>{
  }
 });
 document.addEventListener('change',e=>{const el=e.target;if(el.dataset&&el.dataset.bind){ui[el.dataset.bind]=el.value;if(el.tagName==='SELECT')render();}});
-document.addEventListener('input',e=>{const el=e.target;if(el.id==='vol'){PREFS.vol=+el.value;savePrefs();if(MUS.master)MUS.master.gain.value=PREFS.vol*.5;return;}if(el.dataset&&el.dataset.bind&&el.tagName==='INPUT')ui[el.dataset.bind]=el.value;});
+document.addEventListener('input',e=>{const el=e.target;if(el.dataset&&el.dataset.acc){ACC[el.dataset.acc]=el.value;return;}if(el.id==='vol'){PREFS.vol=+el.value;savePrefs();if(MUS.master)MUS.master.gain.value=PREFS.vol*.5;return;}if(el.dataset&&el.dataset.bind&&el.tagName==='INPUT')ui[el.dataset.bind]=el.value;});
 document.addEventListener('keydown',e=>{
  const tg=e.target.tagName;if(tg==='INPUT'||tg==='SELECT'||tg==='TEXTAREA')return;
  const k=e.key.toLowerCase();
@@ -2596,14 +2607,169 @@ window.addEventListener('blur',()=>keys.clear());
 })();
 function openChat(on){NET.open=!!(on&&NET.room);keys.clear();stick.x=0;stick.y=0;render();renderNet();if(NET.open)setTimeout(()=>{const i=document.getElementById('chatin');if(i)i.focus();},30);}
 
+
+/* ============ ACCOUNTS (Supabase: guest or email login, unique names, cloud saves; see design/gdd/accounts.md) ============ */
+/** Project settings. Empty url/key = accounts off (downloaded copies, tests): the game saves to this device only. */
+const ACCOUNT_CFG={url:'',key:'',lib:'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/+esm',pushEvery:15000,connectTimeout:15000};
+const ACC={sb:null,user:null,name:'',status:'off',msg:'',busy:false,pushT:null,mode:'start',email:'',pass:''};
+function accCfg(){return window.__SUPA_CFG||ACCOUNT_CFG;}
+function accountsOn(){const c=accCfg();return!!(c.url&&c.key)&&ACC.status!=='off-failed';}
+function isGuest(){return!!(ACC.user&&(ACC.user.is_anonymous||!ACC.user.email));}
+/** Player names: 2–20 letters, numbers, spaces, ' or -. Unique across all accounts (case-insensitive, enforced by the database). */
+function cleanName(n){return cleanText(n,20).replace(/[^\p{L}\p{N} '\-]/gu,'').replace(/\s+/g,' ').trim();}
+function nameProblem(n){if(n.length<2)return'Your name needs at least 2 letters.';return null;}
+function authMessage(err){
+ const m=String(err&&(err.message||err.error_description||err.msg)||err||'');
+ if(/invalid login credentials/i.test(m))return'Wrong email or password.';
+ if(/already registered|already exists|already been registered/i.test(m))return'That email already has an account. Sign in instead.';
+ if(/password should be at least|weak password/i.test(m))return'Your password needs at least 8 characters.';
+ if(/valid email|invalid email|unable to validate email/i.test(m))return'That does not look like an email address.';
+ if(/rate limit|too many/i.test(m))return'Too many tries. Wait a minute and try again.';
+ if(/anonymous sign-ins are disabled/i.test(m))return'Guest play is switched off right now.';
+ if(/fetch|network|failed to/i.test(m))return'Could not reach the account server. Check your connection.';
+ return m?m.slice(0,140):'Something went wrong. Try again.';
+}
+async function initAccounts(){
+ const c=accCfg();ACC.status='connecting';render();
+ const timeout=new Promise(r=>setTimeout(()=>r('timeout'),c.connectTimeout||9000));
+ const go=(async()=>{
+  const mod=await import(c.lib);const sb=mod.createClient(c.url,c.key,{auth:{persistSession:true,autoRefreshToken:true,storageKey:'erandel-auth'}});
+  const {data}=await sb.auth.getSession();return{sb,session:data&&data.session};
+ })();
+ let res;try{res=await Promise.race([go,timeout]);}catch(e){res=null;}
+ if(!res||res==='timeout'){ACC.status='off-failed';ACC.sb=null;accOffline();return;}
+ ACC.sb=res.sb;
+ if(res.session&&res.session.user)await accSignedIn(res.session.user);
+ else{ACC.status='ready';ui.screen='login';render();}
+}
+/** Account server unreachable: play on this device, as before accounts existed. */
+function accOffline(){S=loadSaved();ui.screen=S?'game':'create';if(S){enterWorld(false);toast('Accounts are offline right now. Your progress is saved on this device.');}render();}
+async function accSignedIn(user){
+ ACC.user=user;ACC.status='in';ACC.msg='';
+ const sb=ACC.sb,uid=user.id;
+ let prof=null,row=null;
+ try{const p=await sb.from('profiles').select('name').eq('id',uid).maybeSingle();prof=p.data;}catch(e){}
+ try{const r=await sb.from('saves').select('data,codex,updated_at').eq('user_id',uid).maybeSingle();row=r.data;}catch(e){}
+ ACC.name=prof&&prof.name||'';
+ const local=loadSaved();let cloud=row&&row.data&&typeof row.data==='object'?row.data:null;
+ if(cloud&&!valid(cloud))cloud=null;
+ if(row&&row.codex&&typeof row.codex==='object')Object.keys(row.codex).forEach(k=>{if(!CODEX[k])CODEX[k]=row.codex[k];});
+ if(cloud)S=cloud;
+ else if(local&&(!local.owner||local.owner===uid)){S=local;}
+ else S=null;
+ if(S){S.owner=uid;if(ACC.name)S.name=ACC.name;ui.screen='game';enterWorld(false);save();accPush(true);}
+ else{ui.screen='create';if(ACC.name)ui.cname=ACC.name;}
+ render();
+}
+/** Puts the current character into the 3D world: rebuild plot meshes, place the player. */
+function enterWorld(fresh){
+ if(!S)return;if(!S.flags.starter&&!S.build.length)applyStarter();
+ if(W3){Object.values(W3.itemMeshes).forEach(m=>W3.buildGroup.remove(m));W3.itemMeshes={};W3.glows=W3.glows.filter(o=>!o.item);W3.LIGHTS=W3.LIGHTS.filter(o=>!o.item);S.build.forEach(addItemMesh);W3.ready=false;}
+ if(fresh||!S.pos)S.pos={x:SPAWN.x,z:SPAWN.z};window.__teleport=true;
+}
+async function accGuest(){
+ if(ACC.busy||!ACC.sb)return;ACC.busy=true;ACC.msg='';render();
+ try{const {data,error}=await ACC.sb.auth.signInAnonymously();if(error)throw error;ACC.busy=false;await accSignedIn(data.user||(data.session&&data.session.user));}
+ catch(e){ACC.busy=false;ACC.msg=authMessage(e);render();}
+}
+async function accEmail(kind){
+ if(ACC.busy||!ACC.sb)return;const email=String(ACC.email||'').trim(),password=String(ACC.pass||'');
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ACC.msg='That does not look like an email address.';render();return;}
+ if(password.length<8){ACC.msg='Your password needs at least 8 characters.';render();return;}
+ ACC.busy=true;ACC.msg='';render();
+ try{
+  const r=kind==='signup'?await ACC.sb.auth.signUp({email,password}):await ACC.sb.auth.signInWithPassword({email,password});
+  if(r.error)throw r.error;const user=r.data.user||(r.data.session&&r.data.session.user);
+  if(!r.data.session){ACC.busy=false;ACC.msg='Check your email and tap the link to confirm, then sign in.';render();return;}
+  ACC.busy=false;ACC.pass='';await accSignedIn(user);
+ }catch(e){ACC.busy=false;ACC.msg=authMessage(e);render();}
+}
+/** A guest adds an email and password; the same account (and character) continues. */
+async function accLink(){
+ if(ACC.busy||!ACC.sb||!ACC.user)return;const email=String(ACC.email||'').trim(),password=String(ACC.pass||'');
+ if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ACC.msg='That does not look like an email address.';render();return;}
+ if(password.length<8){ACC.msg='Your password needs at least 8 characters.';render();return;}
+ ACC.busy=true;ACC.msg='';render();
+ try{
+  const r=await ACC.sb.auth.updateUser({email,password});if(r.error)throw r.error;
+  ACC.user=r.data.user||ACC.user;ACC.busy=false;ACC.pass='';
+  if(ACC.user.email&&!ACC.user.is_anonymous){ui.dialog=null;toast(`Linked to ${ACC.user.email}. Sign in with it on any device to keep playing.`);}
+  else{ACC.msg='Check your email and tap the link to confirm it.';}
+  accPush(true);render();
+ }catch(e){ACC.busy=false;ACC.msg=authMessage(e);render();}
+}
+async function accSignOut(){
+ if(!ACC.sb)return;await accPush(true);
+ if(ui.market)closeMarket('you left');if(W3)despawnCustomers();
+ try{await ACC.sb.auth.signOut();}catch(e){}
+ try{localStorage.removeItem(SAVE_KEY);}catch(e){}
+ ACC.user=null;ACC.name='';ACC.status='ready';S=null;ui.screen='login';ui.dialog=null;ui.settings=false;ui.journal=false;ui.build=null;render();
+}
+/** Claims a unique name for this account. Resolves null when it is yours, or a message for the player. */
+async function accClaimName(name){
+ if(!ACC.user||!ACC.sb)return null;
+ if(ACC.name&&ACC.name.toLowerCase()===name.toLowerCase())return null;
+ try{const {error}=await ACC.sb.from('profiles').upsert({id:ACC.user.id,name});
+  if(error){if(error.code==='23505'||/duplicate|unique/i.test(error.message||''))return`“${name}” is already taken in Erandel. Choose another name.`;return authMessage(error);}
+  ACC.name=name;return null;
+ }catch(e){return authMessage(e);}
+}
+/** Sends the save to the cloud: at most every 15 s, or now when forced (sleep, leaving the page, signing out). */
+function accPush(now){
+ if(!ACC.user||!ACC.sb||!S)return Promise.resolve();
+ if(!now){if(!ACC.pushT)ACC.pushT=setTimeout(()=>{ACC.pushT=null;accPush(true);},accCfg().pushEvery||ACCOUNT_CFG.pushEvery);return Promise.resolve();}
+ clearTimeout(ACC.pushT);ACC.pushT=null;S.owner=ACC.user.id;
+ return ACC.sb.from('saves').upsert({user_id:ACC.user.id,data:S,codex:CODEX,updated_at:new Date().toISOString()}).then(r=>{if(r&&r.error)ACC.lastError=r.error.message;},()=>{});
+}
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')accPush(true);});
+function renderLogin(){
+ const busy=ACC.busy?' disabled':'';const st=ACC.status;
+ const body=st==='connecting'?`<div class="speech"><p>Opening the Thorngate…</p></div>`:`
+  <div class="speech"><div class="dname">Aelarion Silverbough, keeper of the gate</div><p>Every soul that crosses the Thorngate carries a name no other soul may bear. Enter as a guest, or bind your soul to an email so you can return from any land.</p></div>
+  <div class="acc-grid">
+   <div class="acc-card"><h3>Play as Guest</h3><p class="mut">Start right away. Your hero is saved to this browser. You can link an email later from Settings and keep everything.</p><button class="btn primary" data-act="acc-guest"${busy}>Enter as guest</button></div>
+   <div class="acc-card"><h3>Email account</h3><p class="mut">Play on any phone or computer with the same hero.</p>
+    <label class="kicker" for="acc-email">Email</label><input type="email" id="acc-email" data-acc="email" autocomplete="email" inputmode="email" value="${esc(ACC.email)}">
+    <label class="kicker" for="acc-pass">Password (8 or more characters)</label><input type="password" id="acc-pass" data-acc="pass" autocomplete="current-password" value="">
+    <div class="row"><button class="btn primary" data-act="acc-signin"${busy}>Sign in</button><button class="btn" data-act="acc-signup"${busy}>Create account</button></div></div>
+  </div>
+  ${ACC.msg?`<p class="acc-msg" role="alert">${esc(ACC.msg)}</p>`:''}${ACC.busy?'<p class="mut">One moment…</p>':''}`;
+ return `<div class="threshold pe"><div class="tin">
+  <div class="thero" style="background-image:url(${AEL_IMG})"><div class="thero-txt"><div class="kicker">The Thorngate</div><h1>Erandel</h1></div></div>${body}</div></div>`;
+}
+function renderAccountDialog(){
+ const busy=ACC.busy?' disabled':'';
+ return `<div class="dialog pe" role="dialog" aria-label="Link an email"><div class="dbody"><div class="dname">Keep your hero</div>
+  <div class="dtext">You are playing as a guest. Link an email and password to play the same hero on any device. Nothing you have is lost.</div>
+  <label class="kicker" for="acc-email">Email</label><input type="email" id="acc-email" data-acc="email" autocomplete="email" inputmode="email" value="${esc(ACC.email)}">
+  <label class="kicker" for="acc-pass">New password (8 or more characters)</label><input type="password" id="acc-pass" data-acc="pass" autocomplete="new-password" value="">
+  ${ACC.msg?`<p class="acc-msg" role="alert">${esc(ACC.msg)}</p>`:''}
+  <div class="row"><button class="btn primary" data-act="acc-link"${busy}>Link email</button><button class="btn" data-act="dlg-close">Not now</button></div></div></div>`;
+}
+function accountSettings(){
+ if(!ACC.user)return'';
+ return isGuest()?`<div class="kicker">Account</div><span class="mut">Guest. Your hero lives only in this browser.</span><button class="btn primary" data-act="acc-link-open">Link email to keep hero</button>`
+  :`<div class="kicker">Account</div><span class="mut" style="overflow-wrap:anywhere">${esc(ACC.user.email)}</span><button class="btn" data-act="acc-signout">Sign out</button>`;
+}
+
+/** Starts a new life for the chosen kind with name nm (already checked and claimed). */
+function beginLife(nm){
+   newChar(nm,ui.pick);if(ACC.user)S.owner=ACC.user.id;S.pos={x:SPAWN.x,z:SPAWN.z};window.__teleport=true;applyStarter();
+   if(W3){Object.values(W3.itemMeshes).forEach(m=>W3.buildGroup.remove(m));W3.itemMeshes={};W3.glows=W3.glows.filter(o=>!o.item);W3.LIGHTS=W3.LIGHTS.filter(o=>!o.item);S.build.forEach(addItemMesh);}
+   ui.screen='game';ui.tab='act';ui.confirm=false;ui.journal=false;
+   ui.dialog=HAS3D?{type:'ael',text:`Welcome, ${S.name} the ${R().sing}. Erandel lies north, through this gate. ${IS_PHONE?'Move with the stick and drag the screen to look around. Attack, Jump, Dodge and your spells are on the right.':'Move with W A S D and drag with the mouse to look around. Space jumps, F attacks, Shift dodges, 1 to 4 cast your spells, E talks.'} Steep rock can be climbed. The lantern plot east of the road is yours: build on it with the hammer, and open a night market for travelers.${spawnTip()?' '+spawnTip():''}`,page:-1}:null;
+   save();render();}
 function start(data){
  data=data||{};
+ const acc=accountsOn()&&!data.S;
  const fromLocal=loadSaved();
- if(data.S&&valid(data.S)){S=data.S;if(data.codex)CODEX=data.codex;}else S=fromLocal;
+ if(data.S&&valid(data.S)){S=data.S;if(data.codex)CODEX=data.codex;}else S=acc?null:fromLocal;
+ if(acc)ui.screen='login';
  if(S){ui.screen='game';if(data.ui)ui.tab=data.ui.tab||'act';if(!S.flags.starter&&!S.build.length)applyStarter();}
  if(HAS3D){try{initWorld();}catch(err){HAS3D=false;console.error(err);}}
  render();
  if(HAS3D)initNet();
+ if(acc)initAccounts();
 }
 if(window.claude&&window.claude.hot&&window.claude.hot.snapshot){try{window.claude.hot.snapshot(()=>({S,codex:CODEX,ui:{tab:ui.tab}}));}catch(e){}}
 if(window.claude&&window.claude.hot&&window.claude.hot.ready)window.claude.hot.ready(start);

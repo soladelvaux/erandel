@@ -68,7 +68,7 @@ Example: a well-fed Vampire training at Night: Strength gain = 2 × 1.3 × 1.1 =
 ## Dependencies
 
 - **Reads**: [Kinds and Bodies](kinds-and-bodies.md) (starting stats), [Survival and Diet](survival-and-diet.md) (conditions).
-- **Used by**: [Action Combat and Movement](action-combat.md) (Str, Agi, Mind, End), [Evolution](evolution.md), [Combat](combat.md), [Magic](magic.md), [People, Reputation and Fate](people-and-reputation.md), [Night Market and Economy](night-market-and-economy.md), [World and Regions](world-and-regions.md), [Interface and Controls](interface-and-controls.md).
+- **Used by**: [Accounts and Cloud Saves](accounts.md) (cloud saves after actions and sleep), [Action Combat and Movement](action-combat.md) (Str, Agi, Mind, End), [Evolution](evolution.md), [Combat](combat.md), [Magic](magic.md), [People, Reputation and Fate](people-and-reputation.md), [Night Market and Economy](night-market-and-economy.md), [World and Regions](world-and-regions.md), [Interface and Controls](interface-and-controls.md).
 - **Also connected**: [Companions](companions.md) (Charm raises compatibility).
 
 ## Tuning Knobs

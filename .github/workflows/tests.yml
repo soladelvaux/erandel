@@ -24,6 +24,8 @@ jobs:
         run: CHROME="$(which google-chrome || which google-chrome-stable)" npm run test:browser
       - name: Peer-to-peer multiplayer smoke test (two headless players)
         run: CHROME="$(which google-chrome || which google-chrome-stable)" npm run test:p2p
+      - name: Accounts smoke test (guest, email, unique names, cloud saves)
+        run: CHROME="$(which google-chrome || which google-chrome-stable)" npm run test:accounts
       - uses: actions/upload-artifact@v4
         if: always()
         with:
