@@ -1,14 +1,14 @@
 {
   "adventurer": {
-    "bytes": 139100,
-    "tris": 5386,
+    "bytes": 139544,
+    "tris": 5426,
     "parts": {
       "skin": 1252,
       "skin_ear_human": 160,
       "skin_ear_elf": 64,
       "hair": 1434,
       "cloth": 888,
-      "trim": 192,
+      "trim": 232,
       "leather": 944,
       "metal": 116,
       "face": 240,

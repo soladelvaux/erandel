@@ -52,7 +52,7 @@
       }
     },
     "env_erelian_ruins": {
-      "bytes": 140480,
+      "bytes": 144204,
       "triangles": {
         "env_erelian_spire_a": [
           726,
@@ -87,7 +87,7 @@
           1920
         ],
         "env_erelian_bridge": [
-          1892,
+          2420,
           1252
         ]
       }
