@@ -9,6 +9,7 @@
 const fs = require('fs');
 const path = require('path');
 const puppeteer = require('puppeteer-core');
+const { serveThree } = require('../helpers/serve-three');
 
 const ROOT = path.join(__dirname, '..', '..');
 const GAME = fs.readFileSync(path.join(ROOT, 'src', 'index.html'), 'utf8');
@@ -22,9 +23,7 @@ function serve(req) {
   if (u.startsWith('https://erandel.test/')) {
     return req.respond({ status: 200, contentType: 'text/html', body: '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>[hidden]{display:none!important}</style></head><body>' + GAME + '</body></html>' });
   }
-  if (u.includes('three.min.js')) return req.respond({ status: 200, contentType: 'application/javascript', body: fs.readFileSync(path.join(MODS, 'three/build/three.min.js'), 'utf8') });
-  const m = u.match(/three@0\.128\.0\/(examples\/js\/.+\.js)$/);
-  if (m) return req.respond({ status: 200, contentType: 'application/javascript', body: fs.readFileSync(path.join(MODS, 'three', m[1]), 'utf8') });
+  if (serveThree(req)) return;
   return req.abort();
 }
 

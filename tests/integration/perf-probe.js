@@ -9,21 +9,19 @@
 const fs = require('fs');
 const path = require('path');
 const puppeteer = require('puppeteer-core');
+const { serveThree } = require('../helpers/serve-three');
 
 const ROOT = path.join(__dirname, '..', '..');
-const GAME = fs.readFileSync(path.join(ROOT, 'src', 'index.html'), 'utf8');
+const GAME = fs.readFileSync(process.env.PROBE_SRC || path.join(ROOT, 'src', 'index.html'), 'utf8');
 const MODS = path.join(__dirname, '..', 'node_modules');
 const CHROME = process.env.CHROME || '/usr/bin/google-chrome';
 const LABEL = process.argv[2] || 'current';
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
-const THREE_FILE = fs.readdirSync(path.join(MODS, 'three', 'build')).includes('three.min.js') ? 'three/build/three.min.js' : 'three/build/three.js';
 
 function serve(req) {
   const u = req.url();
   if (u.startsWith('https://erandel.test/')) return req.respond({ status: 200, contentType: 'text/html', body: '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>[hidden]{display:none!important}</style></head><body>' + GAME + '</body></html>' });
-  if (u.includes('three.min.js')) return req.respond({ status: 200, contentType: 'application/javascript', body: fs.readFileSync(path.join(MODS, THREE_FILE), 'utf8') });
-  const m = u.match(/three@[\d.]+\/(examples\/js\/.+\.js)$/);
-  if (m) return req.respond({ status: 200, contentType: 'application/javascript', body: fs.readFileSync(path.join(MODS, 'three', m[1]), 'utf8') });
+  if (serveThree(req)) return;
   return req.abort();
 }
 

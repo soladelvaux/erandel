@@ -7,11 +7,14 @@
     "test:unit": "node --test \"unit/**/*.test.js\"",
     "test:playthrough": "node --test integration/playthrough.test.js",
     "test:browser": "node integration/browser-smoke.js",
-    "test:p2p": "node integration/p2p-smoke.js"
+    "test:p2p": "node integration/p2p-smoke.js",
+    "test:save": "node integration/save-compat.js",
+    "perf": "node integration/perf-probe.js"
   },
   "devDependencies": {
     "jsdom": "24.1.3",
     "puppeteer-core": "22.15.0",
-    "three": "0.128.0"
+    "three": "^0.147.0",
+    "three-r128": "npm:three@^0.128.0"
   }
 }

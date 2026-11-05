@@ -1,0 +1,1297 @@
+{
+  "label": "r147-c1",
+  "date": "2026-11-05T08:04:39.673Z",
+  "three": "147",
+  "file": {
+    "bytes": 400657,
+    "lines": 2633
+  },
+  "viewports": {
+    "phone": {
+      "worldReadyMsSoftware": 3118,
+      "scenes": {
+        "Thorngate spawn (day)": {
+          "plain": {
+            "calls": 343,
+            "tris": 168961
+          },
+          "withBloom": {
+            "calls": 357,
+            "tris": 168975
+          },
+          "programs": 23,
+          "geometries": 64,
+          "textures": 15,
+          "sceneMeshes": 798,
+          "sceneSprites": 170,
+          "instancedMeshes": 10,
+          "lights": 4,
+          "pixelRatio": 1,
+          "categories": {
+            "terrain + water": {
+              "calls": 2,
+              "tris": 37962
+            },
+            "instanced props": {
+              "calls": 10,
+              "tris": 112373
+            },
+            "glow sprites": {
+              "calls": 71,
+              "tris": 142
+            },
+            "landmarks + other meshes": {
+              "calls": 22,
+              "tris": 804
+            },
+            "plot build items": {
+              "calls": 71,
+              "tris": 2908
+            },
+            "people (NPC chibis)": {
+              "calls": 69,
+              "tris": 6600
+            },
+            "effects/glows (other)": {
+              "calls": 3,
+              "tris": 6
+            },
+            "creatures": {
+              "calls": 74,
+              "tris": 6432
+            },
+            "sky": {
+              "calls": 1,
+              "tris": 0
+            },
+            "player chibi": {
+              "calls": 18,
+              "tris": 1730
+            }
+          },
+          "heaviest": [
+            {
+              "what": "terrain + water",
+              "geom": "BufferGeometry",
+              "tris": 37960
+            },
+            {
+              "what": "instanced props ×949",
+              "geom": "SphereGeometry",
+              "tris": 34164
+            },
+            {
+              "what": "instanced props ×890",
+              "geom": "CylinderGeometry",
+              "tris": 21360
+            },
+            {
+              "what": "instanced props ×945",
+              "geom": "ConeGeometry",
+              "tris": 19845
+            },
+            {
+              "what": "instanced props ×370",
+              "geom": "DodecahedronGeometry",
+              "tris": 13320
+            },
+            {
+              "what": "instanced props ×517",
+              "geom": "IcosahedronGeometry",
+              "tris": 10340
+            }
+          ]
+        },
+        "Thorngate gate road (night)": {
+          "plain": {
+            "calls": 259,
+            "tris": 164753
+          },
+          "withBloom": {
+            "calls": 273,
+            "tris": 164767
+          },
+          "programs": 23,
+          "geometries": 65,
+          "textures": 15,
+          "sceneMeshes": 798,
+          "sceneSprites": 170,
+          "instancedMeshes": 10,
+          "lights": 4,
+          "pixelRatio": 1,
+          "categories": {
+            "terrain + water": {
+              "calls": 2,
+              "tris": 37962
+            },
+            "instanced props": {
+              "calls": 10,
+              "tris": 112373
+            },
+            "glow sprites": {
+              "calls": 57,
+              "tris": 114
+            },
+            "landmarks + other meshes": {
+              "calls": 23,
+              "tris": 806
+            },
+            "plot build items": {
+              "calls": 29,
+              "tris": 1232
+            },
+            "people (NPC chibis)": {
+              "calls": 42,
+              "tris": 4098
+            },
+            "creatures": {
+              "calls": 74,
+              "tris": 6432
+            },
+            "effects/glows (other)": {
+              "calls": 1,
+              "tris": 2
+            },
+            "sky": {
+              "calls": 1,
+              "tris": 0
+            },
+            "player chibi": {
+              "calls": 18,
+              "tris": 1730
+            }
+          },
+          "heaviest": [
+            {
+              "what": "terrain + water",
+              "geom": "BufferGeometry",
+              "tris": 37960
+            },
+            {
+              "what": "instanced props ×949",
+              "geom": "SphereGeometry",
+              "tris": 34164
+            },
+            {
+              "what": "instanced props ×890",
+              "geom": "CylinderGeometry",
+              "tris": 21360
+            },
+            {
+              "what": "instanced props ×945",
+              "geom": "ConeGeometry",
+              "tris": 19845
+            },
+            {
+              "what": "instanced props ×370",
+              "geom": "DodecahedronGeometry",
+              "tris": 13320
+            },
+            {
+              "what": "instanced props ×517",
+              "geom": "IcosahedronGeometry",
+              "tris": 10340
+            }
+          ]
+        },
+        "Your plot (night, market open)": {
+          "plain": {
+            "calls": 251,
+            "tris": 163415
+          },
+          "withBloom": {
+            "calls": 265,
+            "tris": 163429
+          },
+          "programs": 24,
+          "geometries": 80,
+          "textures": 15,
+          "sceneMeshes": 863,
+          "sceneSprites": 174,
+          "instancedMeshes": 10,
+          "lights": 4,
+          "pixelRatio": 1,
+          "categories": {
+            "terrain + water": {
+              "calls": 2,
+              "tris": 37962
+            },
+            "instanced props": {
+              "calls": 10,
+              "tris": 112373
+            },
+            "landmarks + other meshes": {
+              "calls": 14,
+              "tris": 380
+            },
+            "glow sprites": {
+              "calls": 37,
+              "tris": 74
+            },
+            "plot build items": {
+              "calls": 62,
+              "tris": 1814
+            },
+            "people (NPC chibis)": {
+              "calls": 33,
+              "tris": 3140
+            },
+            "creatures": {
+              "calls": 70,
+              "tris": 5934
+            },
+            "effects/glows (other)": {
+              "calls": 2,
+              "tris": 4
+            },
+            "sky": {
+              "calls": 1,
+              "tris": 0
+            },
+            "player chibi": {
+              "calls": 18,
+              "tris": 1730
+            }
+          },
+          "heaviest": [
+            {
+              "what": "terrain + water",
+              "geom": "BufferGeometry",
+              "tris": 37960
+            },
+            {
+              "what": "instanced props ×949",
+              "geom": "SphereGeometry",
+              "tris": 34164
+            },
+            {
+              "what": "instanced props ×890",
+              "geom": "CylinderGeometry",
+              "tris": 21360
+            },
+            {
+              "what": "instanced props ×945",
+              "geom": "ConeGeometry",
+              "tris": 19845
+            },
+            {
+              "what": "instanced props ×370",
+              "geom": "DodecahedronGeometry",
+              "tris": 13320
+            },
+            {
+              "what": "instanced props ×517",
+              "geom": "IcosahedronGeometry",
+              "tris": 10340
+            }
+          ]
+        },
+        "Erelian (day)": {
+          "plain": {
+            "calls": 76,
+            "tris": 154909
+          },
+          "withBloom": {
+            "calls": 90,
+            "tris": 154923
+          },
+          "programs": 25,
+          "geometries": 85,
+          "textures": 15,
+          "sceneMeshes": 798,
+          "sceneSprites": 170,
+          "instancedMeshes": 10,
+          "lights": 4,
+          "pixelRatio": 1,
+          "categories": {
+            "terrain + water": {
+              "calls": 2,
+              "tris": 37962
+            },
+            "instanced props": {
+              "calls": 10,
+              "tris": 112373
+            },
+            "landmarks + other meshes": {
+              "calls": 10,
+              "tris": 664
+            },
+            "glow sprites": {
+              "calls": 2,
+              "tris": 4
+            },
+            "butterflies": {
+              "calls": 9,
+              "tris": 18
+            },
+            "people (NPC chibis)": {
+              "calls": 15,
+              "tris": 1442
+            },
+            "creatures": {
+              "calls": 9,
+              "tris": 716
+            },
+            "sky": {
+              "calls": 1,
+              "tris": 0
+            },
+            "player chibi": {
+              "calls": 18,
+              "tris": 1730
+            }
+          },
+          "heaviest": [
+            {
+              "what": "terrain + water",
+              "geom": "BufferGeometry",
+              "tris": 37960
+            },
+            {
+              "what": "instanced props ×949",
+              "geom": "SphereGeometry",
+              "tris": 34164
+            },
+            {
+              "what": "instanced props ×890",
+              "geom": "CylinderGeometry",
+              "tris": 21360
+            },
+            {
+              "what": "instanced props ×945",
+              "geom": "ConeGeometry",
+              "tris": 19845
+            },
+            {
+              "what": "instanced props ×370",
+              "geom": "DodecahedronGeometry",
+              "tris": 13320
+            },
+            {
+              "what": "instanced props ×517",
+              "geom": "IcosahedronGeometry",
+              "tris": 10340
+            }
+          ]
+        },
+        "Cindral Wastes (day)": {
+          "plain": {
+            "calls": 64,
+            "tris": 154303
+          },
+          "withBloom": {
+            "calls": 78,
+            "tris": 154317
+          },
+          "programs": 25,
+          "geometries": 89,
+          "textures": 15,
+          "sceneMeshes": 798,
+          "sceneSprites": 170,
+          "instancedMeshes": 10,
+          "lights": 4,
+          "pixelRatio": 1,
+          "categories": {
+            "terrain + water": {
+              "calls": 2,
+              "tris": 37962
+            },
+            "instanced props": {
+              "calls": 10,
+              "tris": 112373
+            },
+            "landmarks + other meshes": {
+              "calls": 2,
+              "tris": 98
+            },
+            "glow sprites": {
+              "calls": 3,
+              "tris": 6
+            },
+            "people (NPC chibis)": {
+              "calls": 12,
+              "tris": 1072
+            },
+            "creatures": {
+              "calls": 15,
+              "tris": 1060
+            },
+            "effects/glows (other)": {
+              "calls": 1,
+              "tris": 2
+            },
+            "sky": {
+              "calls": 1,
+              "tris": 0
+            },
+            "player chibi": {
+              "calls": 18,
+              "tris": 1730
+            }
+          },
+          "heaviest": [
+            {
+              "what": "terrain + water",
+              "geom": "BufferGeometry",
+              "tris": 37960
+            },
+            {
+              "what": "instanced props ×949",
+              "geom": "SphereGeometry",
+              "tris": 34164
+            },
+            {
+              "what": "instanced props ×890",
+              "geom": "CylinderGeometry",
+              "tris": 21360
+            },
+            {
+              "what": "instanced props ×945",
+              "geom": "ConeGeometry",
+              "tris": 19845
+            },
+            {
+              "what": "instanced props ×370",
+              "geom": "DodecahedronGeometry",
+              "tris": 13320
+            },
+            {
+              "what": "instanced props ×517",
+              "geom": "IcosahedronGeometry",
+              "tris": 10340
+            }
+          ]
+        },
+        "Runekar's Deep": {
+          "plain": {
+            "calls": 54,
+            "tris": 153835
+          },
+          "withBloom": {
+            "calls": 68,
+            "tris": 153849
+          },
+          "programs": 25,
+          "geometries": 93,
+          "textures": 15,
+          "sceneMeshes": 798,
+          "sceneSprites": 170,
+          "instancedMeshes": 10,
+          "lights": 4,
+          "pixelRatio": 1,
+          "categories": {
+            "terrain + water": {
+              "calls": 2,
+              "tris": 37962
+            },
+            "instanced props": {
+              "calls": 10,
+              "tris": 112373
+            },
+            "landmarks + other meshes": {
+              "calls": 4,
+              "tris": 38
+            },
+            "glow sprites": {
+              "calls": 1,
+              "tris": 2
+            },
+            "people (NPC chibis)": {
+              "calls": 18,
+              "tris": 1730
+            },
+            "sky": {
+              "calls": 1,
+              "tris": 0
+            },
+            "player chibi": {
+              "calls": 18,
+              "tris": 1730
+            }
+          },
+          "heaviest": [
+            {
+              "what": "terrain + water",
+              "geom": "BufferGeometry",
+              "tris": 37960
+            },
+            {
+              "what": "instanced props ×949",
+              "geom": "SphereGeometry",
+              "tris": 34164
+            },
+            {
+              "what": "instanced props ×890",
+              "geom": "CylinderGeometry",
+              "tris": 21360
+            },
+            {
+              "what": "instanced props ×945",
+              "geom": "ConeGeometry",
+              "tris": 19845
+            },
+            {
+              "what": "instanced props ×370",
+              "geom": "DodecahedronGeometry",
+              "tris": 13320
+            },
+            {
+              "what": "instanced props ×517",
+              "geom": "IcosahedronGeometry",
+              "tris": 10340
+            }
+          ]
+        },
+        "The Veilmoor (night)": {
+          "plain": {
+            "calls": 397,
+            "tris": 169819
+          },
+          "withBloom": {
+            "calls": 411,
+            "tris": 169833
+          },
+          "programs": 25,
+          "geometries": 93,
+          "textures": 15,
+          "sceneMeshes": 798,
+          "sceneSprites": 170,
+          "instancedMeshes": 10,
+          "lights": 4,
+          "pixelRatio": 1,
+          "categories": {
+            "terrain + water": {
+              "calls": 2,
+              "tris": 37962
+            },
+            "instanced props": {
+              "calls": 10,
+              "tris": 112373
+            },
+            "glow sprites": {
+              "calls": 94,
+              "tris": 188
+            },
+            "landmarks + other meshes": {
+              "calls": 30,
+              "tris": 860
+            },
+            "plot build items": {
+              "calls": 88,
+              "tris": 3252
+            },
+            "people (NPC chibis)": {
+              "calls": 69,
+              "tris": 6600
+            },
+            "effects/glows (other)": {
+              "calls": 3,
+              "tris": 6
+            },
+            "creatures": {
+              "calls": 80,
+              "tris": 6844
+            },
+            "sky": {
+              "calls": 1,
+              "tris": 0
+            },
+            "player chibi": {
+              "calls": 18,
+              "tris": 1730
+            }
+          },
+          "heaviest": [
+            {
+              "what": "terrain + water",
+              "geom": "BufferGeometry",
+              "tris": 37960
+            },
+            {
+              "what": "instanced props ×949",
+              "geom": "SphereGeometry",
+              "tris": 34164
+            },
+            {
+              "what": "instanced props ×890",
+              "geom": "CylinderGeometry",
+              "tris": 21360
+            },
+            {
+              "what": "instanced props ×945",
+              "geom": "ConeGeometry",
+              "tris": 19845
+            },
+            {
+              "what": "instanced props ×370",
+              "geom": "DodecahedronGeometry",
+              "tris": 13320
+            },
+            {
+              "what": "instanced props ×517",
+              "geom": "IcosahedronGeometry",
+              "tris": 10340
+            }
+          ]
+        }
+      },
+      "heapMB": 11,
+      "errors": []
+    },
+    "desktop": {
+      "worldReadyMsSoftware": 3358,
+      "scenes": {
+        "Thorngate spawn (day)": {
+          "plain": {
+            "calls": 739,
+            "tris": 215481
+          },
+          "withBloom": {
+            "calls": 753,
+            "tris": 215495
+          },
+          "programs": 25,
+          "geometries": 102,
+          "textures": 15,
+          "sceneMeshes": 798,
+          "sceneSprites": 170,
+          "instancedMeshes": 10,
+          "lights": 8,
+          "pixelRatio": 1,
+          "categories": {
+            "terrain + water": {
+              "calls": 2,
+              "tris": 65282
+            },
+            "instanced props": {
+              "calls": 10,
+              "tris": 112373
+            },
+            "glow sprites": {
+              "calls": 122,
+              "tris": 244
+            },
+            "landmarks + other meshes": {
+              "calls": 55,
+              "tris": 2154
+            },
+            "butterflies": {
+              "calls": 24,
+              "tris": 48
+            },
+            "plot build items": {
+              "calls": 185,
+              "tris": 5604
+            },
+            "people (NPC chibis)": {
+              "calls": 137,
+              "tris": 12980
+            },
+            "effects/glows (other)": {
+              "calls": 7,
+              "tris": 14
+            },
+            "creatures": {
+              "calls": 176,
+              "tris": 15048
+            },
+            "sky": {
+              "calls": 1,
+              "tris": 0
+            },
+            "player chibi": {
+              "calls": 18,
+              "tris": 1730
+            }
+          },
+          "heaviest": [
+            {
+              "what": "terrain + water",
+              "geom": "BufferGeometry",
+              "tris": 65280
+            },
+            {
+              "what": "instanced props ×949",
+              "geom": "SphereGeometry",
+              "tris": 34164
+            },
+            {
+              "what": "instanced props ×890",
+              "geom": "CylinderGeometry",
+              "tris": 21360
+            },
+            {
+              "what": "instanced props ×945",
+              "geom": "ConeGeometry",
+              "tris": 19845
+            },
+            {
+              "what": "instanced props ×370",
+              "geom": "DodecahedronGeometry",
+              "tris": 13320
+            },
+            {
+              "what": "instanced props ×517",
+              "geom": "IcosahedronGeometry",
+              "tris": 10340
+            }
+          ]
+        },
+        "Thorngate gate road (night)": {
+          "plain": {
+            "calls": 519,
+            "tris": 203339
+          },
+          "withBloom": {
+            "calls": 533,
+            "tris": 203353
+          },
+          "programs": 25,
+          "geometries": 102,
+          "textures": 15,
+          "sceneMeshes": 798,
+          "sceneSprites": 170,
+          "instancedMeshes": 10,
+          "lights": 8,
+          "pixelRatio": 1,
+          "categories": {
+            "terrain + water": {
+              "calls": 2,
+              "tris": 65282
+            },
+            "instanced props": {
+              "calls": 10,
+              "tris": 112373
+            },
+            "glow sprites": {
+              "calls": 101,
+              "tris": 202
+            },
+            "landmarks + other meshes": {
+              "calls": 46,
+              "tris": 1646
+            },
+            "butterflies": {
+              "calls": 14,
+              "tris": 28
+            },
+            "plot build items": {
+              "calls": 101,
+              "tris": 3428
+            },
+            "people (NPC chibis)": {
+              "calls": 99,
+              "tris": 9244
+            },
+            "creatures": {
+              "calls": 120,
+              "tris": 9392
+            },
+            "effects/glows (other)": {
+              "calls": 5,
+              "tris": 10
+            },
+            "sky": {
+              "calls": 1,
+              "tris": 0
+            },
+            "player chibi": {
+              "calls": 18,
+              "tris": 1730
+            }
+          },
+          "heaviest": [
+            {
+              "what": "terrain + water",
+              "geom": "BufferGeometry",
+              "tris": 65280
+            },
+            {
+              "what": "instanced props ×949",
+              "geom": "SphereGeometry",
+              "tris": 34164
+            },
+            {
+              "what": "instanced props ×890",
+              "geom": "CylinderGeometry",
+              "tris": 21360
+            },
+            {
+              "what": "instanced props ×945",
+              "geom": "ConeGeometry",
+              "tris": 19845
+            },
+            {
+              "what": "instanced props ×370",
+              "geom": "DodecahedronGeometry",
+              "tris": 13320
+            },
+            {
+              "what": "instanced props ×517",
+              "geom": "IcosahedronGeometry",
+              "tris": 10340
+            }
+          ]
+        },
+        "Your plot (night, market open)": {
+          "plain": {
+            "calls": 592,
+            "tris": 208525
+          },
+          "withBloom": {
+            "calls": 606,
+            "tris": 208539
+          },
+          "programs": 25,
+          "geometries": 103,
+          "textures": 16,
+          "sceneMeshes": 863,
+          "sceneSprites": 174,
+          "instancedMeshes": 10,
+          "lights": 8,
+          "pixelRatio": 1,
+          "categories": {
+            "terrain + water": {
+              "calls": 2,
+              "tris": 65282
+            },
+            "instanced props": {
+              "calls": 10,
+              "tris": 112373
+            },
+            "glow sprites": {
+              "calls": 90,
+              "tris": 180
+            },
+            "landmarks + other meshes": {
+              "calls": 36,
+              "tris": 1486
+            },
+            "butterflies": {
+              "calls": 4,
+              "tris": 8
+            },
+            "plot build items": {
+              "calls": 169,
+              "tris": 5196
+            },
+            "people (NPC chibis)": {
+              "calls": 83,
+              "tris": 7790
+            },
+            "creatures": {
+              "calls": 139,
+              "tris": 11496
+            },
+            "effects/glows (other)": {
+              "calls": 5,
+              "tris": 10
+            },
+            "sky": {
+              "calls": 1,
+              "tris": 0
+            },
+            "player chibi": {
+              "calls": 18,
+              "tris": 1730
+            },
+            "market customers": {
+              "calls": 33,
+              "tris": 2970
+            }
+          },
+          "heaviest": [
+            {
+              "what": "terrain + water",
+              "geom": "BufferGeometry",
+              "tris": 65280
+            },
+            {
+              "what": "instanced props ×949",
+              "geom": "SphereGeometry",
+              "tris": 34164
+            },
+            {
+              "what": "instanced props ×890",
+              "geom": "CylinderGeometry",
+              "tris": 21360
+            },
+            {
+              "what": "instanced props ×945",
+              "geom": "ConeGeometry",
+              "tris": 19845
+            },
+            {
+              "what": "instanced props ×370",
+              "geom": "DodecahedronGeometry",
+              "tris": 13320
+            },
+            {
+              "what": "instanced props ×517",
+              "geom": "IcosahedronGeometry",
+              "tris": 10340
+            }
+          ]
+        },
+        "Erelian (day)": {
+          "plain": {
+            "calls": 146,
+            "tris": 186393
+          },
+          "withBloom": {
+            "calls": 160,
+            "tris": 186407
+          },
+          "programs": 25,
+          "geometries": 103,
+          "textures": 16,
+          "sceneMeshes": 798,
+          "sceneSprites": 170,
+          "instancedMeshes": 10,
+          "lights": 8,
+          "pixelRatio": 1,
+          "categories": {
+            "terrain + water": {
+              "calls": 2,
+              "tris": 65282
+            },
+            "instanced props": {
+              "calls": 10,
+              "tris": 112373
+            },
+            "landmarks + other meshes": {
+              "calls": 21,
+              "tris": 784
+            },
+            "glow sprites": {
+              "calls": 3,
+              "tris": 6
+            },
+            "butterflies": {
+              "calls": 16,
+              "tris": 32
+            },
+            "people (NPC chibis)": {
+              "calls": 32,
+              "tris": 2888
+            },
+            "creatures": {
+              "calls": 40,
+              "tris": 3292
+            },
+            "effects/glows (other)": {
+              "calls": 1,
+              "tris": 2
+            },
+            "sky": {
+              "calls": 1,
+              "tris": 0
+            },
+            "player chibi": {
+              "calls": 18,
+              "tris": 1730
+            }
+          },
+          "heaviest": [
+            {
+              "what": "terrain + water",
+              "geom": "BufferGeometry",
+              "tris": 65280
+            },
+            {
+              "what": "instanced props ×949",
+              "geom": "SphereGeometry",
+              "tris": 34164
+            },
+            {
+              "what": "instanced props ×890",
+              "geom": "CylinderGeometry",
+              "tris": 21360
+            },
+            {
+              "what": "instanced props ×945",
+              "geom": "ConeGeometry",
+              "tris": 19845
+            },
+            {
+              "what": "instanced props ×370",
+              "geom": "DodecahedronGeometry",
+              "tris": 13320
+            },
+            {
+              "what": "instanced props ×517",
+              "geom": "IcosahedronGeometry",
+              "tris": 10340
+            }
+          ]
+        },
+        "Cindral Wastes (day)": {
+          "plain": {
+            "calls": 75,
+            "tris": 182269
+          },
+          "withBloom": {
+            "calls": 89,
+            "tris": 182283
+          },
+          "programs": 25,
+          "geometries": 103,
+          "textures": 16,
+          "sceneMeshes": 798,
+          "sceneSprites": 170,
+          "instancedMeshes": 10,
+          "lights": 8,
+          "pixelRatio": 1,
+          "categories": {
+            "terrain + water": {
+              "calls": 2,
+              "tris": 65282
+            },
+            "instanced props": {
+              "calls": 10,
+              "tris": 112373
+            },
+            "landmarks + other meshes": {
+              "calls": 6,
+              "tris": 232
+            },
+            "glow sprites": {
+              "calls": 6,
+              "tris": 12
+            },
+            "people (NPC chibis)": {
+              "calls": 17,
+              "tris": 1478
+            },
+            "creatures": {
+              "calls": 14,
+              "tris": 1160
+            },
+            "effects/glows (other)": {
+              "calls": 1,
+              "tris": 2
+            },
+            "sky": {
+              "calls": 1,
+              "tris": 0
+            },
+            "player chibi": {
+              "calls": 18,
+              "tris": 1730
+            }
+          },
+          "heaviest": [
+            {
+              "what": "terrain + water",
+              "geom": "BufferGeometry",
+              "tris": 65280
+            },
+            {
+              "what": "instanced props ×949",
+              "geom": "SphereGeometry",
+              "tris": 34164
+            },
+            {
+              "what": "instanced props ×890",
+              "geom": "CylinderGeometry",
+              "tris": 21360
+            },
+            {
+              "what": "instanced props ×945",
+              "geom": "ConeGeometry",
+              "tris": 19845
+            },
+            {
+              "what": "instanced props ×370",
+              "geom": "DodecahedronGeometry",
+              "tris": 13320
+            },
+            {
+              "what": "instanced props ×517",
+              "geom": "IcosahedronGeometry",
+              "tris": 10340
+            }
+          ]
+        },
+        "Runekar's Deep": {
+          "plain": {
+            "calls": 54,
+            "tris": 181155
+          },
+          "withBloom": {
+            "calls": 68,
+            "tris": 181169
+          },
+          "programs": 25,
+          "geometries": 103,
+          "textures": 16,
+          "sceneMeshes": 798,
+          "sceneSprites": 170,
+          "instancedMeshes": 10,
+          "lights": 8,
+          "pixelRatio": 1,
+          "categories": {
+            "terrain + water": {
+              "calls": 2,
+              "tris": 65282
+            },
+            "instanced props": {
+              "calls": 10,
+              "tris": 112373
+            },
+            "landmarks + other meshes": {
+              "calls": 4,
+              "tris": 38
+            },
+            "glow sprites": {
+              "calls": 1,
+              "tris": 2
+            },
+            "people (NPC chibis)": {
+              "calls": 18,
+              "tris": 1730
+            },
+            "sky": {
+              "calls": 1,
+              "tris": 0
+            },
+            "player chibi": {
+              "calls": 18,
+              "tris": 1730
+            }
+          },
+          "heaviest": [
+            {
+              "what": "terrain + water",
+              "geom": "BufferGeometry",
+              "tris": 65280
+            },
+            {
+              "what": "instanced props ×949",
+              "geom": "SphereGeometry",
+              "tris": 34164
+            },
+            {
+              "what": "instanced props ×890",
+              "geom": "CylinderGeometry",
+              "tris": 21360
+            },
+            {
+              "what": "instanced props ×945",
+              "geom": "ConeGeometry",
+              "tris": 19845
+            },
+            {
+              "what": "instanced props ×370",
+              "geom": "DodecahedronGeometry",
+              "tris": 13320
+            },
+            {
+              "what": "instanced props ×517",
+              "geom": "IcosahedronGeometry",
+              "tris": 10340
+            }
+          ]
+        },
+        "The Veilmoor (night)": {
+          "plain": {
+            "calls": 869,
+            "tris": 224453
+          },
+          "withBloom": {
+            "calls": 883,
+            "tris": 224467
+          },
+          "programs": 25,
+          "geometries": 103,
+          "textures": 16,
+          "sceneMeshes": 798,
+          "sceneSprites": 170,
+          "instancedMeshes": 10,
+          "lights": 8,
+          "pixelRatio": 1,
+          "categories": {
+            "terrain + water": {
+              "calls": 2,
+              "tris": 65282
+            },
+            "instanced props": {
+              "calls": 10,
+              "tris": 112373
+            },
+            "glow sprites": {
+              "calls": 135,
+              "tris": 270
+            },
+            "landmarks + other meshes": {
+              "calls": 61,
+              "tris": 2198
+            },
+            "butterflies": {
+              "calls": 32,
+              "tris": 64
+            },
+            "plot build items": {
+              "calls": 209,
+              "tris": 6216
+            },
+            "people (NPC chibis)": {
+              "calls": 168,
+              "tris": 16130
+            },
+            "effects/glows (other)": {
+              "calls": 7,
+              "tris": 14
+            },
+            "creatures": {
+              "calls": 224,
+              "tris": 20172
+            },
+            "sky": {
+              "calls": 1,
+              "tris": 0
+            },
+            "player chibi": {
+              "calls": 18,
+              "tris": 1730
+            }
+          },
+          "heaviest": [
+            {
+              "what": "terrain + water",
+              "geom": "BufferGeometry",
+              "tris": 65280
+            },
+            {
+              "what": "instanced props ×949",
+              "geom": "SphereGeometry",
+              "tris": 34164
+            },
+            {
+              "what": "instanced props ×890",
+              "geom": "CylinderGeometry",
+              "tris": 21360
+            },
+            {
+              "what": "instanced props ×945",
+              "geom": "ConeGeometry",
+              "tris": 19845
+            },
+            {
+              "what": "instanced props ×370",
+              "geom": "DodecahedronGeometry",
+              "tris": 13320
+            },
+            {
+              "what": "instanced props ×517",
+              "geom": "IcosahedronGeometry",
+              "tris": 10340
+            }
+          ]
+        }
+      },
+      "heapMB": 16,
+      "errors": []
+    }
+  }
+}

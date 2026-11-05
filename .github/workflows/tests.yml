@@ -24,6 +24,10 @@ jobs:
         run: CHROME="$(which google-chrome || which google-chrome-stable)" npm run test:browser
       - name: Peer-to-peer multiplayer smoke test (two headless players)
         run: CHROME="$(which google-chrome || which google-chrome-stable)" npm run test:p2p
+      - name: Save compatibility (a v0.4.1 save loads in this build)
+        run: |
+          git fetch --depth=1 origin rollback/v0.4.1:rollback/v0.4.1
+          CHROME="$(which google-chrome || which google-chrome-stable)" npm run test:save
       - uses: actions/upload-artifact@v4
         if: always()
         with:
