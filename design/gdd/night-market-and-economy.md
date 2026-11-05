@@ -54,7 +54,7 @@ Three resources: gold, wood and stone. Gold comes from jobs, trading, hunting, e
 
 ## Dependencies
 
-- **Reads**: [Building](building.md) (sellers, ambience), [People, Reputation and Fate](people-and-reputation.md) (Thorngate reputation), [Stats and Daily Actions](stats-and-actions.md) (Charm, job stats), [World and Regions](world-and-regions.md) (material lands).
+- **Reads**: [Action Combat and Movement](action-combat.md) (capped kill gold), [Building](building.md) (sellers, ambience), [People, Reputation and Fate](people-and-reputation.md) (Thorngate reputation), [Stats and Daily Actions](stats-and-actions.md) (Charm, job stats), [World and Regions](world-and-regions.md) (material lands).
 - **Used by**: [Building](building.md) (costs), [Survival and Diet](survival-and-diet.md) (food prices), [Combat](combat.md) (gold rewards), [Interface and Controls](interface-and-controls.md) (counters, market pill).
 
 ## Tuning Knobs

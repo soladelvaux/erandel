@@ -48,7 +48,7 @@ Characters evolve through four tiers at dawn. Tier 2 fixes a path based on the s
 ## Dependencies
 
 - **Reads**: [Stats and Daily Actions](stats-and-actions.md), [Elements and Affinity](elements-and-affinity.md), [Kinds and Bodies](kinds-and-bodies.md) (paths, legends), [People, Reputation and Fate](people-and-reputation.md) (Fate and Corruption).
-- **Used by**: [Combat](combat.md) (tier scales creatures), [Companions](companions.md) (companion damage), [Interface and Controls](interface-and-controls.md) (title, Self page tree, Aelarion's advice).
+- **Used by**: [Action Combat and Movement](action-combat.md) (tier scales creatures), [Multiplayer](multiplayer.md) (tier and title shown to others), [Combat](combat.md) (tier scales creatures), [Companions](companions.md) (companion damage), [Interface and Controls](interface-and-controls.md) (title, Self page tree, Aelarion's advice).
 
 ## Tuning Knobs
 

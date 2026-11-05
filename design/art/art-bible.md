@@ -6,7 +6,9 @@
 
 ## 1. Visual Identity Statement
 
-A cozy 3D night diorama: small chibi people in a lantern-lit fantasy world, seen from above like a toy model, glowing warm against dark water. Mythic, gentle, never grim.
+A cozy 3D fantasy world of small chibi people, lantern-lit at night, glowing warm against dark water. Mythic, gentle, never grim.
+
+**Since v0.4.0 (third-person)**: the world is seen from close behind the player, like a third-person action game, at the creator's request (reference: a hand-painted cliff-climbing game made with three.js). The ground is painted, not flat colour: brushed grass on level ground and streaked stone on slopes, chosen per pixel by slope. Ten rock crags give cliffs to climb. Bloom is reserved for night and for spells; daylight stays crisp. Trees and landmarks between the camera and the player dissolve with a dither. Build mode keeps the original overhead diorama view.
 
 ## 2. Mood & Atmosphere
 

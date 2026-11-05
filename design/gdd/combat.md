@@ -10,7 +10,7 @@
 
 ## Overview
 
-JRPG-style battle on contact. Three creatures roam each land. Touching one starts an auto-resolved battle of up to six rounds using the player's weapon, best spell, passive spells and companion. Winning removes the creature until dawn and pays gold and stats.
+Since v0.4.0, creatures in the 3D world are fought in real time (see [Action Combat and Movement](action-combat.md), which reuses the formulas below). This document now covers the **Hunt** action: from the journal (and in the 2D journal-only mode) the player picks a fight with a local creature, resolved automatically of up to six rounds using the player's weapon, best spell, passive spells and companion. Winning removes the creature until dawn and pays gold and stats.
 
 ## Player Fantasy
 
@@ -18,15 +18,15 @@ JRPG-style battle on contact. Three creatures roam each land. Touching one start
 
 ## Detailed Rules
 
-- **Roaming**: creatures wander within 8 units of home. They chase the player within 7 units. Contact distance 1.5 starts a battle. After any encounter there is a 2.5 s grace period.
-- **Refusals**: with 0 actions left or HP ≤ 10, the creature is pushed back and a message says why. The Hunt button (journal) uses the same checks.
+- **Roaming and real-time fights**: see [Action Combat and Movement](action-combat.md). Touching a creature no longer starts a battle.
+- **Refusals**: with 0 actions left or HP ≤ 10 the Hunt action is refused with a message.
 - **Rounds** (max 6, stops if the player's HP ≤ 10):
   1. Player picks the best of weapon or each damage spell (Bolt, Wave, Summon, Ritual) by expected damage.
   2. Companion adds damage.
   3. Creature hits back unless defeated.
 - **Passive spells** (known and usable): Ward (−40% damage taken), Weave (heal 12 after a win), Shape (+30% weapon), Enchant (+20% weapon), Summon known (creature hits 15% softer).
 - **Spell side costs**: Life source −3 HP per cast; Contract source +1 Corruption per cast; Faith spells are skipped while Corruption > Fate.
-- **Outcome**: win: gold, Strength +1, Agility +1, +2 affinity to elements used, blood available for blood-drinkers, companion bond +2; HP ≤ 10: retreat; 6 rounds: creature escapes. The battle result shows in a dialog box with a white flash.
+- **Outcome**: win: gold, Strength +1, Agility +1, +2 affinity to elements used, blood available for blood-drinkers, companion bond +2; HP ≤ 10: retreat; 6 rounds: creature escapes. The result is written to the log.
 - **Respawn**: all creatures return at dawn.
 
 ## Formulas
@@ -51,7 +51,7 @@ Example: Tier 1, Str 7, Agi 9: weapon ≈ (4 + 3.5 + 2.7) = 10.2 per round; a Re
 ## Dependencies
 
 - **Reads**: [Stats and Daily Actions](stats-and-actions.md), [Elements and Affinity](elements-and-affinity.md), [Magic](magic.md), [Companions](companions.md), [World and Regions](world-and-regions.md), [Evolution](evolution.md) (tier scaling).
-- **Used by**: [Survival and Diet](survival-and-diet.md) (blood from hunts), [Night Market and Economy](night-market-and-economy.md) (gold source), [Interface and Controls](interface-and-controls.md) (battle dialog).
+- **Used by**: [Action Combat and Movement](action-combat.md) (shared formulas), [Survival and Diet](survival-and-diet.md) (blood from hunts), [Night Market and Economy](night-market-and-economy.md) (gold source), [Interface and Controls](interface-and-controls.md) (battle dialog).
 
 ## Tuning Knobs
 
@@ -64,7 +64,7 @@ Example: Tier 1, Str 7, Agi 9: weapon ≈ (4 + 3.5 + 2.7) = 10.2 per round; a Re
 
 ## Acceptance Criteria
 
-1. Touching a creature with actions left starts a battle, uses 1 action and shows a result dialog.
-2. With HP ≤ 10, touching a creature shows "too badly hurt" and costs nothing.
-3. A defeated creature disappears and returns after sleeping.
+1. The Hunt action with actions left uses 1 action and logs a battle result.
+2. With HP ≤ 10, Hunt shows "too badly hurt" and costs nothing.
+3. A creature defeated in the 3D world disappears and returns after 75 s or at dawn.
 4. A Water spell beats a Fire creature faster than the weapon alone.

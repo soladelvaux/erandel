@@ -41,8 +41,10 @@ Dawn: `sleep() → dawn()` → weather, heal, conditions, hunger, companion bond
 
 ## World layer
 
-- `initWorld()` builds everything once: terrain grid (110 × 124, Phong flat-shaded, vertex colours), water plane, ~10 instanced meshes for props, landmarks, NPC chibis, monsters, particles, build grid, and the bloom composer.
-- `loop()` each frame: lighting lerp, glows, wisps, butterflies, NPCs, player movement and region detection, companion follow, monsters and encounters, customers, talk target, weather particles, camera, build highlight, periodic save, render.
+- `initWorld()` builds everything once: terrain grid (170 × 192 on desktop, 130 × 146 on phones; Phong with vertex colours plus a painted grass/rock shader chosen by slope, `paintTerrain`), climbable crags (`CRAGS` in `heightAt`), a collider grid for trees, rocks and landmarks (`COL`), sky (stars, sun or moon), water plane, ~10 instanced meshes for props, landmarks, NPC chibis, monsters, particles, build grid, and the bloom composer.
+- `loop()` each frame: lighting lerp, glows, wisps, butterflies, NPCs, third-person movement (camera-relative input, jump, dodge, climb, collisions), region detection, companion follow, creature AI, projectiles, summons, rituals, effects, other players, customers, talk target, weather particles, camera (third-person with terrain and landmark clearance; overhead in build mode), build highlight, screen tags (name plates, HP bars), action HUD and minimap at 10 Hz, presence send, periodic save, render.
+- Props and landmarks use `nearFade`: a dithered discard for fragments near the camera or between the camera and the player. three.js r128 does not upload `cameraPosition` to Lambert or Basic materials, so the camera position is passed as its own uniform (`FADE_CAM`).
+- Multiplayer (`NET`) uses the artifact `room` capability when present: presence carries position and look, the `fx` and `chat` topics carry cosmetic effects and chat. All incoming data passes `sanitizePeer`, `sanitizeFx` or `cleanText`. See `design/gdd/multiplayer.md`.
 - Build items are separate groups keyed by item id; their lights join the light list the point-light pool draws from.
 
 ## External dependencies
@@ -52,6 +54,7 @@ Dawn: `sleep() → dawn()` → weather, heal, conditions, hunger, companion bond
 | three.js r128 | cdnjs | 2D journal-only mode |
 | EffectComposer, RenderPass, ShaderPass, UnrealBloomPass, CopyShader, LuminosityHighPassShader | jsDelivr `three@0.128.0/examples/js` | render without bloom |
 | Google Fonts | fonts.googleapis.com | system serif/sans/mono |
+| Artifact `room` capability | `claude.use("room")` on claude.ai | single-player |
 
 ## Testing
 

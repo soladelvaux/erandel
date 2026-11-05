@@ -10,7 +10,7 @@
 
 ## Overview
 
-A phone-first overlay on the 3D world, styled after cozy night-market builders: compact status card, resource counters and market pill, a music player, side tool icons, JRPG dialog boxes, a full-screen journal, and a build catalog bar. Movement by joystick, tap-to-walk or keys.
+A phone-first overlay on the 3D world, styled after cozy night-market builders: compact status card, resource counters and market pill, a music player, side tool icons, JRPG dialog boxes, a full-screen journal, and a build catalog bar. Movement by joystick, tap-to-walk or keys, seen from a close third-person camera; real-time combat buttons, a minimap, a target frame, name plates and multiplayer chat (v0.4.0, see [Action Combat and Movement](action-combat.md) and [Multiplayer](multiplayer.md)).
 
 ## Player Fantasy
 
@@ -20,7 +20,7 @@ A phone-first overlay on the 3D world, styled after cozy night-market builders: 
 
 **Screens**:
 - **Threshold** (new game): Aelarion art, his speech, name field, kind detail (element, weakness, diet, body notes, paths, legends), 36 kind buttons grouped, Begin and Random.
-- **World HUD**: top left: name, kind, tier, title, HP/Fate/Corruption bars, action pips, time and weather, conditions. Top centre: gold/wood/stone counters, the Open/Close night market pill (Thorngate only), day and land. Top right: music player (prev, play/pause, next), Settings, Journal. Left side: Build (hammer), Photo, Sleep (moon). Bottom: joystick and a Talk button naming the nearest person.
+- **World HUD**: top left: name, kind, tier, title, HP/Fate/Corruption bars, action pips, time and weather, conditions. Top centre: gold/wood/stone counters, the Open/Close night market pill (Thorngate only), day and land. Top right: music player (prev, play/pause, next), Settings, Journal. Left side: Build (hammer), Photo, Sleep (moon). Right, under the icons: minimap of the whole world (you as a white arrow with a view cone, people gold, creatures red, other players cyan). Top centre under the counters: target frame (creature name, element, HP bar). Bottom left: joystick, and above it the online pill and the last chat lines. Bottom right: Talk (only near a person), four round spell buttons with element colours and cooldown sweeps, the Focus bar, and Dodge, Jump and a large Attack button. In the world: name plates over people and players, HP bars over hurt or targeted creatures, floating damage numbers, speech bubbles.
 - **Dialogs**: portrait, name, text, ▸ choices. Types: Aelarion (lore, evolution advice, blessing), resident (Help/Trade/Steal with costs), battle result, sleep confirmation.
 - **Journal** (book icon, M/J): tabs Act, Self, Magic, World, Chronicle; full-screen and scrollable.
 - **Build mode**: overhead camera, grid, green/red tile highlight, ghost preview, catalog cards (name, cost, ambience, sells), tools: Remove, Rotate, Done.
@@ -34,7 +34,13 @@ A phone-first overlay on the 3D world, styled after cozy night-market builders: 
 | Input | Phone | Keyboard / mouse |
 |---|---|---|
 | Move | joystick, or tap the ground to walk there | W A S D / arrows |
-| Talk | Talk button | E, Enter, Space |
+| Look around | drag the world | drag with the mouse |
+| Jump | Jump button | Space |
+| Dodge | Dodge button | Shift |
+| Attack | Attack button, or tap a creature | F, or click a creature |
+| Spells | four round buttons | 1, 2, 3, 4 |
+| Chat | online pill | T to open, Enter to send, Escape to close |
+| Talk | Talk button | E, Enter |
 | Journal | book icon | M or J |
 | Build | hammer icon (Thorngate) | B, R rotates |
 | Zoom | pinch | mouse wheel |
@@ -57,7 +63,7 @@ A phone-first overlay on the 3D world, styled after cozy night-market builders: 
 
 ## Dependencies
 
-- **Reads**: every other system ([Kinds and Bodies](kinds-and-bodies.md), [Stats and Daily Actions](stats-and-actions.md), [World and Regions](world-and-regions.md), [Elements and Affinity](elements-and-affinity.md), [Evolution](evolution.md), [Survival and Diet](survival-and-diet.md), [People, Reputation and Fate](people-and-reputation.md), [Combat](combat.md), [Magic](magic.md), [Companions](companions.md), [Building](building.md), [Night Market and Economy](night-market-and-economy.md)).
+- **Reads**: [Action Combat and Movement](action-combat.md), [Multiplayer](multiplayer.md), every other system ([Kinds and Bodies](kinds-and-bodies.md), [Stats and Daily Actions](stats-and-actions.md), [World and Regions](world-and-regions.md), [Elements and Affinity](elements-and-affinity.md), [Evolution](evolution.md), [Survival and Diet](survival-and-diet.md), [People, Reputation and Fate](people-and-reputation.md), [Combat](combat.md), [Magic](magic.md), [Companions](companions.md), [Building](building.md), [Night Market and Economy](night-market-and-economy.md)).
 - **Used by**: [Audio and Atmosphere](audio-and-atmosphere.md) (music controls, settings).
 
 ## Tuning Knobs

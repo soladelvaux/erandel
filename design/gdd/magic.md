@@ -52,7 +52,7 @@ Example: Mana Ice Bolt with Mind 15, Ice 40: power = 5 + 9 + 12 = 26; Bolt damag
 ## Dependencies
 
 - **Reads**: [Elements and Affinity](elements-and-affinity.md), [Stats and Daily Actions](stats-and-actions.md), [People, Reputation and Fate](people-and-reputation.md) (Fate and Corruption gates).
-- **Used by**: [Combat](combat.md), [Interface and Controls](interface-and-controls.md) (Magic page).
+- **Used by**: [Action Combat and Movement](action-combat.md) (spell hotbar), [Combat](combat.md), [Interface and Controls](interface-and-controls.md) (Magic page).
 - **Also connected**: [Kinds and Bodies](kinds-and-bodies.md) (each kind starts with its natural source).
 
 ## Tuning Knobs

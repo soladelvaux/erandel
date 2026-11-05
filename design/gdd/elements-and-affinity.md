@@ -74,7 +74,7 @@ Elemental damage multiplier `elemMult(a, d)`: 1.5 if `a` is strong against `d`; 
 ## Dependencies
 
 - **Reads**: [World and Regions](world-and-regions.md) (land elements, weather), [Kinds and Bodies](kinds-and-bodies.md) (home element, Humans).
-- **Used by**: [Evolution](evolution.md) (Flow and Bond requirements), [Magic](magic.md) (spells), [Survival and Diet](survival-and-diet.md) (protection), [Combat](combat.md) (multipliers), [Companions](companions.md) (element harmony).
+- **Used by**: [Action Combat and Movement](action-combat.md) (spell multipliers, kill affinity), [Evolution](evolution.md) (Flow and Bond requirements), [Magic](magic.md) (spells), [Survival and Diet](survival-and-diet.md) (protection), [Combat](combat.md) (multipliers), [Companions](companions.md) (element harmony).
 - **Also connected**: [Interface and Controls](interface-and-controls.md) (Self page, practice menu).
 
 ## Tuning Knobs

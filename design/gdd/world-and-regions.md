@@ -63,7 +63,7 @@ Erandel is one open world of ten lands around the Thorngate. The player walks fr
 
 ## Dependencies
 
-- **Used by**: [Elements and Affinity](elements-and-affinity.md) (region and weather multipliers), [Survival and Diet](survival-and-diet.md) (hazards), [People, Reputation and Fate](people-and-reputation.md) (residents, region reputation), [Combat](combat.md) (creatures), [Building](building.md) (plot in Thorngate), [Night Market and Economy](night-market-and-economy.md) (materials, market), [Audio and Atmosphere](audio-and-atmosphere.md) (weather and light), [Interface and Controls](interface-and-controls.md) (banners).
+- **Used by**: [Action Combat and Movement](action-combat.md) (terrain, crags), [Multiplayer](multiplayer.md) (world bounds, lands), [Elements and Affinity](elements-and-affinity.md) (region and weather multipliers), [Survival and Diet](survival-and-diet.md) (hazards), [People, Reputation and Fate](people-and-reputation.md) (residents, region reputation), [Combat](combat.md) (creatures), [Building](building.md) (plot in Thorngate), [Night Market and Economy](night-market-and-economy.md) (materials, market), [Audio and Atmosphere](audio-and-atmosphere.md) (weather and light), [Interface and Controls](interface-and-controls.md) (banners).
 - **Also connected**: [Stats and Daily Actions](stats-and-actions.md) (land actions, study bonus in Thorngate and Dawnspire).
 
 ## Tuning Knobs

@@ -51,7 +51,7 @@ Example: a Merfolk (Charm 7) meeting a Nereid: 40 + 15 (same group) + 4 = 59 →
 ## Dependencies
 
 - **Reads**: [Kinds and Bodies](kinds-and-bodies.md), [Elements and Affinity](elements-and-affinity.md), [Survival and Diet](survival-and-diet.md), [People, Reputation and Fate](people-and-reputation.md), [Stats and Daily Actions](stats-and-actions.md) (Charm).
-- **Used by**: [Combat](combat.md) (companion damage), [Interface and Controls](interface-and-controls.md) (companion panel, following chibi).
+- **Used by**: [Action Combat and Movement](action-combat.md) (companion damage per swing), [Combat](combat.md) (companion damage), [Interface and Controls](interface-and-controls.md) (companion panel, following chibi).
 - **Also connected**: [Evolution](evolution.md) (tier raises companion damage).
 
 ## Tuning Knobs

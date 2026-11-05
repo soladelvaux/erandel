@@ -62,7 +62,7 @@ The player chooses one of 36 kinds in 8 groups when Aelarion asks what form thei
 
 ## Dependencies
 
-- **Used by**: [Stats and Daily Actions](stats-and-actions.md), [Evolution](evolution.md), [Elements and Affinity](elements-and-affinity.md), [Survival and Diet](survival-and-diet.md), [Magic](magic.md), [Companions](companions.md), [People, Reputation and Fate](people-and-reputation.md), [Interface and Controls](interface-and-controls.md).
+- **Used by**: [Multiplayer](multiplayer.md) (how other players see you), [Stats and Daily Actions](stats-and-actions.md), [Evolution](evolution.md), [Elements and Affinity](elements-and-affinity.md), [Survival and Diet](survival-and-diet.md), [Magic](magic.md), [Companions](companions.md), [People, Reputation and Fate](people-and-reputation.md), [Interface and Controls](interface-and-controls.md).
 
 ## Tuning Knobs
 

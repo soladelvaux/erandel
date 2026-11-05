@@ -65,7 +65,7 @@ Each kind's body reacts to places, weather, time of day and food. Hazards cost H
 
 ## Dependencies
 
-- **Reads**: [Kinds and Bodies](kinds-and-bodies.md) (body rules, diet), [World and Regions](world-and-regions.md) (land, weather, time), [Elements and Affinity](elements-and-affinity.md) (protections), [Stats and Daily Actions](stats-and-actions.md) (Endurance protections).
+- **Reads**: [Action Combat and Movement](action-combat.md) (a kill makes blood available), [Kinds and Bodies](kinds-and-bodies.md) (body rules, diet), [World and Regions](world-and-regions.md) (land, weather, time), [Elements and Affinity](elements-and-affinity.md) (protections), [Stats and Daily Actions](stats-and-actions.md) (Endurance protections).
 - **Used by**: [Stats and Daily Actions](stats-and-actions.md) (gain multipliers, faint), [Companions](companions.md) (companions suffer the same hazards, losing bond), [Combat](combat.md) (blood from hunts), [People, Reputation and Fate](people-and-reputation.md) (sleeper feeding).
 - **Also connected**: [Interface and Controls](interface-and-controls.md) (hazard warnings, food row), [Night Market and Economy](night-market-and-economy.md) (food costs gold).
 
