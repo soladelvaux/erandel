@@ -187,6 +187,10 @@ body.under #under{opacity:1}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .toast{z-index:30;bottom:auto;top:calc(150px + env(safe-area-inset-top,0px))}
 @media (prefers-reduced-motion:reduce){.banner,.flash,.fade{animation:none}.flash{opacity:0}}
+/* Mouse-and-keyboard screens move with W A S D, so the touch stick is hidden until the screen is touched (QA V4). */
+@media (hover:hover) and (pointer:fine){body:not(.touched) #stick{visibility:hidden}}
+/* Phones: the clock line stays on one line (QA V5); the hour already says the time of day. */
+@media (max-width:520px){.hclock{white-space:nowrap}.hclock .tw{display:none}}
 @media (max-width:520px){.portrait{width:60px;height:60px}.dialog{padding:10px;gap:10px}#stick{width:116px;height:116px}}
 
 /* ===== cozy diorama UI (video style) ===== */
@@ -1073,7 +1077,54 @@ function valid(s){
  if(s.cand===undefined)s.cand=null;
  if(!s.mat||typeof s.mat!=='object')s.mat={wood:0,stone:0};if(!Array.isArray(s.build))s.build=[];['marketDay','salesToday','salesCap'].forEach(k=>{if(typeof s[k]!=='number')s[k]=0;});
  worldDefaults(s); // living-world state (docs/systems/living-world.md); old saves get defaults
+ repairSave(s);
  return true;
+}
+/** Repairs a damaged or hand-edited save in place (production/qa/phase7-qa-report.md, C1): every
+ * field the game reads gets the right type and a value the game knows, and good values are kept.
+ * Without this, one bad field made every render throw, so the save broke the game on every visit.
+ * Returns the list of repaired fields (empty for a healthy save).
+ * Example: const s=JSON.parse(raw); if(valid(s)) S=s; // valid() calls repairSave(s) */
+function repairSave(s){
+ const fixed=[],r=RACES[s.race];
+ const isObj=v=>!!v&&typeof v==='object'&&!Array.isArray(v),num=v=>typeof v==='number'&&isFinite(v);
+ const fix=(k,ok,def)=>{if(!ok(s[k])){s[k]=typeof def==='function'?def():def;fixed.push(k);}};
+ const int=(lo,hi)=>v=>num(v)&&v>=lo&&v<=hi&&Math.floor(v)===v;
+ fix('name',v=>typeof v==='string'&&v.trim().length>0&&v.length<=24,'Wanderer');
+ fix('legendName',v=>typeof v==='string','');
+ fix('tier',int(1,4),1);
+ fix('path',v=>v===null||int(0,r.paths.length-1)(v),null);
+ if(s.tier>=2&&s.path===null){s.tier=1;fixed.push('tier');}
+ fix('home',v=>v===null||v===undefined||!!ELEM[v],r.home||null);
+ ['day','fedDay'].forEach(k=>fix(k,int(1,1e7),1));
+ ['used','jobXp','charmDay','bloodDay','marketDay','salesToday','salesCap'].forEach(k=>fix(k,v=>num(v)&&v>=0&&v<1e9,0));
+ ['fate','corr'].forEach(k=>fix(k,v=>num(v)&&v>=0&&v<=1e6,0));
+ fix('gold',v=>num(v)&&v>=0&&v<1e9,0);
+ fix('weather',v=>typeof v==='string'&&!!WEATHER[v],'clear');
+ fix('job',v=>v===null||(typeof v==='string'&&!!JOBS[v]),null);
+ fix('blood',v=>v===null||v===undefined||(typeof v==='string'&&!!BLOOD[v]),null);
+ fix('pet',v=>v===null||v===undefined||(typeof v==='string'&&v.length<=40),null);
+ fix('extraSlot',v=>typeof v==='boolean',false);
+ fix('stats',isObj,{});STATS.forEach(k=>{if(!num(s.stats[k])||s.stats[k]<0||s.stats[k]>1e4){s.stats[k]=5+(r.bonus[k]||0);fixed.push('stats.'+k);}});
+ fix('aff',isObj,{});ELS.forEach(e=>{if(!num(s.aff[e])){s.aff[e]=0;fixed.push('aff.'+e);}});
+ fix('regRep',isObj,{});Object.keys(REG).forEach(id=>{if(!num(s.regRep[id])){s.regRep[id]=0;fixed.push('regRep.'+id);}});
+ fix('npcs',isObj,{});Object.keys(NPCS).forEach(id=>{let n=s.npcs[id];if(!isObj(n)){n=s.npcs[id]={rep:0,mem:[],helped:0,gifted:false};fixed.push('npcs.'+id);}
+  if(!num(n.rep))n.rep=0;if(!Array.isArray(n.mem))n.mem=[];if(!num(n.helped))n.helped=0;n.gifted=!!n.gifted;});
+ ['flags','dayGains','cond'].forEach(k=>fix(k,isObj,{}));
+ fix('mat',isObj,{});['wood','stone'].forEach(k=>{if(!num(s.mat[k])||s.mat[k]<0){s.mat[k]=0;fixed.push('mat.'+k);}});
+ const arr=(k,keep)=>{fix(k,Array.isArray,[]);const n=s[k].length;s[k]=s[k].filter(keep);if(s[k].length!==n)fixed.push(k);};
+ arr('traits',v=>typeof v==='string');
+ arr('sources',v=>typeof v==='string'&&!!SRC[v]);if(!s.sources.length&&SRC[r.nat]){s.sources.push(r.nat);}
+ arr('spells',v=>isObj(v)&&!!SRC[v.src]&&!!FORMS[v.form]&&!!ELEM[v.e1]&&(v.e2===null||v.e2===undefined||!!ELEM[v.e2])&&typeof v.name==='string');
+ arr('log',v=>isObj(v)&&typeof v.t==='string');s.log.forEach(o=>{if(typeof o.cls!=='string')o.cls='';});
+ arr('chron',v=>isObj(v)&&typeof v.t==='string');
+ arr('build',v=>isObj(v)&&!!CATALOG[v.t]&&num(v.c)&&num(v.r));s.build.forEach(o=>{if(!num(o.rot))o.rot=0;if(typeof o.id!=='string')o.id='r'+o.c+'_'+o.r+o.t;});
+ fix('comp',v=>v===null||(isObj(v)&&typeof v.name==='string'&&!!RACES[v.race]&&num(v.bond)&&num(v.compat)),null);
+ fix('cand',v=>v===null||isObj(v),null);
+ if(s.pos!==undefined&&!(isObj(s.pos)&&num(s.pos.x)&&num(s.pos.z))){delete s.pos;fixed.push('pos');}
+ if(!num(s.hp)||s.hp<0){s.hp=Math.round(60+s.stats.end*2);fixed.push('hp');}
+ if(fixed.length)console.warn('Erandel repaired a damaged save:',fixed.join(', '));
+ return fixed;
 }
 
 function newChar(name,raceId){
@@ -1889,7 +1940,7 @@ function initWorld(){
  for(let i=0;i<8;i++){const a=i/8*Math.PI*2,x=-52+Math.cos(a)*7,z=58+Math.sin(a)*7;addCol(x,z,.7);addMesh(scene,geo('mp',()=>new THREE.CylinderGeometry(.6,.6,5,6)),mat('#c8d8d8'),x,G(x,z)+2.5,z);}
  [[-2,-40],[-8,-56],[2,-60],[-10,-46]].forEach(([x,z])=>{const y=G(x,z);for(let k=0;k<3;k++)addMesh(scene,geo('cairn'+k,()=>new THREE.BoxGeometry(1.2-k*.3,.6,1.2-k*.3)),stone,x,y+.3+k*.6,z);});
  const wisps=[];for(let i=0;i<16;i++){const x=-14+rng()*28,z=70+rng()*22,g=mkGlow('#cfe8ff',1.4,.6);g.position.set(x,G(x,z)+1.5,z);scene.add(g);wisps.push({s:g,x,z,y:G(x,z)+1.5,t:rng()*6});}
- const flies=[];const fm=new THREE.MeshBasicMaterial({color:'#f6f4ea',side:THREE.DoubleSide});for(let i=0;i<16;i++){const x=-46+(rng()-.5)*30,z=8+(rng()-.5)*30;const f=new THREE.Group();[-1,1].forEach(sd=>{const w=new THREE.Mesh(geo('fly',()=>{const p=new THREE.PlaneGeometry(.22,.16);p.translate(.11,0,0);return p;}),fm);w.scale.x=sd;f.add(w);});scene.add(f);flies.push({s:f,x,z,t:rng()*9});}
+ const flies=[];const fm=new THREE.MeshLambertMaterial({color:'#f1e7c6',emissive:'#3a3424',side:THREE.DoubleSide});for(let i=0;i<16;i++){const x=-46+(rng()-.5)*30,z=8+(rng()-.5)*30;const f=new THREE.Group();[-1,1].forEach(sd=>{const w=new THREE.Mesh(geo('fly',()=>{const w=new THREE.Shape();w.moveTo(0,.01);w.bezierCurveTo(.06,.1,.2,.12,.22,.06);w.bezierCurveTo(.23,.01,.12,0,.03,-.005);w.bezierCurveTo(.12,-.03,.17,-.09,.12,-.11);w.bezierCurveTo(.07,-.12,.02,-.06,0,-.01);return new THREE.ShapeGeometry(w,6);}),fm);w.scale.x=sd;f.add(w);});scene.add(f);flies.push({s:f,x,z,t:rng()*9});}
  for(let i=0;i<40;i++){const x=-6+rng()*44,z=-20+rng()*30;const g=mkGlow('#d8ff90',.35,0);g.position.set(x,G(x,z)+.8+rng(),z);scene.add(g);glows.push({s:g,base:0,night:.9,pulse:1,fire:{x,z,y:g.position.y,t:rng()*9}});}
  PUT_OFF=false;
  finishInst(Object.values(I));
@@ -2527,7 +2578,7 @@ function simState(){
    return{id,name:NPCS[id].name,region:NPC_REGION[id],pos:n?{x:r2(n.x),z:r2(n.z)}:{x:NPC_POS[id][0],z:NPC_POS[id][1]},activity:n&&n.act||null,
     rep:st.rep||0,helpedDay:st.helped||0,gifted:!!st.gifted,met:st.met||0,lastDay:st.lastDay||0,talks:st.talks||0};}),
   creatures:w3&&w3.monsters?w3.monsters.map((m,i)=>({id:'c'+i,name:m.b.n,region:m.region,alive:!!m.alive,hp:m.hp,hpMax:m.hpMax,state:m.st,pos:{x:r2(m.x),z:r2(m.z)},home:{x:r2(m.hx),z:r2(m.hz)},respawnAt:m.alive?null:r2(m.deadT)})):[],
-  inventory:{gold:S.gold,materials:{...S.mat},spells:S.spells.map(s=>({...s})),buildings:S.build.map(b=>({...b})),pet:S.pet?{...S.pet}:null,companion:S.comp?{...S.comp}:null,blood:S.blood||null},
+  inventory:{gold:S.gold,materials:{...S.mat},spells:S.spells.map(s=>({...s})),buildings:S.build.map(b=>({...b})),pet:S.pet||null,companion:S.comp?{...S.comp}:null,blood:S.blood||null},
   quests:{npcHelp:Object.fromEntries(Object.keys(S.npcs).map(id=>[id,S.npcs[id].helped||0])),discoveries:{...(world.disc||{})},flags:{...S.flags},candidate:S.cand||null},
   events:{world:JSON.parse(JSON.stringify(world.events||{})),huntedToday:JSON.parse(JSON.stringify(world.kills||{})),market:{day:S.marketDay,sales:S.salesToday,cap:S.salesCap}},
  };
@@ -2607,7 +2658,7 @@ function nearFade(m){
  m.onBeforeCompile=sh=>{
   sh.uniforms.uFadeP=FADE;sh.uniforms.uCamP=FADE_CAM;
   sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>\nvarying vec3 vFadeW;').replace('#include <begin_vertex>','#include <begin_vertex>\nvec4 fw=vec4(transformed,1.0);\n#ifdef USE_INSTANCING\nfw=instanceMatrix*fw;\n#endif\nvFadeW=(modelMatrix*fw).xyz;');
-  sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>\nvarying vec3 vFadeW;\nuniform vec3 uFadeP;\nuniform vec3 uCamP;').replace('void main() {','void main() {\nvec3 fa=uCamP,fb=uFadeP+vec3(0.0,1.0,0.0),fab=fb-fa;float ft=clamp(dot(vFadeW-fa,fab)/max(dot(fab,fab),0.001),0.0,1.0);float fd=length(vFadeW-(fa+ft*fab));float fdC=distance(vFadeW,uCamP);float fk=min((fdC-1.0)/2.2,ft<0.9?(fd-0.6)/1.4:1.0);\nif(fk<1.0){float th=fract(sin(dot(floor(gl_FragCoord.xy),vec2(12.9898,78.233)))*43758.5453);if(th>fk)discard;}');
+  sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>\nvarying vec3 vFadeW;\nuniform vec3 uFadeP;\nuniform vec3 uCamP;').replace('void main() {','void main() {\nvec3 fa=uCamP,fb=uFadeP+vec3(0.0,1.0,0.0),fab=fb-fa;float ft=clamp(dot(vFadeW-fa,fab)/max(dot(fab,fab),0.001),0.0,1.0);float fd=length(vFadeW-(fa+ft*fab));float fdC=distance(vFadeW,uCamP);float fk=min((fdC-1.0)/2.2,ft<0.9?(fd-0.6)/1.4:1.0);\nif(fk<1.0){vec2 ba=floor(gl_FragCoord.xy);vec2 bb=floor(ba*0.5);float th=fract(bb.x*0.5+bb.y*bb.y*0.75)*0.25+fract(ba.x*0.5+ba.y*ba.y*0.75)+0.03125;if(th>fk)discard;}');
  };
  m.needsUpdate=true;return m;
 }
@@ -3217,7 +3268,7 @@ function renderHud3(){
  return `<div class="hud3">
   <div class="hcard hl"><div class="hname">${esc(S.name)} <span class="kicker">${r.sing} · T${S.tier}</span></div><div class="htitle">${esc(title())}</div>
    ${miniBar('HP',S.hp,hpMax(),'var(--hp)')}${miniBar('Fate',S.fate,100,'var(--fate)')}${miniBar('Corr',S.corr,100,'var(--corr)')}
-   <div class="hrow"><div class="pips" aria-label="${energyLeft()} actions left">${pips}</div><span class="kicker">${TIMES[timeIdx()]} <span id="lw-clock">${S.world&&HAS3D?clockLabel():''}</span> · ${w.name}</span></div>
+   <div class="hrow"><div class="pips" aria-label="${energyLeft()} actions left">${pips}</div><span class="kicker hclock"><span class="${S.world&&HAS3D?'tw':''}">${TIMES[timeIdx()]} </span><span id="lw-clock">${S.world&&HAS3D?clockLabel():''}</span> · ${w.name}</span></div>
    ${Object.keys(S.cond).length?`<div class="chips" style="margin-top:4px">${Object.keys(S.cond).filter(c=>COND[c]).map(c=>`<span class="el" style="--c:${COND[c].good?'var(--good)':'var(--hp)'}">${COND[c].n}</span>`).join('')}</div>`:''}
   </div>
   <div class="hc"><div class="counters"><span title="Gold">${ic('coin','g')}<b class="num">${S.gold}</b></span><span title="Wood">${ic('wood','w')}<b class="num">${S.mat.wood}</b></span><span title="Stone">${ic('stone','s')}<b class="num">${S.mat.stone}</b></span></div>${mk}<div class="hreg">Day ${S.day} · ${esc(REG[S.region].name)}</div></div>
@@ -3411,6 +3462,7 @@ document.addEventListener('keydown',e=>{
 });
 document.addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));
 window.addEventListener('blur',()=>keys.clear());
+window.addEventListener('pointerdown',e=>{if(e.pointerType==='touch')document.body.classList.add('touched');},{passive:true,capture:true});
 (function(){
  const st=document.getElementById('stick'),kn=document.getElementById('knob');let id=null;
  const move=e=>{const r=st.getBoundingClientRect();let x=e.clientX-(r.left+r.width/2),y=e.clientY-(r.top+r.height/2);const m=Math.hypot(x,y),R0=r.width/2-14;if(m>R0){x=x/m*R0;y=y/m*R0;}kn.style.transform=`translate(${x}px,${y}px)`;stick.x=x/R0;stick.y=y/R0;};

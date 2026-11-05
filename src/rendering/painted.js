@@ -34,7 +34,7 @@ function nearFade(m){
  m.onBeforeCompile=sh=>{
   sh.uniforms.uFadeP=FADE;sh.uniforms.uCamP=FADE_CAM;
   sh.vertexShader=sh.vertexShader.replace('#include <common>','#include <common>\nvarying vec3 vFadeW;').replace('#include <begin_vertex>','#include <begin_vertex>\nvec4 fw=vec4(transformed,1.0);\n#ifdef USE_INSTANCING\nfw=instanceMatrix*fw;\n#endif\nvFadeW=(modelMatrix*fw).xyz;');
-  sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>\nvarying vec3 vFadeW;\nuniform vec3 uFadeP;\nuniform vec3 uCamP;').replace('void main() {','void main() {\nvec3 fa=uCamP,fb=uFadeP+vec3(0.0,1.0,0.0),fab=fb-fa;float ft=clamp(dot(vFadeW-fa,fab)/max(dot(fab,fab),0.001),0.0,1.0);float fd=length(vFadeW-(fa+ft*fab));float fdC=distance(vFadeW,uCamP);float fk=min((fdC-1.0)/2.2,ft<0.9?(fd-0.6)/1.4:1.0);\nif(fk<1.0){float th=fract(sin(dot(floor(gl_FragCoord.xy),vec2(12.9898,78.233)))*43758.5453);if(th>fk)discard;}');
+  sh.fragmentShader=sh.fragmentShader.replace('#include <common>','#include <common>\nvarying vec3 vFadeW;\nuniform vec3 uFadeP;\nuniform vec3 uCamP;').replace('void main() {','void main() {\nvec3 fa=uCamP,fb=uFadeP+vec3(0.0,1.0,0.0),fab=fb-fa;float ft=clamp(dot(vFadeW-fa,fab)/max(dot(fab,fab),0.001),0.0,1.0);float fd=length(vFadeW-(fa+ft*fab));float fdC=distance(vFadeW,uCamP);float fk=min((fdC-1.0)/2.2,ft<0.9?(fd-0.6)/1.4:1.0);\nif(fk<1.0){vec2 ba=floor(gl_FragCoord.xy);vec2 bb=floor(ba*0.5);float th=fract(bb.x*0.5+bb.y*bb.y*0.75)*0.25+fract(ba.x*0.5+ba.y*ba.y*0.75)+0.03125;if(th>fk)discard;}');
  };
  m.needsUpdate=true;return m;
 }

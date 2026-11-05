@@ -61,5 +61,9 @@ body.under #under{opacity:1}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .toast{z-index:30;bottom:auto;top:calc(150px + env(safe-area-inset-top,0px))}
 @media (prefers-reduced-motion:reduce){.banner,.flash,.fade{animation:none}.flash{opacity:0}}
+/* Mouse-and-keyboard screens move with W A S D, so the touch stick is hidden until the screen is touched (QA V4). */
+@media (hover:hover) and (pointer:fine){body:not(.touched) #stick{visibility:hidden}}
+/* Phones: the clock line stays on one line (QA V5); the hour already says the time of day. */
+@media (max-width:520px){.hclock{white-space:nowrap}.hclock .tw{display:none}}
 @media (max-width:520px){.portrait{width:60px;height:60px}.dialog{padding:10px;gap:10px}#stick{width:116px;height:116px}}
 

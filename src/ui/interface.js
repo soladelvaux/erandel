@@ -17,7 +17,7 @@ function renderHud3(){
  return `<div class="hud3">
   <div class="hcard hl"><div class="hname">${esc(S.name)} <span class="kicker">${r.sing} · T${S.tier}</span></div><div class="htitle">${esc(title())}</div>
    ${miniBar('HP',S.hp,hpMax(),'var(--hp)')}${miniBar('Fate',S.fate,100,'var(--fate)')}${miniBar('Corr',S.corr,100,'var(--corr)')}
-   <div class="hrow"><div class="pips" aria-label="${energyLeft()} actions left">${pips}</div><span class="kicker">${TIMES[timeIdx()]} <span id="lw-clock">${S.world&&HAS3D?clockLabel():''}</span> · ${w.name}</span></div>
+   <div class="hrow"><div class="pips" aria-label="${energyLeft()} actions left">${pips}</div><span class="kicker hclock"><span class="${S.world&&HAS3D?'tw':''}">${TIMES[timeIdx()]} </span><span id="lw-clock">${S.world&&HAS3D?clockLabel():''}</span> · ${w.name}</span></div>
    ${Object.keys(S.cond).length?`<div class="chips" style="margin-top:4px">${Object.keys(S.cond).filter(c=>COND[c]).map(c=>`<span class="el" style="--c:${COND[c].good?'var(--good)':'var(--hp)'}">${COND[c].n}</span>`).join('')}</div>`:''}
   </div>
   <div class="hc"><div class="counters"><span title="Gold">${ic('coin','g')}<b class="num">${S.gold}</b></span><span title="Wood">${ic('wood','w')}<b class="num">${S.mat.wood}</b></span><span title="Stone">${ic('stone','s')}<b class="num">${S.mat.stone}</b></span></div>${mk}<div class="hreg">Day ${S.day} · ${esc(REG[S.region].name)}</div></div>

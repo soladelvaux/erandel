@@ -31,7 +31,7 @@ function simState(){
    return{id,name:NPCS[id].name,region:NPC_REGION[id],pos:n?{x:r2(n.x),z:r2(n.z)}:{x:NPC_POS[id][0],z:NPC_POS[id][1]},activity:n&&n.act||null,
     rep:st.rep||0,helpedDay:st.helped||0,gifted:!!st.gifted,met:st.met||0,lastDay:st.lastDay||0,talks:st.talks||0};}),
   creatures:w3&&w3.monsters?w3.monsters.map((m,i)=>({id:'c'+i,name:m.b.n,region:m.region,alive:!!m.alive,hp:m.hp,hpMax:m.hpMax,state:m.st,pos:{x:r2(m.x),z:r2(m.z)},home:{x:r2(m.hx),z:r2(m.hz)},respawnAt:m.alive?null:r2(m.deadT)})):[],
-  inventory:{gold:S.gold,materials:{...S.mat},spells:S.spells.map(s=>({...s})),buildings:S.build.map(b=>({...b})),pet:S.pet?{...S.pet}:null,companion:S.comp?{...S.comp}:null,blood:S.blood||null},
+  inventory:{gold:S.gold,materials:{...S.mat},spells:S.spells.map(s=>({...s})),buildings:S.build.map(b=>({...b})),pet:S.pet||null,companion:S.comp?{...S.comp}:null,blood:S.blood||null},
   quests:{npcHelp:Object.fromEntries(Object.keys(S.npcs).map(id=>[id,S.npcs[id].helped||0])),discoveries:{...(world.disc||{})},flags:{...S.flags},candidate:S.cand||null},
   events:{world:JSON.parse(JSON.stringify(world.events||{})),huntedToday:JSON.parse(JSON.stringify(world.kills||{})),market:{day:S.marketDay,sales:S.salesToday,cap:S.salesCap}},
  };

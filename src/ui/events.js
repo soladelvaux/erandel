@@ -99,6 +99,7 @@ document.addEventListener('keydown',e=>{
 });
 document.addEventListener('keyup',e=>keys.delete(e.key.toLowerCase()));
 window.addEventListener('blur',()=>keys.clear());
+window.addEventListener('pointerdown',e=>{if(e.pointerType==='touch')document.body.classList.add('touched');},{passive:true,capture:true});
 (function(){
  const st=document.getElementById('stick'),kn=document.getElementById('knob');let id=null;
  const move=e=>{const r=st.getBoundingClientRect();let x=e.clientX-(r.left+r.width/2),y=e.clientY-(r.top+r.height/2);const m=Math.hypot(x,y),R0=r.width/2-14;if(m>R0){x=x/m*R0;y=y/m*R0;}kn.style.transform=`translate(${x}px,${y}px)`;stick.x=x/R0;stick.y=y/R0;};
