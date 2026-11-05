@@ -29,7 +29,7 @@ const check = (ok, what) => { if (!ok) failures.push(what); console.log(`${ok ? 
 
 (async () => {
   fs.mkdirSync(OUT, { recursive: true });
-  const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args: ['--no-sandbox', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+  const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', timeout: 120000, args: ['--no-sandbox', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
   const page = await browser.newPage();
   const errors = []; page.on('pageerror', (e) => errors.push(e.message));
   await page.evaluateOnNewDocument(() => { try { if (!sessionStorage.getItem('keep')) localStorage.clear(); } catch (e) { /* ignore */ } });

@@ -67,7 +67,7 @@ async function openPlayer(browser, name, kind, x, failures) {
 }
 
 (async () => {
-  const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args: ['--no-sandbox', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--disable-background-timer-throttling', '--disable-backgrounding-occluded-windows', '--disable-renderer-backgrounding'] });
+  const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', timeout: 120000, args: ['--no-sandbox', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--disable-background-timer-throttling', '--disable-backgrounding-occluded-windows', '--disable-renderer-backgrounding'] });
   const failures = [];
   const a = await openPlayer(browser, 'Aster', 'elves', -1.5, failures);
   const b = await openPlayer(browser, 'Brook', 'merfolk', 1.5, failures);

@@ -29,7 +29,7 @@ async function open(browser, block) {
 }
 
 (async () => {
-  const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args: ['--no-sandbox', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+  const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', timeout: 120000, args: ['--no-sandbox', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
   const failures = [];
   const noBloom = await open(browser, /examples\/jsm\/postprocessing\//);
   if (!noBloom.state.has3d || !noBloom.state.world || noBloom.state.bloom || !noBloom.state.begin) failures.push('bloom add-ons blocked: expected the 3D world without bloom, got ' + JSON.stringify(noBloom));

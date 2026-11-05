@@ -75,7 +75,7 @@ const SCENES = [
 ];
 
 (async () => {
-  const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args: ['--no-sandbox', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+  const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', timeout: 120000, args: ['--no-sandbox', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
   const out = { label: LABEL, date: new Date().toISOString(), three: null, file: { bytes: Buffer.byteLength(GAME), lines: GAME.split('\n').length }, viewports: {} };
   for (const [vp, viewport] of [['phone', { width: 412, height: 860, isMobile: true, hasTouch: true }], ['desktop', { width: 1280, height: 720 }]]) {
     const page = await browser.newPage();

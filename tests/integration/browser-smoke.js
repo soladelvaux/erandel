@@ -30,7 +30,7 @@ function serve(req) {
 
 (async () => {
   fs.mkdirSync(OUT, { recursive: true });
-  const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args: ['--no-sandbox', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+  const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', timeout: 120000, args: ['--no-sandbox', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
   const failures = [];
   for (const [name, viewport] of [['phone', { width: 412, height: 860, isMobile: true, hasTouch: true }], ['desktop', { width: 1280, height: 720 }]]) {
     const page = await browser.newPage();

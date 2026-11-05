@@ -66,7 +66,7 @@ function frameStats() {
 
 (async () => {
   fs.mkdirSync(OUT, { recursive: true });
-  const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', args: ['--no-sandbox', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+  const browser = await puppeteer.launch({ executablePath: CHROME, headless: 'new', timeout: 120000, args: ['--no-sandbox', '--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
 
   // ---------- desktop ----------
   const { page, errors } = await open(browser, { width: 1280, height: 720 });
