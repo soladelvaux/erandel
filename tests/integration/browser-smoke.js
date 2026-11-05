@@ -10,6 +10,7 @@ const fs = require('fs');
 const path = require('path');
 const puppeteer = require('puppeteer-core');
 const { serveThree } = require('../helpers/serve-three');
+const { waitForStart } = require('../helpers/wait-start');
 
 const ROOT = path.join(__dirname, '..', '..');
 const GAME = require('../../tools/build').assembleGame();
@@ -59,7 +60,7 @@ function serve(req) {
     await page.setRequestInterception(true);
     page.on('request', serve);
     await page.setViewport(viewport);
-    await page.goto('https://erandel.test/', { waitUntil: 'load' });
+    await page.goto('https://erandel.test/', { waitUntil: 'load' }); await waitForStart(page);
     await wait(2500);
     const shot = (n) => page.screenshot({ path: path.join(OUT, `${name}-${n}.png`) });
     if (!(await page.evaluate(() => HAS3D))) failures.push(`${name}: WebGL world did not start`);

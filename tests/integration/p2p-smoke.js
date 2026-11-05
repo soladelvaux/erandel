@@ -9,6 +9,7 @@ const fs = require('fs');
 const path = require('path');
 const puppeteer = require('puppeteer-core');
 const { serveThree } = require('../helpers/serve-three');
+const { waitForStart } = require('../helpers/wait-start');
 
 const ROOT = path.join(__dirname, '..', '..');
 const GAME = require('../../tools/build').assembleGame();
@@ -55,7 +56,7 @@ async function openPlayer(browser, name, kind, x, failures) {
   await page.setRequestInterception(true);
   page.on('request', serve);
   await page.setViewport({ width: 800, height: 600 });
-  await page.goto('https://erandel.test/', { waitUntil: 'load' });
+  await page.goto('https://erandel.test/', { waitUntil: 'load' }); await waitForStart(page);
   await wait(1500);
   await page.evaluate((n, k, px) => { ui.cname = n; ui.pick = k; document.querySelector('[data-act="begin"]').click(); }, name, kind, x);
   await wait(800);

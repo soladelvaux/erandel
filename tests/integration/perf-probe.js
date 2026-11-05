@@ -10,6 +10,7 @@ const fs = require('fs');
 const path = require('path');
 const puppeteer = require('puppeteer-core');
 const { serveThree } = require('../helpers/serve-three');
+const { waitForStart } = require('../helpers/wait-start');
 
 const ROOT = path.join(__dirname, '..', '..');
 const GAME = process.env.PROBE_SRC ? fs.readFileSync(process.env.PROBE_SRC, 'utf8') : require('../../tools/build').assembleGame();
@@ -82,7 +83,7 @@ const SCENES = [
     await page.evaluateOnNewDocument(() => { try { localStorage.clear(); } catch (e) { /* ignore */ } });
     await page.setRequestInterception(true); page.on('request', serve);
     await page.setViewport(viewport);
-    const t0 = Date.now(); await page.goto('https://erandel.test/', { waitUntil: 'load' });
+    const t0 = Date.now(); await page.goto('https://erandel.test/', { waitUntil: 'load' }); await waitForStart(page);
     await page.waitForFunction(() => typeof W3 !== 'undefined' && W3 && W3.renderer, { timeout: 60000 });
     const ready = Date.now() - t0;
     out.three = await page.evaluate(() => THREE.REVISION);
@@ -90,7 +91,12 @@ const SCENES = [
     const res = { worldReadyMsSoftware: ready, scenes: {} };
     for (const [name, s] of SCENES) {
       await page.evaluate((s) => { ui.dialog = null; ui.banner = null; S.used = s.used; S.pos = { x: s.x, z: s.z }; window.__teleport = true; W3.grace = 1e9; W3.cam.yaw = 0; W3.cam.pitch = 0.38; if (s.market && !ui.market) { doAction('sp', 'market'); for (let i = 0; i < 200; i++) updateCustomers(0.05, i * 0.05); } render(); }, s);
+      // Wait until the game loop has moved the camera to the new spot (a fixed wait sometimes
+      // measured the previous scene in software rendering), then let lights settle.
+      await page.waitForFunction((s) => { const c = W3.camera.position; return Math.hypot(c.x - s.x, c.z - s.z) < 15 && !window.__teleport; }, { timeout: 30000, polling: 100 }, s);
       await wait(2500); await page.evaluate(() => { W3.lightT = 0; }); await wait(600);
+      const at = await page.evaluate(() => [W3.camera.position.x, W3.camera.position.z]);
+      if (Math.hypot(at[0] - s.x, at[1] - s.z) > 15) throw new Error(`${name}: camera not at the scene`);
       res.scenes[name] = await page.evaluate(measure);
     }
     res.heapMB = await page.evaluate(() => (performance.memory ? Math.round(performance.memory.usedJSHeapSize / 1048576) : null));

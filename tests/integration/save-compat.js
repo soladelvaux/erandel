@@ -6,6 +6,7 @@ const path = require('path');
 const { execSync } = require('child_process');
 const puppeteer = require('puppeteer-core');
 const { serveThree } = require('../helpers/serve-three');
+const { waitForStart } = require('../helpers/wait-start');
 
 const ROOT = path.join(__dirname, '..', '..');
 const CHROME = process.env.CHROME || '/usr/bin/google-chrome';
@@ -28,7 +29,7 @@ const page = (html) => '<!doctype html><html><head><meta charset="utf-8"><meta n
   p.on('request', (r) => { if (r.url().startsWith('https://erandel.test/')) return r.respond({ status: 200, contentType: 'text/html', body: page(current) }); if (serveThree(r)) return; r.abort(); });
   await p.setViewport({ width: 800, height: 600 });
   // 1. play a little in the old build
-  await p.goto('https://erandel.test/', { waitUntil: 'load' }); await wait(1500);
+  await p.goto('https://erandel.test/', { waitUntil: 'load' }); await waitForStart(p); await wait(1500);
   const made = await p.evaluate(() => {
     localStorage.clear(); ui.cname = 'Oldsave'; ui.pick = 'merfolk'; document.querySelector('[data-act="begin"]').click();
     doAction('train'); doAction('explore'); S.gold = 321; S.build.length; save();
@@ -36,7 +37,7 @@ const page = (html) => '<!doctype html><html><head><meta charset="utf-8"><meta n
   });
   // 2. open the same storage in the new build
   current = NEW;
-  await p.goto('https://erandel.test/', { waitUntil: 'load' }); await wait(2500);
+  await p.goto('https://erandel.test/', { waitUntil: 'load' }); await waitForStart(p); await wait(2500);
   const loaded = await p.evaluate(() => ({ rev: typeof THREE !== 'undefined' ? THREE.REVISION : null, screen: ui.screen, name: S && S.name, race: S && S.race, day: S && S.day, gold: S && S.gold, used: S && S.used, builds: S && S.build.length, stats: S && S.stats.str }));
   const after = await p.evaluate(() => { const g = S.gold; doAction('rest'); return { ok: S.used === 3 && S.gold === g }; });
   await browser.close();

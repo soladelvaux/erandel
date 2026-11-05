@@ -1,6 +1,6 @@
 /* ============ ERANDEL WORLD (cozy 3D diorama) ============ */
-let HAS3D=false;
-(function(){try{const c=document.createElement('canvas');HAS3D=!!(window.THREE&&(c.getContext('webgl')||c.getContext('experimental-webgl')));}catch(e){HAS3D=false;}})();
+let HAS3D=false,CAN3D=false;
+(function(){try{const c=document.createElement('canvas');CAN3D=!!(c.getContext('webgl')||c.getContext('experimental-webgl'));}catch(e){CAN3D=false;}HAS3D=!!(window.THREE&&CAN3D);})();
 const IS_PHONE=Math.min(window.innerWidth||800,window.innerHeight||800)<700;
 const PREF_KEY='erandel-prefs-v1';
 let PREFS={glow:true,tilt:true,vol:.5};

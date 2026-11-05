@@ -313,13 +313,7 @@ body.hurt #vignette{background:radial-gradient(ellipse at 50% 55%,transparent 40
   <div id="acts"><button id="b-dodge" type="button" aria-label="Dodge (Shift)">Dodge</button><button id="b-jump" type="button" aria-label="Jump (Space)">Jump</button><button id="b-atk" type="button" aria-label="Attack (F)">Attack</button></div>
  </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.147.0/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/shaders/CopyShader.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/postprocessing/EffectComposer.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/postprocessing/RenderPass.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/postprocessing/ShaderPass.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.151.0/build/three.module.min.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.151.0/examples/jsm/"}}</script>
 <script>
 "use strict";
 /* ============ DATA ============ */
@@ -1337,8 +1331,8 @@ function renderLog(){
 
 
 /* ============ ERANDEL WORLD (cozy 3D diorama) ============ */
-let HAS3D=false;
-(function(){try{const c=document.createElement('canvas');HAS3D=!!(window.THREE&&(c.getContext('webgl')||c.getContext('experimental-webgl')));}catch(e){HAS3D=false;}})();
+let HAS3D=false,CAN3D=false;
+(function(){try{const c=document.createElement('canvas');CAN3D=!!(c.getContext('webgl')||c.getContext('experimental-webgl'));}catch(e){CAN3D=false;}HAS3D=!!(window.THREE&&CAN3D);})();
 const IS_PHONE=Math.min(window.innerWidth||800,window.innerHeight||800)<700;
 const PREF_KEY='erandel-prefs-v1';
 let PREFS={glow:true,tilt:true,vol:.5};
@@ -2626,7 +2620,22 @@ function start(data){
  if(HAS3D)initNet();
 }
 if(window.claude&&window.claude.hot&&window.claude.hot.snapshot){try{window.claude.hot.snapshot(()=>({S,codex:CODEX,ui:{tab:ui.tab}}));}catch(e){}}
-if(window.claude&&window.claude.hot&&window.claude.hot.ready)window.claude.hot.ready(start);
-else start(window.claude&&window.claude.hot&&window.claude.hot.data?window.claude.hot.data:{});
+/** Loads three.js and its post-processing add-ons as ES modules through the page's import map
+ *  (three.js r148+ ships add-ons only as modules; ADR-0002 U3) and exposes them as the one THREE
+ *  object the game has always used. Same fallbacks as the old script tags: if an add-on fails,
+ *  the 3D world starts without bloom; if three.js itself fails, or WebGL is missing, the game
+ *  starts in its 2D journal mode. Never rejects. */
+function loadThree(){
+ if(window.THREE||!CAN3D)return Promise.resolve();
+ const add=(p)=>import('three/addons/postprocessing/'+p+'.js').catch((err)=>{console.warn('three.js add-on '+p+' did not load, no bloom',err);return {};});
+ return Promise.all([import('three'),add('EffectComposer'),add('RenderPass'),add('ShaderPass'),add('UnrealBloomPass')])
+  .then((mods)=>{window.THREE=Object.assign({},...mods);HAS3D=true;})
+  .catch((err)=>{console.error('three.js did not load, starting in 2D',err);});
+}
+function boot(){
+ if(window.claude&&window.claude.hot&&window.claude.hot.ready)window.claude.hot.ready(start);
+ else start(window.claude&&window.claude.hot&&window.claude.hot.data?window.claude.hot.data:{});
+}
+if(window.THREE||!CAN3D)boot();else loadThree().then(boot);
 
 </script>

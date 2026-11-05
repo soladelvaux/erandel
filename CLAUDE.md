@@ -5,7 +5,7 @@ Each agent owns a specific domain, enforcing separation of concerns and quality.
 
 ## Technology Stack
 
-- **Engine**: Web browser, three.js r147 (UMD from cdnjs) + UnrealBloomPass from `three@0.147.0/examples/js` on jsDelivr (r128 until milestone C1; migration plan: `docs/architecture/adr-0002-modernise-threejs.md`)
+- **Engine**: Web browser, three.js r151 as ES modules from jsDelivr (import map in `src/ui/shell/body.html`, loaded by `loadThree()` in `src/core/start.js`) + UnrealBloomPass from `three@0.151.0/examples/jsm` (r128 until milestone C1; plan: `docs/architecture/adr-0002-modernise-threejs.md`, log: `docs/architecture/migration-log.md`)
 - **Language**: JavaScript (ES2019), HTML, CSS — one self-contained page
 - **Code root**: `src/` — the game is the module files under `src/`, joined in the order of `src/manifest.json` by `node tools/build.js` into `src/index.html` (generated; never edit it by hand). Module map: `docs/architecture/architecture.md` › Layers
 - **Version Control**: Git with trunk-based development
