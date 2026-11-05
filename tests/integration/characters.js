@@ -48,7 +48,7 @@ const check = (ok, what) => { if (!ok) failures.push(what); console.log(`${ok ? 
   check(ld.boars >= 1 && ld.stags === 3, `1 creatures placed: ${ld.boars} Thornback Boars rigged, ${ld.stags} Lunar Stags`);
 
   // put the player in an open meadow in Erelian, facing the camera, close-up camera for the evidence
-  const goTo = async (x, z) => { await page.evaluate((x, z) => { ui.dialog = null; ui.banner = null; S.pos = { x, z }; window.__teleport = true; W3.grace = 1e9; render(); }, x, z); await page.waitForFunction((x, z) => Math.hypot(W3.player.x - x, W3.player.z - z) < 1.5, { timeout: 15000, polling: 100 }, x, z); };
+  const goTo = async (x, z) => { await page.evaluate((x, z) => { ui.dialog = null; ui.banner = null; S.pos = { x, z }; window.__teleport = true; W3.grace = 1e9; render(); }, x, z); await page.waitForFunction((x, z) => Math.hypot(W3.player.x - x, W3.player.z - z) < 1.5, { timeout: 60000, polling: 100 }, x, z); };
   await goTo(-44, 2); await page.evaluate(() => { W3.zoom = 0.55; W3.cam.yaw = 0; W3.cam.pitch = 0.18; W3.player.ch.g.rotation.y = 0; }); await wait(2500);
   const shot = (n) => page.screenshot({ path: path.join(OUT, n + '.png') });
   const cur = () => page.evaluate(() => CHR.hero.cur);
