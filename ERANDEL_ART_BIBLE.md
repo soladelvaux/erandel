@@ -1,6 +1,6 @@
 # ERANDEL ART BIBLE
 
-**Owner**: Sola · **Version**: 1.0 (Phase 2 draft, awaiting Sola's review) · **Date**: 2026-11-05
+**Owner**: Sola · **Version**: 1.1 (Sola's decisions D1–D6 applied) · **Date**: 2026-11-05
 **Authority**: every future asset, shader, effect and screen is judged against this file.
 **Supersedes**: `design/art/art-bible.md` (v0.3 "cozy chibi diorama"). That file stays as the record of the current build's look until the visual transformation ships.
 **Lore boundary**: this bible decides how things *look*. It does not decide what is true in Erandel. Every name, place and culture here comes from `ERANDEL_LORE_REGISTRY.md` and keeps its category there. Where this bible gives a region a look, that look is an art-direction choice, marked **[visual direction]**. It adds no history, faction or event to the lore.
@@ -12,7 +12,7 @@
 | You are making | Read |
 |---|---|
 | Any asset at all | §1 Vision, §2 Reference workflow, §17 Quality standards |
-| A character or a kind | §4 Palette, §5 Lighting, §6 Characters, §15 Animation |
+| A character or a kind (every kind is a playable main character) | §4 Palette, §5 Lighting, §6 Characters, §15 Animation |
 | A creature | §7 Creatures, §13 VFX |
 | A building or a prop | §8 Architecture, §12 the region's sheet |
 | Ground, rock, trees or water | §9 Forest, §10 Terrain, §11 Water and materials |
@@ -38,7 +38,7 @@ Rules marked **MUST** are gates: an asset that breaks one is sent back. Rules ma
 | **R2** | The painterly three.js cliff-climbing game Sola shared (made with Flux, GPT Image, Tripo, Blender and three.js) | Proof the look runs in a browser: hand-painted textures on real 3D forms, a close third-person camera, big readable cliffs, soft stylized lighting | Its characters, world, palette and specific assets. It is a technique reference, never a source to copy |
 | **R3** | The current game (v0.4.1 screenshots, `production/qa/evidence/`) | What already works and stays: night lantern warmth with bloom, the painted slope-aware ground, the dissolving foreground, the night-market plot, readable kind silhouettes | Chibi proportions, primitive-shape props, flat untextured materials (see decision D1) |
 
-**Sola: please add the other reference images you have in mind.** The brief mentions "supplied reference images". R1 and R2 are the only references I have in this project. Each new image becomes R4, R5 and so on in §2.2, with the same three columns.
+**Decided (D2): Aelarion (R1) is Erandel's style reference.** Every asset is judged against R1. R2 is kept only as proof that the technique runs in a browser, and R3 only as a record of the current build. Neither sets the look. New references may be added later as R4, R5 and so on (§2.2), always below R1.
 
 ### 1.3 Art pillars
 
@@ -230,7 +230,7 @@ Practicals:  (what glows, which colour)
 
 ### 6.2 Proportions
 
-> **Decision D1 (needs Sola):** the current game uses chibi characters (head about half the body). R1 and this brief call for stylized anime characters. This bible recommends the proportions below for all characters, retiring chibi when the visual transformation ships. Until Sola decides, both are documented and nothing in the game changes.
+> **Decided (D1): chibi proportions are retired.** All characters use the stylized anime proportions below, matching R1. The change reaches the game with the visual transformation; until then the current build keeps its chibi characters.
 
 | Type | Height (heads) | Notes |
 |---|---|---|
@@ -256,7 +256,17 @@ Fixed across all kinds: eye shape family, iris highlight style, hair rendering (
 - **Costume layers tell culture:** an under layer, an outer layer, and one signature piece (a mantle, a sash, a hood, an embroidered collar). R1's green mantle with gold-thread embroidery is the quality bar for trim detail.
 - Robe colours follow the kind's home element at 40–60% desaturation (§4.3).
 
-### 6.5 Kind silhouettes
+### 6.5 Every kind is a main character
+
+Erandel's players choose their own kind (registry K0, CANON), and many of those kinds are creatures in other fantasy worlds: a player can be a vampire, a werewolf, a nymph, a golem or a lich as easily as a human, an elf, a dwarf or a gnome. So:
+
+- **MUST**: all 36 kinds are built as hero-quality playable characters: the player-character budget (§16.2), the full Painted Character treatment (§11.3), the shared humanoid skeleton with extra bones where needed (§15.3), face and expression quality from §6.3, and costume layers from §6.4.
+- **MUST**: a kind that looks like a creature (a werewolf, a golem, a treant, a lich, a merfolk) still reads as a *person* the player wants to be: expressive face or readable eyes, a heroic stance, clothing or ornament that shows culture. It is never designed like an enemy.
+- **MUST**: the playable form of a kind and any enemy of a similar type are visibly different. Example: a werewolf player and a Frost Wolf (B11) never share a silhouette; a ghoul player and a Restless Ghoul (B15) differ in posture, clothing and eye colour. Enemies follow §7; playable kinds follow §6.
+- **SHOULD**: each kind gets a male, a female and a neutral body option and at least three face and colour presets, so a player of any kind has a hero of their own.
+- Creature-like kinds keep their kind features at full strength (tails, wings, fins, bark, stone, fangs), painted in the same character material as everyone else.
+
+### 6.6 Kind silhouettes
 
 Each of the 36 kinds is identified by **one or two silhouette features** visible at phone size, before colour. These features come from the game's existing kind designs. The kinds' names are in the registry (section 4); their legends, paths and traits stay PROVISIONAL.
 
@@ -273,7 +283,7 @@ Each of the 36 kinds is identified by **one or two silhouette features** visible
 
 **MUST**: two kinds in the same group differ in silhouette, not only in colour. A line-up of the group in black silhouette must be told apart.
 
-### 6.6 Named characters
+### 6.7 Named characters
 
 Only canon facts are fixed here. Anything else about a named character's look is a **provisional look** until Sola approves it.
 
@@ -285,7 +295,7 @@ Only canon facts are fixed here. Anything else about a named character's look is
 | Elash, Caelithra | C5, C12, CANON names | No look defined | Needs a brief and Sola's approval |
 | Ysolde, Kesh, Tovin, Hilde, Nyx, Brother Aldric | C2, C6–C8, C10, C11, PROVISIONAL | Current game looks | Provisional characters, provisional looks |
 
-### 6.7 Equipment
+### 6.8 Equipment
 
 - Weapons and staffs are 1.0–1.3× realistic size: bigger than life, smaller than anime extremes.
 - Every magic focus (staff, wand, tome, instrument) has an emissive part in the user's element colour.
@@ -295,7 +305,7 @@ Only canon facts are fixed here. Anything else about a named character's look is
 
 ## 7. Creature design guide
 
-Creatures and their homes come from the registry (section 5, all PROVISIONAL). This guide sets how any creature looks; it adds no new species.
+This guide covers **enemies and wildlife** only. Playable kinds, including creature-like ones such as vampires, werewolves, golems and liches, are characters and follow §6 (see §6.5). Creatures and their homes come from the registry (section 5, all PROVISIONAL). This guide sets how any creature looks; it adds no new species.
 
 ### 7.1 Principles
 
@@ -576,11 +586,11 @@ The visual transformation runs in a browser on phones. These budgets keep the lo
 | Animation | Inside the `.glb` |
 | Concepts and references | PNG or JPG |
 
-### 16.2 Budgets (to be confirmed by the real-device test plan, `production/qa/mobile-perf-test-plan.md`)
+### 16.2 Budgets (approved as targets, D6; to be confirmed by the real-device test plan, `production/qa/mobile-perf-test-plan.md`)
 
 | Asset type | Triangles (LOD0) | Textures | LODs |
 |---|---|---|---|
-| Player character | 12k–18k | 1 × 1024² atlas (albedo plus mask) | 3 |
+| Player character (any of the 36 kinds) | 12k–18k; up to 22k for kinds with wings, tails or a large body | 1 × 1024² atlas (albedo plus mask) | 3 |
 | NPC | 6k–10k | 1 × 512²–1024² | 3 |
 | Creature, medium | 4k–8k | 1 × 512² | 3 |
 | Creature, large or boss | 10k–25k | 1 × 1024²–2048² | 3–4 |
@@ -669,21 +679,20 @@ Every new region screenshot is placed side by side with an Erelian screenshot. T
 
 ---
 
-## 18. Decisions for Sola
+## 18. Decisions (answered by Sola, 2026-11-05)
 
-| # | Question | Recommendation |
-|---|---|---|
-| D1 | Retire the chibi proportions for stylized anime proportions (§6.2)? | Yes, at the visual transformation, matching R1 |
-| D2 | Which other reference images should join the board (§1.2)? | Send them; each becomes R4, R5… |
-| D3 | Is the Erelian look of R1 the house style for all elven-style architecture? | Yes for Erelian; other regions shift from it (§12) |
-| D4 | Approve the provisional looks of Runekar (red beard) and the mermaid queen (teal hair, gold crown)? | Keep as provisional until their briefs |
-| D5 | Approve the asset pipeline including AI concept and image-to-3D tools (§2.3)? | Yes, with the same review as any artist |
-| D6 | Approve the phone budgets (§16.2) as targets, to be confirmed by the real-device test? | Yes |
-
----
+| # | Question | Sola's answer | Where applied |
+|---|---|---|---|
+| D1 | Retire chibi for stylized anime proportions? | **Yes** | §6.2 |
+| D2 | Which references set the style? | **Aelarion (R1)** | §1.2 |
+| D3 | R1's Erelian look as the house style for elven-style architecture? | **Yes** | §8.2, §12 |
+| D4 | Runekar's red beard, the mermaid queen's teal hair and crown? | **Provisional.** Sola added: many creatures are main characters too (vampire, human, elf, gnome, dwarf, nymph) | §6.7 stays provisional; new §6.5 makes every kind a hero-quality main character |
+| D5 | Use AI concept and image-to-3D tools, with the same review? | **Yes** | §2.3 |
+| D6 | Phone budgets as targets until the real-device test? | **Yes** | §16.2 |
 
 ## Change log
 
 | Date | Change |
 |---|---|
 | 2026-11-05 | Version 1.0 written for Phase 2. Palette sampled from R1. Built on the v0.3 art bible, the lore registry and the Phase 1 technical findings. No game code changed |
+| 2026-11-05 | Version 1.1: Sola's answers D1–D6. Chibi retired; Aelarion is the style reference; new §6.5 "Every kind is a main character"; enemies vs playable kinds separated in §7; player budget covers all 36 kinds |
