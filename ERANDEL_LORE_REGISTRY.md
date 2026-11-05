@@ -12,7 +12,7 @@ This is the one place to review how every named piece of Erandel lore is classif
 
 **How to review:** change a row's category and tell Claude, or comment on a row. A row that moves to CANON keeps its source column, so the history stays visible. When a row is CANON only in part, the Note says which part is still PROVISIONAL.
 
-**Counts today:** 20 CANON rows, 97 PROVISIONAL rows, 13 DEPRECATED rows (130 rows in all). In section 4, a kind is CANON only because Sola named it as a kind; its legends, paths and traits are still PROVISIONAL.
+**Counts today:** 20 CANON rows, 101 PROVISIONAL rows, 13 DEPRECATED rows (134 rows in all). In section 4, a kind is CANON only because Sola named it as a kind; its legends, paths and traits are still PROVISIONAL.
 
 ## 1. Core myth and world
 
@@ -38,6 +38,10 @@ This is the one place to review how every named piece of Erandel lore is classif
 | L8 | The Veilmoor: "Where souls choose rebirth or eternity" | PROVISIONAL | Game | Built on the canon myth; code id `hollow` clashes with Volume I's Hollow |
 | L9 | Dawnspire: "Keeper of the first light" | PROVISIONAL | Game |  |
 | L10 | Caelithra’s Moonwell: "The pool that holds the moon" | PROVISIONAL | Game | Built around canon Caelithra |
+| L11 | Erelian's western plateau, its cliff and two waterfalls fed by springs | PROVISIONAL | Phase 3 layout | A visual layout (`docs/regions/erelian.md`), not history |
+| L12 | Wide stone stairs up Erelian's cliff | PROVISIONAL | Phase 3 layout | |
+| L13 | An old arched stone bridge over the Aethwyn in Erelian | PROVISIONAL | Phase 3 layout | |
+| L14 | Ruins of an older age in Erelian (arches, walls, broken pillars) | PROVISIONAL | Phase 3 layout | Who built them is not answered |
 
 ## 3. People
 
@@ -210,3 +214,4 @@ No story content has been deprecated. Only Sola can deprecate lore.
 | Date | Change |
 |---|---|
 | 2026-11-05 | Registry created from the v0.4.1 game data, Sola's stated canon, and Volume I |
+| 2026-11-05 | L11–L14 added as PROVISIONAL: the Erelian benchmark region's layout (Phase 3) |

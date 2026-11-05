@@ -2,7 +2,7 @@
 function itemCenter(it){const[w,d]=itemSize(it);return[PLOT.x0+(it.c+w/2)*PLOT.t,PLOT.z0+(it.r+d/2)*PLOT.t];}
 function itemBase(it){const C=CATALOG[it.t];if(C.where==='water')return 0;if(C.layer==='floor')return PLOT.land;const o=occMap();const has=footprint(it).some(([c,r])=>o[c+','+r+'floor']);return has?PLOT.deck:PLOT.land;}
 function hasFloor(c,r){return S.build.some(it=>CATALOG[it.t].layer==='floor'&&footprint(it).some(([cc,rr])=>cc===c&&rr===r));}
-function groundY(x,z){const t=tileAt(x,z);if(t&&hasFloor(t.c,t.r))return PLOT.deck;return heightAt(x,z);}
+function groundY(x,z){const t=tileAt(x,z);if(t&&hasFloor(t.c,t.r))return PLOT.deck;return Math.max(heightAt(x,z),bridgeY(x,z));}
 function frontOf(it){const[x,z]=itemCenter(it);const[w,d]=itemSize(it);const f=[[0,1],[-1,0],[0,-1],[1,0]][it.rot%4];return{x:x+f[0]*(w+.8),z:z+f[1]*(d+.8),fx:f[0],fz:f[1]};}
 const ITEM_BUILD={
  boardwalk(g,it,lit){addMesh(g,geo('deck',()=>new THREE.BoxGeometry(2,.2,2)),mat('#7a5236'),0,.1,0);for(let i=-1;i<=1;i++)addMesh(g,geo('plank',()=>new THREE.BoxGeometry(2,.02,.04)),mat('#4a3020'),0,.21,i*.5);if(tileWater(it.c,it.r))[[-.85,-.85],[.85,-.85],[-.85,.85],[.85,.85]].forEach(([x,z])=>addMesh(g,geo('pile',()=>new THREE.CylinderGeometry(.08,.08,2,6)),mat('#3a2614'),x,-1,z));},

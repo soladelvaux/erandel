@@ -8,7 +8,7 @@ try{Object.assign(PREFS,JSON.parse(localStorage.getItem(PREF_KEY)||'{}'));}catch
 function savePrefs(){try{localStorage.setItem(PREF_KEY,JSON.stringify(PREFS));}catch(e){}}
 
 const CENTERS={vael:[0,38],greenmere:[-46,8],coral:[-52,58],sanctum:[40,30],moonwell:[10,-8],skyreach:[-4,-50],frostfell:[-48,-46],ember:[56,-12],stonedeep:[46,-54],hollow:[0,84]};
-const BIOME={vael:{h:1,amp:.6,c:'#5f8a40'},greenmere:{h:1.4,amp:.8,c:'#467f3e'},coral:{h:-6,amp:.8,c:'#2f6f72'},sanctum:{h:2.5,amp:.6,c:'#98ab6a'},moonwell:{h:1,amp:.5,c:'#43786a'},skyreach:{h:13,amp:3.5,c:'#7e837f'},frostfell:{h:4,amp:1.2,c:'#dfe8ee'},ember:{h:1.6,amp:1,c:'#6e402e'},stonedeep:{h:15,amp:3.5,c:'#625a50'},hollow:{h:.3,amp:.5,c:'#434a40'}};
+const BIOME={vael:{h:1,amp:.6,c:'#5f8a40'},greenmere:{h:1.4,amp:.8,c:'#56704a'},coral:{h:-6,amp:.8,c:'#2f6f72'},sanctum:{h:2.5,amp:.6,c:'#98ab6a'},moonwell:{h:1,amp:.5,c:'#43786a'},skyreach:{h:13,amp:3.5,c:'#7e837f'},frostfell:{h:4,amp:1.2,c:'#dfe8ee'},ember:{h:1.6,amp:1,c:'#6e402e'},stonedeep:{h:15,amp:3.5,c:'#625a50'},hollow:{h:.3,amp:.5,c:'#434a40'}};
 const TAGLINE={vael:'Where reborn souls cross into Erandel',greenmere:'City of the White Boughs',coral:'Where the Aethwyn sleeps beneath the water',sanctum:'Keeper of the first light',moonwell:'The pool that holds the moon',skyreach:'The windward road where the Aethwyn begins',frostfell:'The winter that never ends',ember:'Ash, vents and the old fire',stonedeep:'Halls of the rune-hammer',hollow:'Where souls choose rebirth or eternity'};
 const WB={minX:-80,maxX:80,minZ:-80,maxZ:100};
 const RIVER=[[-4,-44],[-8,-24],[-24,-6],[-38,14],[-44,34],[-52,56]];

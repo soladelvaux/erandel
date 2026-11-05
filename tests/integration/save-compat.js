@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 const puppeteer = require('puppeteer-core');
-const { serveThree } = require('../helpers/serve-three');
+const { serveThree, serveAssets } = require('../helpers/serve-three');
 const { waitForStart } = require('../helpers/wait-start');
 
 const ROOT = path.join(__dirname, '..', '..');
@@ -26,7 +26,7 @@ const page = (html) => '<!doctype html><html><head><meta charset="utf-8"><meta n
   const p = await browser.newPage();
   const errors = []; p.on('pageerror', (e) => errors.push(e.message));
   await p.setRequestInterception(true);
-  p.on('request', (r) => { if (r.url().startsWith('https://erandel.test/')) return r.respond({ status: 200, contentType: 'text/html', body: page(current) }); if (serveThree(r)) return; r.abort(); });
+  p.on('request', (r) => { if (r.url().startsWith('https://erandel.test/')) return r.respond({ status: 200, contentType: 'text/html', body: page(current) }); if (serveAssets(r) || serveThree(r)) return; r.abort(); });
   await p.setViewport({ width: 800, height: 600 });
   // 1. play a little in the old build
   await p.goto('https://erandel.test/', { waitUntil: 'load' }); await waitForStart(p); await wait(1500);

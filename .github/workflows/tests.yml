@@ -24,6 +24,8 @@ jobs:
         run: npm test
       - name: Start-up fallbacks (no bloom files, no three.js)
         run: CHROME="$(which google-chrome || which google-chrome-stable)" npm run test:fallback
+      - name: Erelian region acceptance test
+        run: CHROME="$(which google-chrome || which google-chrome-stable)" npm run test:region
       - name: Real-browser smoke test (headless Chrome)
         run: CHROME="$(which google-chrome || which google-chrome-stable)" npm run test:browser
       - name: Peer-to-peer multiplayer smoke test (two headless players)

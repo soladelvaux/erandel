@@ -1,7 +1,7 @@
 /* ---------- world build ---------- */
 let W3=null,dummy=null,_tc=null,_c1=null,_c2=null,_v=null,_pv=null;
 function Inst(geom,material,max,scene){const m=new THREE.InstancedMesh(geom,material,max);m.instanceColor=new THREE.InstancedBufferAttribute(new Float32Array(max*3),3);m.count=0;m._max=max;m.frustumCulled=false;scene.add(m);return m;}
-function put(im,x,y,z,sx,sy,sz,ry,col,rx){if(im.count>=im._max)return;dummy.position.set(x,y,z);dummy.rotation.set(rx||0,ry||0,0);dummy.scale.set(sx,sy,sz);dummy.updateMatrix();im.setMatrixAt(im.count,dummy.matrix);im.setColorAt(im.count,_tc.set(col||'#ffffff'));im.count++;}
+function put(im,x,y,z,sx,sy,sz,ry,col,rx){if(PUT_OFF&&regionAt(x,z)==='greenmere')return;if(im.count>=im._max)return;dummy.position.set(x,y,z);dummy.rotation.set(rx||0,ry||0,0);dummy.scale.set(sx,sy,sz);dummy.updateMatrix();im.setMatrixAt(im.count,dummy.matrix);im.setColorAt(im.count,_tc.set(col||'#ffffff'));im.count++;}
 function finishInst(list){list.forEach(im=>{im.instanceMatrix.needsUpdate=true;if(im.instanceColor)im.instanceColor.needsUpdate=true;});}
 function mkGlow(color,size,op){const m=new THREE.SpriteMaterial({map:GT,color:new THREE.Color(color),transparent:true,opacity:op,blending:THREE.AdditiveBlending,depthWrite:false});const s=new THREE.Sprite(m);s.scale.set(size,size,1);return s;}
 function glowTex(){const cv=document.createElement('canvas');cv.width=cv.height=64;const x=cv.getContext('2d');const g=x.createRadialGradient(32,32,0,32,32,32);g.addColorStop(0,'rgba(255,255,255,1)');g.addColorStop(.3,'rgba(255,255,255,.45)');g.addColorStop(1,'rgba(255,255,255,0)');x.fillStyle=g;x.fillRect(0,0,64,64);return new THREE.CanvasTexture(cv);}
@@ -43,7 +43,8 @@ function initWorld(){
   pad:Inst(geo('ipad',()=>new THREE.CylinderGeometry(1,1,.05,10)),new THREE.MeshLambertMaterial({color:W}),300,scene),
   grass:Inst(geo('igrass',()=>{const c=new THREE.ConeGeometry(.07,.36,4);c.translate(0,.18,0);return c;}),new THREE.MeshLambertMaterial({color:W}),2600,scene),
  };
- const rng=mulberry(7);const glows=[];const LIGHTS=[];const flick=[];const COL=new Map();const addCol=(x,z,r,cr,lo,hi)=>{const k=Math.floor(x/4)+','+Math.floor(z/4);if(!COL.has(k))COL.set(k,[]);const g=heightAt(x,z);COL.get(k).push({x,z,r,cr:cr||r,lo:g+(lo==null?0:lo),hi:g+(hi==null?12:hi)});};
+ const erelianNew=regionWanted();
+ const rng=mulberry(7);const glows=[];const LIGHTS=[];const flick=[];const COL=new Map();const addCol=(x,z,r,cr,lo,hi)=>{if(PUT_OFF&&regionAt(x,z)==='greenmere')return;const k=Math.floor(x/4)+','+Math.floor(z/4);if(!COL.has(k))COL.set(k,[]);const g=heightAt(x,z);COL.get(k).push({x,z,r,cr:cr||r,lo:g+(lo==null?0:lo),hi:g+(hi==null?12:hi)});};
  const addLight=(x,y,z,str,colr)=>LIGHTS.push({x,y,z,str,col:colr||WARM});
  const lantern=(x,z,h)=>{const y=heightAt(x,z);put(I.box,x,y,z,.14,h||1.4,.14,0,'#3a2a1a');put(I.lamp,x,y+(h||1.4)+.16,z,.3,.34,.3,0,'#ffd08a');const g=mkGlow('#ffcf7a',1.5,.3);g.position.set(x,y+(h||1.4)+.16,z);scene.add(g);glows.push({s:g,base:.15,night:.9});addLight(x,y+(h||1.4)+.2,z,1);};
  const floatL=(x,z)=>{put(I.lamp,x,.1,z,.24,.2,.24,rng()*3,'#ffc070');const g=mkGlow('#ffb050',1.1,.25);g.position.set(x,.22,z);scene.add(g);glows.push({s:g,base:.08,night:.55,pulse:1});const r=mkGlow('#ff9a40',.9,.12);r.position.set(x,-.3,z);scene.add(r);glows.push({s:r,base:.03,night:.25});flick.push({x,z,t:rng()*6,o:g});};
@@ -52,6 +53,7 @@ function initWorld(){
  const GREENS=['#3f7a34','#4c8a3e','#5a9a44','#38703a'],PALE=['#a2c98a','#b8d8a0','#c8e6b4'];
  for(let n=0;n<2200;n++){
   const x=WB.minX+6+rng()*(WB.maxX-WB.minX-12),z=WB.minZ+6+rng()*(WB.maxZ-WB.minZ-12);const reg=regionAt(x,z),h=heightAt(x,z);
+  PUT_OFF=erelianNew; // old props standing inside Erelian are skipped (the region replaces them)
   if(reg==='coral'){if(h>-.8)continue;}else if(h<.25)continue;
   if(Math.abs(x)<4.5&&z>22&&z<76)continue;if(plotW(x,z)>0)continue;
   if(keep.some(p=>(p[0]-x)**2+(p[1]-z)**2<20))continue;
@@ -73,6 +75,7 @@ function initWorld(){
   else if(type==='flower'){for(let k=0;k<4;k++)put(I.bulb,x+(rng()-.5)*.8,h+.15,z+(rng()-.5)*.8,.11,.11,.11,0,['#f2d26a','#e88ab0','#b090f0','#fff4e0'][k]);}
   else if(type==='grass'){for(let k=0;k<6;k++)put(I.grass,x+(rng()-.5)*1.4,h,z+(rng()-.5)*1.4,1,.8+rng()*.6,1,rng()*6,GREENS[k%4]);}
  }
+ PUT_OFF=false; // only the scatter loop skips Erelian's old props; everything after it is placed as before
  // Thorngate: bamboo belt, road lights, string lights
  const BAM=['#6a9a4a','#7aaa52','#5a8a40'];
  for(let n=0;n<220;n++){const x=33+rng()*12,z=20+rng()*40;const h=heightAt(x,z);if(h<.2)continue;const t=3.5+rng()*3;put(I.trunk,x,h,z,.45,t,.45,0,BAM[n%3]);if(n%3===0)put(I.canopy,x,h+t,z,.55,.35,.55,rng()*6,'#5a8a3a');}
@@ -90,7 +93,7 @@ function initWorld(){
  addMesh(scene,new THREE.TorusGeometry(4.5,.75,6,16,Math.PI),mat('#3d5a2c'),0,gy+7,52);
  addMesh(scene,new THREE.TorusGeometry(4.5,.35,5,16,Math.PI),mat('#5a3a22'),0,gy+7.3,52.3);
  for(let i=0;i<14;i++){const a=i/13*Math.PI;const g=mkGlow('#b8ffb0',.7,.3);g.position.set(Math.cos(a)*4.6,gy+7+Math.sin(a)*4.6,52.6);scene.add(g);glows.push({s:g,base:.2,night:.8,pulse:1});}
- for(let i=0;i<7;i++){const a=i/7*Math.PI*2,x=-46+Math.cos(a)*(6+(i%2)*4),z=8+Math.sin(a)*(6+(i%2)*4),y=G(x,z);addCol(x,z,1.3);addMesh(scene,geo('spire'+(i%3),()=>new THREE.CylinderGeometry(.8,1.2,10+(i%3)*2,6)),mat('#ece8dc'),x,y+5+(i%3),z);addMesh(scene,geo('spc',()=>new THREE.ConeGeometry(1.4,5,6)),mat('#6fa860'),x,y+12.5+(i%3)*2,z);lantern(x+1.8,z+.5,1.6);}
+ if(!erelianNew)for(let i=0;i<7;i++){const a=i/7*Math.PI*2,x=-46+Math.cos(a)*(6+(i%2)*4),z=8+Math.sin(a)*(6+(i%2)*4),y=G(x,z);addCol(x,z,1.3);addMesh(scene,geo('spire'+(i%3),()=>new THREE.CylinderGeometry(.8,1.2,10+(i%3)*2,6)),mat('#ece8dc'),x,y+5+(i%3),z);addMesh(scene,geo('spc',()=>new THREE.ConeGeometry(1.4,5,6)),mat('#6fa860'),x,y+12.5+(i%3)*2,z);lantern(x+1.8,z+.5,1.6);}
  const sy=G(40,30);addCol(40,30,3);addMesh(scene,new THREE.CylinderGeometry(2,3,24,8),mat('#f0ece0'),40,sy+12,30);addMesh(scene,new THREE.SphereGeometry(2,12,9),bmat('#fff2b0'),40,sy+25,30);
  {const g=mkGlow('#fff0b0',12,.55);g.position.set(40,sy+25,30);scene.add(g);glows.push({s:g,base:.45,night:.9});addLight(40,sy+3,30,1.2,'#fff0c0');}
  const my=G(10,-8);const ring=addMesh(scene,new THREE.TorusGeometry(3.6,.5,6,18),mat('#9aa0b0'),10,my+.35,-8);ring.rotation.x=Math.PI/2;
@@ -106,6 +109,7 @@ function initWorld(){
  const wisps=[];for(let i=0;i<16;i++){const x=-14+rng()*28,z=70+rng()*22,g=mkGlow('#cfe8ff',1.4,.6);g.position.set(x,G(x,z)+1.5,z);scene.add(g);wisps.push({s:g,x,z,y:G(x,z)+1.5,t:rng()*6});}
  const flies=[];const fm=new THREE.MeshBasicMaterial({color:'#f6f4ea',side:THREE.DoubleSide});for(let i=0;i<16;i++){const x=-46+(rng()-.5)*30,z=8+(rng()-.5)*30;const f=new THREE.Group();[-1,1].forEach(sd=>{const w=new THREE.Mesh(geo('fly',()=>{const p=new THREE.PlaneGeometry(.22,.16);p.translate(.11,0,0);return p;}),fm);w.scale.x=sd;f.add(w);});scene.add(f);flies.push({s:f,x,z,t:rng()*9});}
  for(let i=0;i<40;i++){const x=-6+rng()*44,z=-20+rng()*30;const g=mkGlow('#d8ff90',.35,0);g.position.set(x,G(x,z)+.8+rng(),z);scene.add(g);glows.push({s:g,base:0,night:.9,pulse:1,fire:{x,z,y:g.position.y,t:rng()*9}});}
+ PUT_OFF=false;
  finishInst(Object.values(I));
  ['trunk','canopy','cone','rock','box','glowy','grass'].forEach(k=>nearFade(I[k].material));
  // build layer
@@ -139,6 +143,7 @@ function initWorld(){
  S&&S.build.forEach(addItemMesh);
  scene.traverse(o=>{if(o.isMesh&&!o.isInstancedMesh&&o!==terrain&&o!==water&&o.material&&!o.material.transparent&&/Lambert|Phong|Standard/.test(o.material.type))nearFade(o.material);});
  setupComposer();
+ erelianInit();
  window.addEventListener('resize',()=>{renderer.setSize(window.innerWidth,window.innerHeight,false);camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix();if(W3.composer)W3.composer.setSize(window.innerWidth,window.innerHeight);});
  initPointer(canvas);
  requestAnimationFrame(loop);

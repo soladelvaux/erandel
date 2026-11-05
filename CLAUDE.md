@@ -10,7 +10,7 @@ Each agent owns a specific domain, enforcing separation of concerns and quality.
 - **Code root**: `src/` — the game is the module files under `src/`, joined in the order of `src/manifest.json` by `node tools/build.js` into `src/index.html` (generated; never edit it by hand). Module map: `docs/architecture/architecture.md` › Layers
 - **Version Control**: Git with trunk-based development
 - **Build System**: `node tools/build.js` (joins the modules, writes `src/index.html` and `dist/`); open `src/index.html` in a browser; production is the public site, the claude.ai Artifact is the dev preview
-- **Asset Pipeline**: none — all art is generated in code (3D primitives, canvas textures); no external assets
+- **Asset Pipeline**: `tools/assets/author-erelian.mjs` authors the region prefabs in code → meshopt GLBs and a KTX2 foliage atlas in `assets/game/` (shipped next to the page by `tools/build.js`). Everything else is still generated at runtime. Region doc: `docs/regions/erelian.md`
 - **Tests**: Node — `tests/` (jsdom engine playthrough, puppeteer-core real-browser smoke test, market simulation). Run `npm install` then `npm test` inside `tests/`
 
 > **Engine note**: `engine.name` in `project.yaml` only accepts Godot, Unity or Unreal,

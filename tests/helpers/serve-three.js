@@ -19,6 +19,8 @@ function serveThree(req) {
   const u = req.url().split('?')[0];
   const pkg = pkgFor(u);
   if (/cdnjs\.cloudflare\.com\/ajax\/libs\/three\.js\/.+\/three(\.min)?\.js$/.test(u)) return js(req, path.join(MODS, pkg, 'build', 'three.min.js')), true;
+  const w = u.match(/three@[\d.]+\/(examples\/jsm\/libs\/.+\.wasm)$/);
+  if (w) return req.respond({ status: 200, contentType: 'application/wasm', headers: { 'Access-Control-Allow-Origin': '*' }, body: fs.readFileSync(path.join(MODS, pkg, w[1])) }), true;
   const m = u.match(/three@[\d.]+\/((?:build|examples\/jsm?)\/.+\.js)$/);
   // jsDelivr minifies on request (three.module.min.js); the package has only three.module.js.
   // THREE_MIN_FILE=<path> serves a real copy of the CDN file instead, to check it works.
@@ -27,4 +29,16 @@ function serveThree(req) {
   return false;
 }
 
-module.exports = { serveThree };
+const ROOT = path.join(__dirname, '..', '..');
+/** Serves the game's own assets (assets/game/...) from the repo for pages at https://erandel.test/. */
+function serveAssets(req) {
+  const u = req.url().split('?')[0];
+  const m = u.match(/^https:\/\/erandel\.test\/(assets\/game\/[\w\/.-]+)$/);
+  if (!m) return false;
+  const f = path.join(ROOT, m[1]);
+  if (!f.startsWith(path.join(ROOT, 'assets', 'game')) || !fs.existsSync(f)) return req.respond({ status: 404, body: '' }), true;
+  const type = f.endsWith('.png') ? 'image/png' : f.endsWith('.json') ? 'application/json' : 'application/octet-stream';
+  return req.respond({ status: 200, contentType: type, body: fs.readFileSync(f) }), true;
+}
+
+module.exports = { serveThree, serveAssets };

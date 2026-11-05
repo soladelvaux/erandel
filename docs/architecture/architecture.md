@@ -41,6 +41,10 @@ src/                     the game, as module files joined in the order of src/ma
 ├── net/                 sanitize.js (untrusted peer data), transports.js (claude.ai room,
 │                        peer-to-peer, solo)
 ├── audio/               music.js (procedural ambient)
+├── core/gfx.js          graphics tiers (low / medium / high)
+├── world/erelian-layout.js   Erelian terrain shaping, bridge deck (docs/regions/erelian.md)
+├── world/region-erelian.js   Erelian runtime: asset streaming, instancing, water, falls, atmosphere
+├── rendering/painted-materials.js   shared painted material for authored prefabs
 └── ui/                  journal.js (2D journal pages, also the no-WebGL fallback), screen-tags,
                          action-hud (skills, focus, minimap), interface.js (HUD, dialogs, build bar),
                          events.js (clicks, keys)

@@ -9,7 +9,7 @@
 const fs = require('fs');
 const path = require('path');
 const puppeteer = require('puppeteer-core');
-const { serveThree } = require('../helpers/serve-three');
+const { serveThree, serveAssets } = require('../helpers/serve-three');
 const { waitForStart } = require('../helpers/wait-start');
 
 const ROOT = path.join(__dirname, '..', '..');
@@ -24,7 +24,7 @@ function serve(req) {
   if (u.startsWith('https://erandel.test/')) {
     return req.respond({ status: 200, contentType: 'text/html', body: '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>[hidden]{display:none!important}</style></head><body>' + GAME + '</body></html>' });
   }
-  if (serveThree(req)) return;
+  if (serveAssets(req) || serveThree(req)) return;
   return req.abort();
 }
 

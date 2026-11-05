@@ -16,6 +16,7 @@ function heightAt(x,z){
  const cw=cragAt(x,z);if(cw)h=Math.max(h,h+cw);
  if(Math.abs(x)<3&&z>24&&z<74)h=h*.4+.6*(1+(fbm(x,z)-.5)*.3);
  const pw=plotW(x,z);if(pw>0){const ph=inPond(x,z)?-1.1:PLOT.land;h=h*(1-pw)+ph*pw;}
+ h=erelianShape(x,z,h);
  const e=Math.min(x-WB.minX,WB.maxX-x,z-WB.minZ,WB.maxZ-z);if(e<12)h+=Math.pow((12-e)/12,2)*18;
  return h;
 }

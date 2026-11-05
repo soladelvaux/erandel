@@ -1,0 +1,123 @@
+{
+  "generated": "2026-11-05",
+  "packs": {
+    "veg_erelian_trees": {
+      "bytes": 400664,
+      "triangles": {
+        "veg_erelian_white-tree_hero": [
+          1640,
+          588
+        ],
+        "veg_erelian_white-tree_a": [
+          984,
+          334
+        ],
+        "veg_erelian_white-tree_b": [
+          872,
+          300
+        ],
+        "veg_erelian_green-tree_a": [
+          1072,
+          356
+        ],
+        "veg_erelian_green-tree_b": [
+          836,
+          282
+        ]
+      }
+    },
+    "env_erelian_rocks": {
+      "bytes": 43400,
+      "triangles": {
+        "env_erelian_rock_a": [
+          320,
+          80
+        ],
+        "env_erelian_rock_b": [
+          320,
+          80
+        ],
+        "env_erelian_rock_flat": [
+          320,
+          80
+        ],
+        "env_erelian_boulder_cliff": [
+          960,
+          160
+        ],
+        "veg_erelian_log": [
+          120,
+          72
+        ]
+      }
+    },
+    "env_erelian_ruins": {
+      "bytes": 140480,
+      "triangles": {
+        "env_erelian_spire_a": [
+          726,
+          366
+        ],
+        "env_erelian_spire_b": [
+          726,
+          366
+        ],
+        "env_erelian_ruin-arch": [
+          912,
+          720
+        ],
+        "env_erelian_ruin-arch_broken": [
+          768,
+          576
+        ],
+        "env_erelian_ruin-wall": [
+          1152,
+          1152
+        ],
+        "env_erelian_ruin-pillar": [
+          488,
+          148
+        ],
+        "env_erelian_ruin-pillar_short": [
+          488,
+          148
+        ],
+        "env_erelian_stairs": [
+          1920,
+          1920
+        ],
+        "env_erelian_bridge": [
+          1892,
+          1252
+        ]
+      }
+    },
+    "veg_all_groundcover": {
+      "bytes": 16612,
+      "triangles": {
+        "veg_all_grass-clump": [
+          6
+        ],
+        "veg_all_grass-tall": [
+          8
+        ],
+        "veg_all_flowers": [
+          6
+        ],
+        "veg_all_fern": [
+          72
+        ],
+        "veg_all_reeds": [
+          8
+        ],
+        "veg_all_bush": [
+          28
+        ]
+      }
+    }
+  },
+  "textures": {
+    "tex_all_foliage-atlas.ktx2": 193215,
+    "tex_all_foliage-atlas.png": 665076
+  }
+}

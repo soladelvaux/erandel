@@ -68,6 +68,7 @@ document.addEventListener('click',e=>{
   case'photo':ui.photo=true;ui.settings=false;document.body.classList.add('photo');render();break;
   case'settings':ui.settings=!ui.settings;render();break;
   case'set-glow':PREFS.glow=!PREFS.glow;savePrefs();if(W3)setupComposer();render();break;
+  case'set-gfx':{const i=GFX_ORDER.indexOf(PREFS.gfx||'auto');PREFS.gfx=GFX_ORDER[(i+1)%GFX_ORDER.length];savePrefs();render();break;}
   case'set-tilt':PREFS.tilt=!PREFS.tilt;savePrefs();render();break;
   case'm-play':if(MUS.playing)mPause();else mPlay();render();break;
   case'm-next':mSkip(1);render();break;

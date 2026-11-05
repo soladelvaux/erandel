@@ -71,6 +71,9 @@ function build() {
   const site = SITE_HEAD + game + '\n' + stamp + '</body>\n</html>\n';
   fs.writeFileSync(path.join(DIST, 'site', 'index.html'), site);
   fs.writeFileSync(path.join(DIST, 'preview', 'erandel.html'), game);
+  // Region assets (docs/regions/erelian.md) ship next to the page: dist/site/assets/game/...
+  const assets = path.join(ROOT, 'assets', 'game');
+  if (fs.existsSync(assets)) { fs.rmSync(path.join(DIST, 'site', 'assets'), { recursive: true, force: true }); fs.cpSync(assets, path.join(DIST, 'site', 'assets', 'game'), { recursive: true }); }
   return { commit, siteBytes: Buffer.byteLength(site), previewBytes: Buffer.byteLength(game) };
 }
 

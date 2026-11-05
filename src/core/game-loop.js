@@ -46,7 +46,7 @@ function loop(){
  const ael=w.npcs.find(n=>n.special);if(ael.ch.orb){ael.ch.orb.getWorldPosition(_v);w.aelGlow.position.copy(_v);}w.aelGlow.material.opacity=.5+.25*Math.sin(t*2.2);
  w.lightT-=dt;
  if(!playing){
-  if(w.camera.fov!==36){w.camera.fov=36;w.camera.updateProjectionMatrix();}if(TAGS.map.size)sweepTags();updateSky(nf,dt);
+  if(w.camera.fov!==36){w.camera.fov=36;w.camera.updateProjectionMatrix();}if(TAGS.map.size)sweepTags();erelianTick(dt,t,nf);updateSky(nf,dt);
   FADE.value.set(0,-999,0);
   w.orbit+=dt*.05;const cx=14,cz=42,cy=1,ok=clamp(1.3/w.camera.aspect,1,2.2);w.camDist=30*ok;w.camera.position.set(cx+Math.sin(w.orbit)*24*ok,cy+20*ok,cz+Math.cos(w.orbit)*24*ok);w.camera.lookAt(cx,cy,cz);
   if(w.lightT<=0){w.lightT=.3;assignLights(cx,cz,1);}
@@ -109,7 +109,7 @@ function loop(){
  else{w.hilite.visible=false;if(w.ghost)w.ghost.visible=false;}
  w.saveT+=dt;if(w.saveT>1.5){w.saveT=0;S.pos={x:Math.round(p.x*10)/10,z:Math.round(p.z*10)/10};save();}
  FADE.value.set(p.x,ui.build?-999:py,p.z);w.plamp.position.set(p.x,py+2.4,p.z);w.plamp.intensity+=(Math.min(1,nf)*.9-w.plamp.intensity)*Math.min(1,dt*4);
- updateSky(nf,dt);drawTags();sweepTags();
+ erelianTick(dt,t,nf);updateSky(nf,dt);drawTags();sweepTags();
  w.uiT-=dt;if(w.uiT<=0){w.uiT=.1;updateActionUi(t);drawMini();}
  w.netT-=dt;if(w.netT<=0){w.netT=2;renderNet();}
  netSend(dt);

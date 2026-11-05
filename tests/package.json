@@ -11,6 +11,7 @@
     "test:p2p": "node integration/p2p-smoke.js",
     "test:save": "node integration/save-compat.js",
     "test:fallback": "node integration/fallback-smoke.js",
+    "test:region": "node integration/region-erelian.js",
     "perf": "node integration/perf-probe.js"
   },
   "devDependencies": {
