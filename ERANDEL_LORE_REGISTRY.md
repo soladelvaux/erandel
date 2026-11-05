@@ -1,0 +1,212 @@
+# ERANDEL LORE REGISTRY
+
+**Owner**: Sola · **Updated**: 2026-11-05 · **Rule**: nothing PROVISIONAL becomes CANON without Sola's approval
+
+This is the one place to review how every named piece of Erandel lore is classified. The explanations and fit notes for Master Lore Bible Volume I are in `design/narrative/lore-bible.md`. The original Volume I text is kept unedited in `design/narrative/sources/`.
+
+| Category | Meaning | Who sets it |
+|---|---|---|
+| **CANON** | Confirmed original Erandel lore | Sola only |
+| PROVISIONAL | A development idea waiting for Sola's approval. This includes everything written while building the game, and all of Volume I | Anyone may add; only Sola promotes |
+| DEPRECATED | Old prototype material that is no longer current | Sola, or anyone marking a superseded name, with what replaced it |
+
+**How to review:** change a row's category and tell Claude, or comment on a row. A row that moves to CANON keeps its source column, so the history stays visible. When a row is CANON only in part, the Note says which part is still PROVISIONAL.
+
+**Counts today:** 20 CANON rows, 97 PROVISIONAL rows, 13 DEPRECATED rows (130 rows in all). In section 4, a kind is CANON only because Sola named it as a kind; its legends, paths and traits are still PROVISIONAL.
+
+## 1. Core myth and world
+
+| # | Entry | Category | Source | Note |
+|---|---|---|---|---|
+| W1 | Erandel (also spelled Aerandel) is Sola's original fantasy world | **CANON** | Sola | Spelling to be decided |
+| W2 | Souls arrive at the Thorngate and choose rebirth or eternity | **CANON** | Sola |  |
+| W3 | Erandel spans a game, novels and stories, YouTube, biographies, maps, an encyclopedia | **CANON** | Sola (Volume I) | Scope of the IP |
+| W4 | Aelarion says Fate and Corruption "are the shape your deeds leave on the world" | PROVISIONAL | Game (`AEL_LORE`) |  |
+
+## 2. Places
+
+| # | Entry | Category | Source | Note |
+|---|---|---|---|---|
+| L0 | The Aethwyn river | **CANON** | Sola | Its course in the game (Pass → Erelian → Mere) is PROVISIONAL |
+| L1 | Thorngate | **CANON** | Sola (name) | Its tagline in the game, "Where reborn souls cross into Erandel", is PROVISIONAL |
+| L2 | Aethwyn Mere: "Where the Aethwyn sleeps beneath the water" | PROVISIONAL | Game | Lake named after the canon river |
+| L3 | Erelian | **CANON** | Sola (name) | Its tagline in the game, "City of the White Boughs", is PROVISIONAL |
+| L4 | Cindral Wastes: "Ash, vents and the old fire" | PROVISIONAL | Game |  |
+| L5 | Vetharn’s Pass | **CANON** | Sola (name) | Its tagline in the game, "The windward road where the Aethwyn begins", is PROVISIONAL |
+| L6 | Hrimwold: "The winter that never ends" | PROVISIONAL | Game |  |
+| L7 | Runekar’s Deep: "Halls of the rune-hammer" | PROVISIONAL | Game | Built around canon Runekar |
+| L8 | The Veilmoor: "Where souls choose rebirth or eternity" | PROVISIONAL | Game | Built on the canon myth; code id `hollow` clashes with Volume I's Hollow |
+| L9 | Dawnspire: "Keeper of the first light" | PROVISIONAL | Game |  |
+| L10 | Caelithra’s Moonwell: "The pool that holds the moon" | PROVISIONAL | Game | Built around canon Caelithra |
+
+## 3. People
+
+| # | Entry | Category | Source | Note |
+|---|---|---|---|---|
+| C1 | Aelarion Silverbough, gatekeeper of Erandel | **CANON** | Sola | Portrait art supplied by Sola |
+| C2 | Ysolde, innkeeper | PROVISIONAL | Game |  |
+| C3 | A mermaid queen | **CANON** | Sola |  |
+| C4 | Her name "Maren" and the Mere as her court | PROVISIONAL | Game | Name unconfirmed |
+| C5 | Elash | **CANON** | Sola (name) | Role in game "warden of the white boughs" is PROVISIONAL |
+| C6 | Kesh, vent smith | PROVISIONAL | Game |  |
+| C7 | Tovin, mountain guide | PROVISIONAL | Game |  |
+| C8 | Hilde, ice harvester | PROVISIONAL | Game |  |
+| C9 | Runekar | **CANON** | Sola (name; "a dwarf with a rune hammer") | Role in game "rune-smith" is PROVISIONAL |
+| C10 | Nyx, keeper of lingering souls | PROVISIONAL | Game |  |
+| C11 | Brother Aldric, priest | PROVISIONAL | Game |  |
+| C12 | Caelithra | **CANON** | Sola (name) | Role in game "moon oracle" is PROVISIONAL |
+| C13 | An elf mage | **CANON** | Sola (Dawnfolk idea) | Unnamed; may or may not be Elash |
+
+## 4. Peoples and kinds
+
+| # | Entry | Category | Source | Note |
+|---|---|---|---|---|
+| K0 | Players choose their own kind; humans have many jobs | **CANON** | Sola (first design message) | The system is canon; the list below is mostly PROVISIONAL |
+| K1 | Merfolk (Sea) | **CANON** | Sola named this kind | In the game: legend Tide Sovereign, dark legend Drowned One; these names, paths and traits are PROVISIONAL |
+| K2 | Sirens (Sea): legend Voice of the Abyss, dark legend Drowning Chorus | PROVISIONAL | Game |  |
+| K3 | Selkies (Sea): legend Eternal Tide-Walker, dark legend Skinless Wraith | PROVISIONAL | Game |  |
+| K4 | Nereids (Sea): legend Daughter of the Sea God, dark legend Brine Witch | PROVISIONAL | Game |  |
+| K5 | Vampires (Night) | **CANON** | Sola named this kind | In the game: legend Daywalker Saint, dark legend Blood Tyrant; these names, paths and traits are PROVISIONAL |
+| K6 | Werewolves (Night) | **CANON** | Sola named this kind | In the game: legend Moon’s Chosen, dark legend Fenris-Born; these names, paths and traits are PROVISIONAL |
+| K7 | Ghouls (Night): legend Keeper of Lost Souls, dark legend Hollow King | PROVISIONAL | Game |  |
+| K8 | Shades (Night): legend Nightfall Incarnate, dark legend The Unlit | PROVISIONAL | Game |  |
+| K9 | Nymphs (Nature) | **CANON** | Sola named this kind | In the game: legend Spirit of the Land, dark legend Withered Dryad; these names, paths and traits are PROVISIONAL |
+| K10 | Elves (Nature): legend Starborn, dark legend Blightborne | PROVISIONAL | Game |  |
+| K11 | Fae (Nature): legend Fae Monarch, dark legend Unseelie Sovereign | PROVISIONAL | Game |  |
+| K12 | Treants (Nature): legend World-Tree Heart, dark legend Blight Colossus | PROVISIONAL | Game |  |
+| K13 | Satyrs (Nature): legend Lord of the Wild Feast, dark legend Maddened Piper | PROVISIONAL | Game |  |
+| K14 | Harpies (Sky): legend Queen of Tempests, dark legend Carrion Queen | PROVISIONAL | Game |  |
+| K15 | Birdfolk (Sky): legend Phoenix-Blooded, dark legend Ashwing | PROVISIONAL | Game |  |
+| K16 | Sylphs (Sky): legend Living Wind, dark legend Dead Calm | PROVISIONAL | Game |  |
+| K17 | Tengu (Sky): legend Great Tengu Lord, dark legend Black-Feather Demon | PROVISIONAL | Game |  |
+| K18 | Salamanders (Elemental): legend Living Volcano, dark legend Ashen Ruin | PROVISIONAL | Game |  |
+| K19 | Golems (Elemental): legend Titan of the Deep Earth, dark legend Rampaging Colossus | PROVISIONAL | Game |  |
+| K20 | Djinn (Elemental): legend Marid Emperor, dark legend Ifrit of Ruin | PROVISIONAL | Game |  |
+| K21 | Frostkin (Elemental): legend Eternal Winter, dark legend Heart of Black Ice | PROVISIONAL | Game |  |
+| K22 | Kitsune (Beastfolk): legend Nine-Tailed Celestial, dark legend Nine-Tailed Calamity | PROVISIONAL | Game |  |
+| K23 | Nekomata (Beastfolk): legend Cat Sovereign of Ten Lives, dark legend Bakeneko Curse | PROVISIONAL | Game |  |
+| K24 | Minotaurs (Beastfolk): legend Horned Colossus, dark legend Bloodhorn Tyrant | PROVISIONAL | Game |  |
+| K25 | Centaurs (Beastfolk): legend Sky-Hoof Ancient, dark legend Burning-Plain Warlord | PROVISIONAL | Game |  |
+| K26 | Lizardfolk (Beastfolk): legend Dragonblood Ascendant, dark legend Venom Wyrm | PROVISIONAL | Game |  |
+| K27 | Seraphs (Divine & cursed): legend Archangel, dark legend Fallen Archon | PROVISIONAL | Game |  |
+| K28 | Fallen (Divine & cursed): legend Morningstar, dark legend Lord of the Pit | PROVISIONAL | Game |  |
+| K29 | Demons (Divine & cursed): legend Demon Saint, dark legend Archdemon | PROVISIONAL | Game |  |
+| K30 | Tieflings (Divine & cursed): legend Crowned Heir of Two Worlds, dark legend Infernal Heir | PROVISIONAL | Game |  |
+| K31 | Liches (Divine & cursed): legend Death’s Equal, dark legend Eternal Lich | PROVISIONAL | Game |  |
+| K32 | Dwarves (Small folk & humans): legend Forge-Father, dark legend Greed-Bound King | PROVISIONAL | Game |  |
+| K33 | Gnomes (Small folk & humans): legend Grand Inventor, dark legend Mad Machinist | PROVISIONAL | Game |  |
+| K34 | Halflings (Small folk & humans): legend Fortune’s Favorite, dark legend Thief-Lord of Shadows | PROVISIONAL | Game |  |
+| K35 | Goblins (Small folk & humans): legend Goblin King of the Market, dark legend Warboss of Ruin | PROVISIONAL | Game |  |
+| K36 | Humans (Small folk & humans) | **CANON** | Sola named this kind | In the game: legend Legend of Erandel, dark legend Tyrant of Erandel; these names, paths and traits are PROVISIONAL |
+
+## 5. Creatures
+
+| # | Entry | Category | Source | Note |
+|---|---|---|---|---|
+| B1 | Rat King (Thorngate) | PROVISIONAL | Game |  |
+| B2 | Cutpurse Gang (Thorngate, shadow) | PROVISIONAL | Game |  |
+| B3 | Reef Shark (Aethwyn Mere, water) | PROVISIONAL | Game |  |
+| B4 | Drowned Sailor (Aethwyn Mere, death) | PROVISIONAL | Game |  |
+| B5 | Thornback Boar (Erelian, nature) | PROVISIONAL | Game |  |
+| B6 | Will-o’-Wisp (Erelian, spirit) | PROVISIONAL | Game |  |
+| B7 | Ember Wisp (Cindral Wastes, fire) | PROVISIONAL | Game |  |
+| B8 | Ash Drake Whelp (Cindral Wastes, magma) | PROVISIONAL | Game |  |
+| B9 | Storm Roc (Vetharn’s Pass, lightning) | PROVISIONAL | Game |  |
+| B10 | Gale Harpy (Vetharn’s Pass, air) | PROVISIONAL | Game |  |
+| B11 | Frost Wolf (Hrimwold, ice) | PROVISIONAL | Game |  |
+| B12 | Rime Wraith (Hrimwold, ice) | PROVISIONAL | Game |  |
+| B13 | Cave Golem (Runekar’s Deep, earth) | PROVISIONAL | Game |  |
+| B14 | Deep Crawler (Runekar’s Deep, shadow) | PROVISIONAL | Game |  |
+| B15 | Restless Ghoul (The Veilmoor, death) | PROVISIONAL | Game |  |
+| B16 | Wailing Shade (The Veilmoor, shadow) | PROVISIONAL | Game |  |
+| B17 | Fallen Templar (Dawnspire, light) | PROVISIONAL | Game |  |
+| B18 | Corrupted Acolyte (Dawnspire, shadow) | PROVISIONAL | Game |  |
+| B19 | Moon Moth Swarm (Caelithra’s Moonwell, moon) | PROVISIONAL | Game |  |
+| B20 | Lunar Stag (Caelithra’s Moonwell, moon) | PROVISIONAL | Game |  |
+
+## 6. Magic and elements (game)
+
+| # | Entry | Category | Source | Note |
+|---|---|---|---|---|
+| M1 | A magic system and an elemental system exist | **CANON** | Sola asked for both | Their contents below are PROVISIONAL |
+| M2 | 13 elements: Fire, Water, Earth, Air, Ice, Lightning, Nature, Magma, Light, Shadow, Spirit, Moon, Death | PROVISIONAL | Game |  |
+| M3 | 8 sources: Mana, Life Essence, Nature Pact, Spirit Bond, Voice & Song, Faith, Contract, Runes | PROVISIONAL | Game |  |
+| M4 | 8 forms: Bolt (Lance), Wave (Surge), Summon (Calling), Ritual (Rite), Ward (Wall), Weave (Blessing), Shape (Form), Enchant (Edge) | PROVISIONAL | Game |  |
+| M5 | 18 fusions: Blight, Blizzard, Bloom, Dread, Dreamtide, Eclipse, Firestorm, Glacier, Inferno, Mire, Nightveil, Rootstone, Silverdawn, Solar, Steam, Storm, Tempest, Wraith | PROVISIONAL | Game |  |
+
+## 7. Everyday world (game)
+
+| # | Entry | Category | Source | Note |
+|---|---|---|---|---|
+| E1 | 27 jobs: Blacksmith, Alchemist, Herbalist, Farmer, Fisher, Merchant, Bard, Cartographer, Healer, Hunter, Knight, Assassin, Thief, Scholar, Priest, Shipwright, Innkeeper, Spy, Architect, Chef, Beast Tamer, Rune Carver, Pearl Diver, Crypt Warden, Sky Courier, Ice Harvester, Astrologer | PROVISIONAL | Game |  |
+| E2 | 16 foods: Hearty stew, Smoked fish, Brazier coals, Iron filings, Drink from a sleeper, Blessed bread, Goat jerky, Fresh reef fish, Ice-hole fish, Wild berries and nectar, Moon dew, Glowing vent coal, Raw ore, Grave offerings, Soak up sunlight, Blood from today’s hunt | PROVISIONAL | Game |  |
+| E3 | 17 build items: Boardwalk, Stone path, Lantern post, Paper lantern, Stone lantern, Light garland, Torii gate, Market stall, Tea house, Parasol table, Flower bed, Wisteria arch, Bamboo, Lily pads, Floating lanterns, Bench, Moon ring | PROVISIONAL | Game |  |
+| E4 | Music tracks: Calm, Lantern Night, White Boughs | PROVISIONAL | Game |  |
+
+## 8. Aelarion's lore lines (game)
+
+| # | Line | Category | Note |
+|---|---|---|---|
+| A1 | Every soul that reaches the Thorngate must choose: rebirth, or eternity. You chose to be born again. Erandel will remember what you do with that choice. | PROVISIONAL | Uses canon names; the details are PROVISIONAL |
+| A2 | The Aethwyn begins in the snows of Vetharn’s Pass, runs through Erelian, and sinks into the Mere, where the Mermaid Queen keeps her court beneath the water. | PROVISIONAL | Uses canon names; the details are PROVISIONAL |
+| A3 | Erelian, the city of white boughs, lies to the west. Elash keeps its groves. Its people read the old magic in leaves and running water. | PROVISIONAL | Uses canon names; the details are PROVISIONAL |
+| A4 | South of this gate lies the Veilmoor. The souls who chose eternity wait there. The living should not linger long. | PROVISIONAL | Uses canon names; the details are PROVISIONAL |
+| A5 | Runekar still hammers runes in the Deep, far to the northeast. Caelithra reads the moon at her well in the heart of the land. | PROVISIONAL | Uses canon names; the details are PROVISIONAL |
+| A6 | The plot by the lantern pond is yours. Light it well. Travelers of every kind will come to a market that glows. | PROVISIONAL | Uses canon names; the details are PROVISIONAL |
+| A7 | Fate and Corruption are not rewards or punishments. They are the shape your deeds leave on the world, and the world answers that shape. | PROVISIONAL | Uses canon names; the details are PROVISIONAL |
+
+## 9. Master Lore Bible, Volume I (received 2026-11-05, truncated in section 13)
+
+| # | Entry | Category | Note |
+|---|---|---|---|
+| V1 | Erandel is an ancient world built on forgotten civilizations; the central mystery is what happened before recorded history | PROVISIONAL | |
+| V2 | Five pillars: Ancient mystery, Consequence, Discovery, Power, Legacy | PROVISIONAL | Story pillars; the game's play pillars stay as they are |
+| V3 | No simple good and evil (kingdoms with crimes, protective necromancers, a monster as witness) | PROVISIONAL | Matches the game's Fate and Corruption |
+| V4 | The First Silence and the First Awakening | PROVISIONAL | |
+| V5 | Three primordial principles: the Origin, the Veil, the End (forces, not gods; the End is not evil) | PROVISIONAL | The Veil could hold the canon Thorngate (undecided) |
+| V6 | Five realms: the Living World, the Veiled Realm, the Astral Expanse, the Hollow, the Primordial Deep | PROVISIONAL | "The Hollow" clashes with the Veilmoor's code id |
+| V7 | Seven Ages: Before Time, First Creation, Ancients, Ascendancy, Sundering, Reclamation, Present | PROVISIONAL | |
+| V8 | The Age of Sundering, cause deliberately unresolved, with five rival accounts | PROVISIONAL | The narrative rule asks for a documented true answer, which Sola has not given yet |
+| V9 | Six regions: Northern Reaches, Central Kingdoms, Verdant Expanse, Ashen Territories, Sunken Sands, Shattered Isles | PROVISIONAL | Working names; a possible mapping to the 10 lands is in the lore bible |
+| V10 | Peoples: Humans, Eldari, Dwarven Clans, Veyr, Drakari, Hollowborn | PROVISIONAL | Humans and Dwarves already exist as kinds |
+| V11 | Species, culture and faction are separate | PROVISIONAL | Matches the game |
+| V12 | Five power centres: dynasties, religions, arcane orders, merchant alliances, independent factions | PROVISIONAL | |
+| V13 | Six disciplines: Arcana, Verdancy, Aether, Umbral, Thanaturgy, Chronomancy | PROVISIONAL | Chronomancy has no counterpart in the game |
+| V14 | Five laws of magic: Conservation, Cost, Resistance, Knowledge, Irreversibility | PROVISIONAL | Matches the game's source costs |
+| V15 | Necromancy "previously discussed" | PROVISIONAL | Source not found; Sola to point to the original |
+| V16 | Death as a transition; incomplete crossings; three forms (Spirit Communion, Corporeal Binding, Soul Manipulation); the forbidden question; necromancers in society | PROVISIONAL | The text ends mid-sentence here |
+
+## 10. DEPRECATED
+
+Prototype names still used as internal ids in the code. They are not lore and must not appear in stories or new content. They will be renamed in the code with a save migration after the Three.js migration closes (ADR-0002).
+
+| # | Deprecated | Replaced by | Category |
+|---|---|---|---|
+| X1 | `bramble` | Elash | DEPRECATED |
+| X2 | `durgan` | Runekar | DEPRECATED |
+| X3 | `selune` | Caelithra | DEPRECATED |
+| X4 | `vael` | Thorngate | DEPRECATED |
+| X5 | `greenmere` | Erelian | DEPRECATED |
+| X6 | `coral` | Aethwyn Mere | DEPRECATED |
+| X7 | `skyreach` | Vetharn's Pass | DEPRECATED |
+| X8 | `stonedeep` | Runekar's Deep | DEPRECATED |
+| X9 | `moonwell` | Caelithra's Moonwell | DEPRECATED |
+| X10 | `frostfell` | Hrimwold | DEPRECATED |
+| X11 | `ember` | Cindral Wastes | DEPRECATED |
+| X12 | `sanctum` | Dawnspire | DEPRECATED |
+| X13 | `hollow` | The Veilmoor | DEPRECATED |
+
+No story content has been deprecated. Only Sola can deprecate lore.
+
+## 11. Open questions for Sola
+
+- [ ] Send the rest of Volume I and any original necromancer material.
+- [ ] Roles of Caelithra, Runekar and Elash; the mermaid queen's name; whether the elf mage is Elash.
+- [ ] Erandel or Aerandel.
+- [ ] Which PROVISIONAL rows to promote, reject or deprecate.
+
+## Change log
+
+| Date | Change |
+|---|---|
+| 2026-11-05 | Registry created from the v0.4.1 game data, Sola's stated canon, and Volume I |

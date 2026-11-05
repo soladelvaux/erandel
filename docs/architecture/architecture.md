@@ -1,12 +1,19 @@
 # Erandel Architecture
 
 ---
-**Status**: Reverse-Documented from `src/index.html` (v0.3.0) · **Date**: 2026-11-03
+**Status**: Reverse-Documented from `src/index.html`, updated for v0.4.1 · **Date**: 2026-11-05
 ---
 
 ## Overview
 
-Erandel is one self-contained HTML file. A plain-JavaScript game engine (state, rules, actions) sits underneath a three.js world layer and an HTML overlay UI. There is no build step and no server. See [ADR-0001](adr-0001-single-file-web.md).
+Erandel is one self-contained HTML file. A plain-JavaScript game engine (state, rules, actions) sits underneath a three.js world layer and an HTML overlay UI. There is no server. See [ADR-0001](adr-0001-single-file-web.md).
+
+**Current state (v0.4.1, the Phase 1 baseline):**
+- Three.js r128, loaded from CDNs.
+- One 398 KB file, 2,613 lines, mapped section by section in the Phase 1 audit (the claude.ai doc "Erandel — Phase 1 Technical Audit").
+- Measured numbers are in `production/qa/baseline/BASELINE-v0.4.1.md`.
+- Built by `tools/build.js` into the production page and the preview page ([deployment.md](deployment.md)).
+- The planned move to modern Three.js and modules is [ADR-0002](adr-0002-modernise-threejs.md); networking goes behind [ADR-0003](adr-0003-net-folder.md).
 
 ## Layers
 

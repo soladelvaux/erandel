@@ -5,6 +5,8 @@
 **Inputs**: Sola's stated canon; the shipped game v0.4.1 (`src/index.html`); *Master Lore Bible — Volume I* (received 2026-11-05, kept unedited in `sources/master-lore-bible-vol1-received-2026-11-05.md`)
 ---
 
+**The review list of every classified item is `ERANDEL_LORE_REGISTRY.md` at the repository root.** This file holds the explanations: what each Volume I part proposes, and how it fits the existing world.
+
 **Governing rules** (set by Sola, 2026-11-05):
 - Development inventions never become official Erandel lore by accident. **Nothing PROVISIONAL becomes CANON without Sola's approval.**
 - We expand the universe without silently rewriting its history (from *Volume I*).
