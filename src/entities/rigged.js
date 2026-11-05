@@ -15,7 +15,7 @@ function chrMat(color,o){
 /** Builds the clip actions for a model: { mixer, act:{name:action}, cur, meta }. */
 function rigCtl(root,clips,meta){
  const mixer=new THREE.AnimationMixer(root),act={};
- clips.forEach(c=>{const a=mixer.clipAction(c);const loop=/^(idle|walk|run|climb)$/.test(c.name);a.setLoop(loop?THREE.LoopRepeat:THREE.LoopOnce,Infinity);a.clampWhenFinished=!loop;act[c.name]=a;});
+ clips.forEach(c=>{const a=mixer.clipAction(c);const loop=/^(idle|walk|run|climb|rest)$/.test(c.name);a.setLoop(loop?THREE.LoopRepeat:THREE.LoopOnce,Infinity);a.clampWhenFinished=!loop;act[c.name]=a;});
  const bones={};root.traverse(o=>{if(o.isBone)bones[o.name]=o;});
  return{mixer,act,cur:null,meta,bones,root,oneShot:0};
 }
@@ -88,6 +88,7 @@ function creatureTick(c,dt){
  let want='idle',ts=1,fade=.18,restart=false;
  if(m.st==='windup'){want='attack';ts=.35/Math.max(.2,m.wind||ACT.windup);restart=c.cur!=='attack';fade=.08;}
  else if(m.flash>0){want='hit';fade=.05;restart=c.cur!=='hit';}
+ else if(m.st==='rest'){want=c.act.rest?'rest':'idle';ts=c.act.rest?1:.35;fade=.4;}
  else if(c.speed>2.6){want='run';ts=Math.max(.5,c.speed/st.run);}
  else if(c.speed>.25){want='walk';ts=Math.max(.4,c.speed/st.walk);}
  if(m.st==='recover'&&c.cur==='attack')want='attack';
@@ -103,7 +104,8 @@ function spawnStags(L){
 /** Grazes, wanders near home, and flees from anyone who comes within 7 m. Never attacks, never targeted. */
 function stagTick(c,dt){
  const s=c.s,p=W3.player,dpx=s.x-p.x,dpz=s.z-p.z,dp=Math.hypot(dpx,dpz)||.01;let vx=0,vz=0;
- if(dp<7&&S&&S.hp>0){s.st='flee';s.t=3;}
+ if(s.watchT>0){s.watchT-=dt;s.st='graze';s.t=Math.max(s.t,1);const a=Math.atan2(-dpx,-dpz);let d=a-s.ry;while(d>Math.PI)d-=Math.PI*2;while(d<-Math.PI)d+=Math.PI*2;s.ry+=d*Math.min(1,dt*3);} // world event 'stag-watches'
+ else if(dp<7&&S&&S.hp>0){s.st='flee';s.t=3;}
  if(s.st==='flee'){s.t-=dt;vx=dpx/dp*7.5;vz=dpz/dp*7.5;const nx=s.x+vx*dt,nz=s.z+vz*dt;if(regionAt(nx,nz)!=='greenmere'||heightAt(nx,nz)<.3||Math.hypot(nx-s.hx,nz-s.hz)>26){vx=-vx*.3+(s.hx-s.x)*.3;vz=-vz*.3+(s.hz-s.z)*.3;}if(s.t<=0&&dp>12)s.st='graze';}
  else{s.t-=dt;if(s.st==='graze'&&s.t<=0){s.st='walk';s.tx=s.hx+(Math.random()-.5)*14;s.tz=s.hz+(Math.random()-.5)*14;if(regionAt(s.tx,s.tz)!=='greenmere'||heightAt(s.tx,s.tz)<.3){s.tx=s.hx;s.tz=s.hz;}}
   if(s.st==='walk'){const dx=s.tx-s.x,dz=s.tz-s.z,d=Math.hypot(dx,dz);if(d<.6){s.st='graze';s.t=4+Math.random()*5;}else{vx=dx/d*1.4;vz=dz/d*1.4;}}}

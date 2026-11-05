@@ -26,7 +26,7 @@ function loop(){
  requestAnimationFrame(loop);
  const w=W3,dt=Math.min(w.clock.getDelta(),.05),t=w.clock.elapsedTime;
  const playing=ui.screen==='game'&&S;
- const ti=playing?(PERF&&PERF.night?2:timeIdx()):2;const L0=LIGHT[ti];const wx=playing?weatherHere():'clear';
+ const ti=playing?(PERF&&PERF.night?2:timeIdx()):2;const L0=playing&&!(PERF&&PERF.night)?worldLight(ti):LIGHT[ti];const wx=playing?weatherHere():'clear';
  _c1.set(L0.fog);if(wx==='rain'||wx==='storm')_c1.lerp(_c2.set(ti===2?'#101420':'#7a8696'),.5);if(wx==='snow')_c1.lerp(_c2.set('#e8eef4'),ti===2?.15:.45);if(wx==='fog')_c1.lerp(_c2.set('#b8bcc0'),ti===2?.15:.5);if(wx==='heat')_c1.lerp(_c2.set('#f0c890'),.3);
  const k=Math.min(1,dt*2);w.scene.fog.color.lerp(_c1,k);w.scene.background.lerp(_c1,k);
  w.hemi.color.lerp(_c2.set(L0.sky),k);w.hemi.groundColor.lerp(_c2.set(L0.gnd),k);w.hemi.intensity+=(L0.hi*(wx==='storm'||wx==='rain'?.8:1)-w.hemi.intensity)*k;
@@ -42,7 +42,7 @@ function loop(){
  w.wisps.forEach(o=>{o.t+=dt;o.s.position.set(o.x+Math.sin(o.t*.5)*1.5,o.y+Math.sin(o.t*1.3)*.5,o.z+Math.cos(o.t*.4)*1.5);});
  w.flies.forEach(o=>{o.t+=dt;o.s.position.set(o.x+Math.sin(o.t*.6)*3,heightAt(o.x,o.z)+1.6+Math.abs(Math.sin(o.t*5))*.5,o.z+Math.cos(o.t*.45)*3);o.s.rotation.y=o.t*.6;o.s.children.forEach((c,i)=>{c.rotation.y=(i?-1:1)*Math.sin(o.t*16)*.9;});});
  const near=(n,d)=>playing&&(w.player.x-n.x)**2+(w.player.z-n.z)**2<d;
- w.npcs.forEach(n=>{animChibi(n.ch,dt,false);if(near(n,40))turnTo(n.ch,w.player.x-n.x,w.player.z-n.z,dt);n.ch.g.position.y=heightAt(n.x,n.z);});
+ livingNpcs(dt,t); // schedules and simulation levels (src/world/living-world.js)
  const ael=w.npcs.find(n=>n.special);if(ael.ch.orb){ael.ch.orb.getWorldPosition(_v);w.aelGlow.position.copy(_v);}w.aelGlow.material.opacity=.5+.25*Math.sin(t*2.2);
  w.lightT-=dt;
  if(!playing){
@@ -109,7 +109,7 @@ function loop(){
  else{w.hilite.visible=false;if(w.ghost)w.ghost.visible=false;}
  w.saveT+=dt;if(w.saveT>1.5){w.saveT=0;if(!window.__teleport)S.pos={x:Math.round(p.x*10)/10,z:Math.round(p.z*10)/10};save();} // a pending move (e.g. after a fall) keeps its destination
  FADE.value.set(p.x,ui.build?-999:py,p.z);w.plamp.position.set(p.x,py+2.4,p.z);w.plamp.intensity+=(Math.min(1,nf)*.9-w.plamp.intensity)*Math.min(1,dt*4);
- erelianTick(dt,t,nf);charactersTick(dt);updateSky(nf,dt);drawTags();sweepTags();
+ livingTick(dt,t,wx);erelianTick(dt,t,nf);charactersTick(dt);updateSky(nf,dt);drawTags();sweepTags();
  w.uiT-=dt;if(w.uiT<=0){w.uiT=.1;updateActionUi(t);drawMini();}
  w.netT-=dt;if(w.netT<=0){w.netT=2;renderNet();}
  netSend(dt);

@@ -257,7 +257,10 @@ function quadruped(o) {
   const keysHit = [[0, {}], [0.08, { '@body': [0, -0.03, -0.06], body: [-8, 0, 6], neck: [-15, 10, 0], head: [-10, 0, 0] }], [0.35, {}]];
   const downQ = { '@body': [0, -legH * 0.75, 0], body: [0, 0, 80], neck: [10, 0, -30], legFL: [-30, 0, 0], legBL: [30, 0, 0], legFR: [-10, 0, 0], legBR: [10, 0, 0] };
   const keysDeath = [[0, {}], [0.3, { '@body': [0, -0.1, 0], body: [-6, 0, 20], neck: [20, 0, 0] }], [0.8, downQ], [1.4, downQ]];
-  const clips = [clip('idle', 3, keysIdle, sk, true), clip('walk', 1.0, gait(1.0, 22, 30, 0.02), sk, true), clip('run', 0.5, o.gallop ? gallop(0.5) : gait(0.5, 38, 55, 0.05), sk, true), clip('attack', 0.6, keysAttack, sk, false), clip('hit', 0.35, keysHit, sk, false), clip('death', 1.4, keysDeath, sk, false)];
+  // rest: lying down with legs folded, slow breathing (living-world habits: day creatures rest at night)
+  const lie = (b) => ({ '@body': [0, -legH * 0.62 + b * 0.01, 0], neck: [18, 0, 0], head: [12, 0, 0], tail: [-10, 0, 0], legFL: [-70, 0, 0], legFR: [-70, 0, 0], shinFL: [120, 0, 0], shinFR: [120, 0, 0], legBL: [70, 0, 0], legBR: [70, 0, 0], shinBL: [-120, 0, 0], shinBR: [-120, 0, 0] });
+  const keysRest = cyc(4, 8, (p) => lie(S(p * TAU)));
+  const clips = [clip('rest', 4, keysRest, sk, true), clip('idle', 3, keysIdle, sk, true), clip('walk', 1.0, gait(1.0, 22, 30, 0.02), sk, true), clip('run', 0.5, o.gallop ? gallop(0.5) : gait(0.5, 38, 55, 0.05), sk, true), clip('attack', 0.6, keysAttack, sk, false), clip('hit', 0.35, keysHit, sk, false), clip('death', 1.4, keysDeath, sk, false)];
   return { sk, parts, clips, meta: { stride: { walk: o.walkSpeed, run: o.runSpeed }, height: H } };
 }
 

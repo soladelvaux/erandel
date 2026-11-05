@@ -13,7 +13,8 @@
     "test:fallback": "node integration/fallback-smoke.js",
     "test:region": "node integration/region-erelian.js",
     "perf": "node integration/perf-probe.js",
-    "test:chars": "node integration/characters.js"
+    "test:chars": "node integration/characters.js",
+    "test:world": "node integration/living-world.js"
   },
   "devDependencies": {
     "jsdom": "24.1.3",

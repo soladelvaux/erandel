@@ -30,7 +30,7 @@
     ]
   },
   "boar": {
-    "bytes": 36428,
+    "bytes": 38816,
     "tris": 1290,
     "parts": {
       "body": 896,
@@ -39,6 +39,7 @@
     },
     "bones": 18,
     "clips": [
+      "rest",
       "idle",
       "walk",
       "run",
@@ -48,7 +49,7 @@
     ]
   },
   "stag": {
-    "bytes": 36244,
+    "bytes": 38640,
     "tris": 1264,
     "parts": {
       "body": 896,
@@ -57,6 +58,7 @@
     },
     "bones": 18,
     "clips": [
+      "rest",
       "idle",
       "walk",
       "run",

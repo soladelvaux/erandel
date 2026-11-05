@@ -1,6 +1,6 @@
 /* ============ EVENTS ============ */
 function dlgAct(kind,arg){const n=S.log.length;doAction(kind,arg);const lines=S.log.slice(n).map(x=>x.t);if(ui.dialog&&lines.length)ui.dialog.result=lines.join(' ');render();}
-function openTalk(n){if(!n)return;if(n.special)ui.dialog={type:'ael',text:`Welcome back, ${S.name}. ${AEL_LORE[0]}`,page:0};else ui.dialog={type:'npc',id:n.id,result:''};render();}
+function openTalk(n){if(!n)return;if(n.special)ui.dialog={type:'ael',text:`Welcome back, ${S.name}. ${AEL_LORE[0]}`,page:0};else{ui.dialog={type:'npc',id:n.id,result:'',say:S.world?npcSay(n.id):''};if(S.world)npcRemember(n.id);}render();}
 /** Aelarion's first advice, tailored to the new character's body and diet. */
 function spawnTip(){
  const r=R(),tips=[];

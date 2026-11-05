@@ -14,6 +14,7 @@ function valid(s){
  if(s.comp===undefined)s.comp=null;
  if(s.cand===undefined)s.cand=null;
  if(!s.mat||typeof s.mat!=='object')s.mat={wood:0,stone:0};if(!Array.isArray(s.build))s.build=[];['marketDay','salesToday','salesCap'].forEach(k=>{if(typeof s[k]!=='number')s[k]=0;});
+ worldDefaults(s); // living-world state (docs/systems/living-world.md); old saves get defaults
  return true;
 }
 
@@ -27,7 +28,7 @@ function newChar(name,raceId){
   fate:raceId==='halflings'?15:0,corr:raceId==='liches'?15:raceId==='fallen'?10:0,gold:30,aff,traits:[],job:null,jobXp:0,
   spells:[],sources:[r.nat],npcs,regRep,log:[],chron:[],pet:null,blood:null,dayGains:{},flags:{},charmDay:0,extraSlot:false,
   cond:{},fedDay:1,bloodDay:0,comp:null,cand:null,mat:{wood:10,stone:4},build:[],marketDay:0,salesToday:0,salesCap:0};
- S.hp=hpMax();
+ S.hp=hpMax();worldDefaults(S);
  if(DISTRUSTED.includes(raceId)){S.regRep.vael=-15;S.npcs.ysolde.rep=-10;}
  OUT=[];
  L(`Dawn · Day 1 · Clear`,'dawn');

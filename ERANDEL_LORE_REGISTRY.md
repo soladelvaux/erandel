@@ -12,7 +12,7 @@ This is the one place to review how every named piece of Erandel lore is classif
 
 **How to review:** change a row's category and tell Claude, or comment on a row. A row that moves to CANON keeps its source column, so the history stays visible. When a row is CANON only in part, the Note says which part is still PROVISIONAL.
 
-**Counts today:** 20 CANON rows, 101 PROVISIONAL rows, 13 DEPRECATED rows (134 rows in all). In section 4, a kind is CANON only because Sola named it as a kind; its legends, paths and traits are still PROVISIONAL.
+**Counts today:** 20 CANON rows, 106 PROVISIONAL rows, 13 DEPRECATED rows (139 rows in all). In section 4, a kind is CANON only because Sola named it as a kind; its legends, paths and traits are still PROVISIONAL.
 
 ## 1. Core myth and world
 
@@ -180,6 +180,18 @@ This is the one place to review how every named piece of Erandel lore is classif
 | V15 | Necromancy "previously discussed" | PROVISIONAL | Source not found; Sola to point to the original |
 | V16 | Death as a transition; incomplete crossings; three forms (Spirit Communion, Corporeal Binding, Soul Manipulation); the forbidden question; necromancers in society | PROVISIONAL | The text ends mid-sentence here |
 
+## 12. Living world (Phase 5, 2026-11-05)
+
+Everything in this section is a development idea built on the rows named. None of it states new history. Source: `src/data/living-world.js`, explained in `docs/systems/living-world.md`.
+
+| # | Entry | Category | Built on | Note |
+|---|---|---|---|---|
+| LW1 | NPC daily lives: Elash tends the hero tree in the morning, walks the groves, crosses the old bridge at dusk and sleeps by the spires; Ysolde works the inn and the market; the others work, walk and rest near home. Aelarion never leaves the gate; the mermaid queen keeps her court | PROVISIONAL | C1, C3, C5, C2 | Behaviour only |
+| LW2 | New spoken lines for Elash (11) and Ysolde (8), and narration for the others | PROVISIONAL | C5, C2, L0, L3 | Elash: "the trees here still listen" echoes Erelian's game description; "roots older than the spires" is a look (art bible), not a dated fact |
+| LW3 | Creature habits: which creatures rest by day or by night, which patrol, which flee when badly hurt | PROVISIONAL | B1-B20 | |
+| LW4 | World events: pale soul-lights drift from the Thorngate toward the Veilmoor at night; lamps wake on Erelian's spires at dusk; a Lunar Stag stops to watch you at dusk; the moon rises in Caelithra's Moonwell | PROVISIONAL | W2 (canon), A4, L3, B20, L10 | The soul-lights only show the canon myth (souls at the Thorngate) |
+| LW5 | Discoveries in Erelian: the springs that feed the falls; the old stone bridge; ruins whose builders no one can name | PROVISIONAL | L11, L13, L14 | Who built the ruins stays unanswered |
+
 ## 10. DEPRECATED
 
 Prototype names still used as internal ids in the code. They are not lore and must not appear in stories or new content. They will be renamed in the code with a save migration after the Three.js migration closes (ADR-0002).
@@ -216,3 +228,4 @@ No story content has been deprecated. Only Sola can deprecate lore.
 | 2026-11-05 | Registry created from the v0.4.1 game data, Sola's stated canon, and Volume I |
 | 2026-11-05 | L11–L14 added as PROVISIONAL: the Erelian benchmark region's layout (Phase 3) |
 | 2026-11-05 | B20 note: the Lunar Stag also appears in Erelian as neutral wildlife (Phase 4, Sola's choice; PROVISIONAL) |
+| 2026-11-05 | Section 12 added: living-world schedules, lines, habits, events and discoveries (LW1-LW5, all PROVISIONAL) |

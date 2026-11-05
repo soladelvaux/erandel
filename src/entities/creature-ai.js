@@ -9,7 +9,7 @@ function hitMonster(m,dmg,mult,els){
  if(m.hp<=0)killMonster(m);
 }
 function killMonster(m){
- const w=W3;m.alive=false;m.mo.g.visible=false;if(m.glow)m.glow.visible=false;if(m.tele)m.tele.material.opacity=0;m.deadT=w.clock.elapsedTime+ACT.respawn;
+ const w=W3;m.alive=false;if(S.world){const k=S.world.kills;if(k.day!==S.day){k.day=S.day;k.by={};}k.by[m.region]=(k.by[m.region]||0)+1;}m.mo.g.visible=false;if(m.glow)m.glow.visible=false;if(m.tele)m.tele.material.opacity=0;m.deadT=w.clock.elapsedTime+ACT.respawn;
  burstFx(m.x,m.mo.g.position.y+1,m.z,m.b.el?ELEM[m.b.el].c:'#ffffff',4);if(w.target===m)w.target=null;
  OUT=[];L(killReward(m.b,m.els),'good');flush();toast(S.log[S.log.length-1].t);save();
 }
@@ -27,7 +27,7 @@ function damagePlayer(n,m){
  if(S.hp<=0)playerDown(m);else render();
 }
 function playerDown(m){
- const w=W3;w.player.downT=1.8;w.grace=w.clock.elapsedTime+5;w.target=null;w.monsters.forEach(o=>{if(o.alive)o.st='home';o.hit=false;if(o.tele)o.tele.material.opacity=0;});
+ const w=W3;w.player.downT=1.8;if(S.world)S.world.fellDay=S.day;w.grace=w.clock.elapsedTime+5;w.target=null;w.monsters.forEach(o=>{if(o.alive)o.st='home';o.hit=false;if(o.tele)o.tele.material.opacity=0;});
  const n=S.log.length;faint();const lines=S.log.slice(n).map(l=>l.t);
  ui.dialog={type:'battle',title:'You fell',text:(m?`The ${m.b.n} overwhelms you. `:'')+lines.join(' '),el:m?m.b.el:null};render();
 }
@@ -36,8 +36,13 @@ function updateMonster(m,dt,t,blocked){
  if(!m.alive){if(t>m.deadT)reviveMonster(m);return;}
  const dxp=p.x-m.x,dzp=p.z-m.z,dp=Math.hypot(dxp,dzp)||.001,homeD=Math.hypot(m.x-m.hx,m.z-m.hz);
  const peace=blocked||w.grace>t||S.hp<=0;let vx=0,vz=0;m.cd-=dt;
+ const hab=habitOf(m),restNow=!creatureAwake(hab)&&!m.hit&&dp>HABIT_WAKE_DIST&&(m.st==='wander'||m.st==='rest'||m.st==='home'); // habits (src/data/living-world.js)
+ if(m.st==='rest'&&!restNow)m.st='wander';
+ if(hab.flee&&m.st==='chase'&&m.hp<m.hpMax*HABIT_FLEE_AT){m.st='flee';m.stT=HABIT_FLEE_TIME;}
  if(peace&&(m.st==='chase'||m.st==='windup'||m.st==='recover')){m.st='home';if(m.tele)m.tele.material.opacity=0;}
- if(m.st==='windup'){m.stT-=dt;turnTo(mo,dxp,dzp,dt);const tl=teleOf(m),k=1-Math.max(0,m.stT)/m.wind,r=mo.type==='wisp'?1:ACT.enemyReach+(mo.type==='golem'?.8:0);tl.scale.setScalar(r*(.35+.65*k));tl.material.opacity=.18+.32*k;tl.position.set(m.x,heightAt(m.x,m.z)+.08,m.z);if(m.stT<=0){monsterStrike(m);m.st='recover';m.stT=.55;}}
+ if(restNow){m.st='rest';const dx=m.hx-m.x,dz=m.hz-m.z,d=Math.hypot(dx,dz);if(d>.8){vx=dx/d*1.2;vz=dz/d*1.2;}}
+ else if(m.st==='flee'){m.stT-=dt;vx=-dxp/dp*5.2;vz=-dzp/dp*5.2;if(m.stT<=0){m.st='home';}}
+ else if(m.st==='windup'){m.stT-=dt;turnTo(mo,dxp,dzp,dt);const tl=teleOf(m),k=1-Math.max(0,m.stT)/m.wind,r=mo.type==='wisp'?1:ACT.enemyReach+(mo.type==='golem'?.8:0);tl.scale.setScalar(r*(.35+.65*k));tl.material.opacity=.18+.32*k;tl.position.set(m.x,heightAt(m.x,m.z)+.08,m.z);if(m.stT<=0){monsterStrike(m);m.st='recover';m.stT=.55;}}
  else if(m.st==='recover'){m.stT-=dt;if(m.stT<=0)m.st='chase';}
  else if(m.st==='chase'||(!peace&&dp<ACT.aggro)){
   m.st='chase';
@@ -45,7 +50,8 @@ function updateMonster(m,dt,t,blocked){
   else{const reach=mo.type==='wisp'?7:ACT.enemyReach*.75;if(dp>reach){const sp=mo.type==='golem'?3.2:mo.type==='wisp'?3.6:4.6;vx=dxp/dp*sp;vz=dzp/dp*sp;}else{turnTo(mo,dxp,dzp,dt);if(m.cd<=0){m.st='windup';m.wind=m.stT=ACT.windup*(mo.type==='golem'?1.35:1);m.cd=ACT.enemyCd;}}}
  }
  else if(m.st==='home'){const dx=m.hx-m.x,dz=m.hz-m.z,d=Math.hypot(dx,dz);if(d<1){m.st='wander';m.hit=false;m.hp=m.hpMax;m.els=[];}else{vx=dx/d*5.5;vz=dz/d*5.5;}}
- else{const dx=m.tx-m.x,dz=m.tz-m.z,d=Math.hypot(dx,dz);if(d<.5||Math.random()<dt*.15){m.tx=m.hx+(Math.random()-.5)*16;m.tz=m.hz+(Math.random()-.5)*16;if(regionAt(m.tx,m.tz)!==m.region||plotW(m.tx,m.tz)>0){m.tx=m.hx;m.tz=m.hz;}}else{vx=dx/d*1.6;vz=dz/d*1.6;}}
+ else{if(m.idleT>0){m.idleT-=dt;}else{const dx=m.tx-m.x,dz=m.tz-m.z,d=Math.hypot(dx,dz);if(d<.5||(!hab.patrol&&Math.random()<dt*.15)){if(d<.5)m.idleT=1.5+Math.random()*3;if(hab.patrol){for(let k=0;k<4;k++){m.pi=((m.pi||0)+1)%4;const a=m.pi*Math.PI/2;m.tx=m.hx+Math.cos(a)*6;m.tz=m.hz+Math.sin(a)*6;if(regionAt(m.tx,m.tz)===m.region&&plotW(m.tx,m.tz)<=0)break;}}else{ // a patrol skips a waypoint it may not use
+ m.tx=m.hx+(Math.random()-.5)*16;m.tz=m.hz+(Math.random()-.5)*16;}if(regionAt(m.tx,m.tz)!==m.region||plotW(m.tx,m.tz)>0){m.tx=m.hx;m.tz=m.hz;}}else{vx=dx/d*(hab.patrol?1.9:1.6);vz=dz/d*(hab.patrol?1.9:1.6);}}}
  m.x+=vx*dt;m.z+=vz*dt;const my=heightAt(m.x,m.z),mv=Math.abs(vx)+Math.abs(vz)>.05;
  if(mo.legL)animChibi(mo,dt,mv);else{mo.t+=dt*(mv?8:2);mo.body.position.y=mo.type==='wisp'?Math.sin(mo.t*.8)*.2:Math.abs(Math.sin(mo.t))*(mv?.1:.03);mo.legs.forEach((l,i)=>{l.rotation.x=mv?Math.sin(mo.t+i*Math.PI)*.5:0;});}
  if(m.st==='windup'&&mo.legL){mo.armR.rotation.x=-2.4;}
