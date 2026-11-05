@@ -76,7 +76,9 @@ const check = (ok, what) => { if (!ok) failures.push(what); console.log(`${ok ? 
   check(Math.abs(walk.ts - Math.max(0.4, walk.sp / walk.stride)) < 0.05 && walk.sp > 0.8 && walk.sp < 3.6, `4 walk plays at ground speed: ${walk.sp.toFixed(1)} m/s -> timeScale ${walk.ts.toFixed(2)}`);
 
   // 2 + 5 one-shots through the game's own actions, observed on the next frame
-  const oneShot = async (fn, want, shotName) => { const r = await page.evaluate((fn) => { const p = W3.player; p.cd = p.cd || {}; Object.keys(p.cd).forEach((k) => { p.cd[k] = 0; }); window[fn](); heroTick(p, 0.016); return { cur: CHR.hero.cur, ts: CHR.hero.act[CHR.hero.cur] && CHR.hero.act[CHR.hero.cur].timeScale }; }, fn); if (shotName) { await wait(120); await shot(shotName); } await page.waitForFunction(() => ['idle', 'walk', 'run'].includes(CHR.hero.cur) && W3.player.ground && !(W3.player.dodgeT > 0) && !(W3.player.atkAnim > 0), { timeout: 30000, polling: 100 }).catch(() => {}); return r; };
+  const oneShot = async (fn, want, shotName) => { const r = await page.evaluate((fn) => { const p = W3.player; p.cd = p.cd || {}; Object.keys(p.cd).forEach((k) => { p.cd[k] = 0; }); window[fn](); heroTick(p, 0.016); return { cur: CHR.hero.cur, ts: CHR.hero.act[CHR.hero.cur] && CHR.hero.act[CHR.hero.cur].timeScale }; }, fn); if (shotName) { await wait(120); await shot(shotName); } await settle(); return r; };
+  // Isolation: each check starts from a settled player, whatever the frame rate (CI runners are slower than this machine)
+  async function settle() { await page.evaluate(() => { const p = W3.player; p.atkAnim = 0; p.dodgeT = 0; p.castAnim = 0; p.hitT = 0; p.interactT = 0; p.vy = 0; p.y = groundY(p.x, p.z); p.ground = true; p.climb = false; for (let i = 0; i < 12; i++) heroTick(p, 0.05); }); }
   const atk = await oneShot('playerAttack', 'attack', '04-attack');
   check(atk.cur === 'attack', `2/5 attack shows on the next frame: ${atk.cur}`);
   const dodge = await oneShot('playerDodge', 'dodge', '05-dodge');
@@ -85,9 +87,9 @@ const check = (ok, what) => { if (!ok) failures.push(what); console.log(`${ok ? 
   check(jump.cur === 'jump', `2 jump: ${jump.cur}`);
   await wait(800);
   const cast = await page.evaluate(() => { const p = W3.player; p.castAnim = 0.5; heroTick(p, 0.016); return CHR.hero.cur; });
-  check(cast === 'cast', `2 cast (the game's castAnim): ${cast}`); await page.waitForFunction(() => !(W3.player.castAnim > 0), { timeout: 30000, polling: 100 }).catch(() => {});
+  check(cast === 'cast', `2 cast (the game's castAnim): ${cast}`); await settle();
   const hit = await page.evaluate(() => { const m = W3.monsters.find((o) => o.alive); W3.player.iUntil = 0; const hp = S.hp; damagePlayer(1, m); heroTick(W3.player, 0.016); return { cur: CHR.hero.cur, hp0: hp, hp1: S.hp }; });
-  check(hit.cur === 'hit' && hit.hp1 === hit.hp0 - 1, `2 hit reaction when damaged: ${hit.cur}, hp ${hit.hp0} -> ${hit.hp1}`); await wait(120); await shot('07-hit'); await page.waitForFunction(() => !(W3.player.hitT > 0), { timeout: 30000, polling: 100 }).catch(() => {});
+  check(hit.cur === 'hit' && hit.hp1 === hit.hp0 - 1, `2 hit reaction when damaged: ${hit.cur}, hp ${hit.hp0} -> ${hit.hp1}`); await wait(120); await shot('07-hit'); await settle();
   const inter = await page.evaluate(() => { ui.dialog = null; doAction('explore'); ui.dialog = null; ui.fadeText = null; heroTick(W3.player, 0.016); return CHR.hero.cur; });
   check(inter === 'interact', `2 interaction on an action: ${inter}`); await wait(500); await shot('08-interact'); await wait(900);
   const climb = await page.evaluate(() => { const p = W3.player; p.climb = true; p.climbMove = true; heroTick(p, 0.016); const r = CHR.hero.cur; p.climb = false; return r; });
