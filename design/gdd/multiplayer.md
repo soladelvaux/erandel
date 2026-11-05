@@ -18,7 +18,7 @@ Everyone who has the published Erandel page open at the same time shares one wor
 
 ## Detailed Rules
 
-**Joining**: on start the page asks `claude.use("room")`. A null answer means solo. The "N online · Chat" pill appears only when the room exists.
+**Joining**: on start the page asks `claude.use("room")` (the claude.ai world). If that answers null, for example on the public site `https://soladelvaux.github.io/erandel/` or in a downloaded file, the page joins the **peer-to-peer world** instead (`p2pRoom`): browsers find each other through public Nostr relays using the Trystero library (`trystero@0.26.0` from jsDelivr, app id `erandel-world-v1`, room `erandel`) and then talk directly over WebRTC. Presence, effects and chat travel the same way in both worlds, but the claude.ai world and the peer-to-peer world are separate: players in one do not see players in the other. If neither is available the game is solo. The "N online · Chat" pill appears only when a world was joined.
 
 **Presence** (what I share, about 7 times a second while moving, once a second when idle, only when it changed): name (20 chars), kind, tier, title, position x/y/z, facing, animation (idle, run, jump, atk, cast, dodge, climb), HP and max HP, land. Under 600 bytes.
 
@@ -31,6 +31,8 @@ Everyone who has the published Erandel page open at the same time shares one wor
 **Opening chat** (Chat pill or T): the chat bar replaces the controls; creatures leave you alone while it is open; Escape or the pill closes it.
 
 **Trust**: everything from other players is untrusted data. Names and chat are inserted as text, never HTML. Kinds, lands, animations, effect kinds and elements must be in the game's own lists (own properties only, so `__proto__` or `constructor` fail). Numbers must be finite and are clamped to the world bounds. Invisible and control characters are removed.
+
+**Peer-to-peer details**: presence is sent to everyone when it changes and directly to each newcomer on join; any message larger than 4 KiB is dropped; a player disappears when their connection closes. Some phone networks block direct WebRTC connections without a TURN server; those players stay solo.
 
 **Permissions**: the artifact is published with `capabilities: { room: { topics: { fx: "interact", chat: "interact" } } }` so everyone who can open it at Contributor level or above can send effects and chat. Viewers below that level still see everyone and still share presence.
 
@@ -74,4 +76,5 @@ Everyone who has the published Erandel page open at the same time shares one wor
 2. Three other players in the room appear as three characters with name plates; a name containing HTML shows as plain text; an unknown kind becomes Human (browser test).
 3. An effect with an unknown kind or non-number position is ignored; a valid Wave from another player draws a ring (unit + browser test).
 4. A chat message from another player appears in the log and as a bubble; mine is sent once on the `chat` topic (browser test).
-5. Without a room the game shows no chat pill and plays exactly as single-player (jsdom suite runs without a room).
+5. Without any world the game shows no chat pill and plays exactly as single-player (jsdom suite runs without a room).
+6. Two copies of the game outside claude.ai join the peer-to-peer world, see each other's character and name, exchange chat, and a player who leaves disappears (`tests/integration/p2p-smoke.js`, run in CI).

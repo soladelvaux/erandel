@@ -6,7 +6,8 @@
     "test": "node --test \"unit/**/*.test.js\" integration/playthrough.test.js",
     "test:unit": "node --test \"unit/**/*.test.js\"",
     "test:playthrough": "node --test integration/playthrough.test.js",
-    "test:browser": "node integration/browser-smoke.js"
+    "test:browser": "node integration/browser-smoke.js",
+    "test:p2p": "node integration/p2p-smoke.js"
   },
   "devDependencies": {
     "jsdom": "24.1.3",

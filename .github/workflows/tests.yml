@@ -22,6 +22,8 @@ jobs:
         run: npm test
       - name: Real-browser smoke test (headless Chrome)
         run: CHROME="$(which google-chrome || which google-chrome-stable)" npm run test:browser
+      - name: Peer-to-peer multiplayer smoke test (two headless players)
+        run: CHROME="$(which google-chrome || which google-chrome-stable)" npm run test:p2p
       - uses: actions/upload-artifact@v4
         if: always()
         with:

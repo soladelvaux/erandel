@@ -2188,10 +2188,36 @@ function poseChibi(c,anim,t){
 
 /* ---------- live multiplayer (room capability; solo when absent) ---------- */
 const NET={room:null,peers:new Map(),chat:[],sendT:0,last:'',open:false,uiT:0};
+/** Peer-to-peer world for copies outside claude.ai (GitHub Pages, a downloaded file): WebRTC via Trystero over public Nostr relays. */
+const P2P={lib:'https://cdn.jsdelivr.net/npm/trystero@0.26.0/+esm',appId:'erandel-world-v1',room:'erandel'};
+/** Wraps a Trystero room in the same calls the game uses from the claude.ai room (presence, emit, on, onPeers, connected). */
+async function p2pRoom(){
+ let mod;try{mod=await import(window.__P2P_LIB||P2P.lib);}catch(e){return null;}
+ if(!mod||typeof mod.joinRoom!=='function')return null;
+ let room;try{room=mod.joinRoom({appId:P2P.appId},P2P.room);}catch(e){return null;}
+ const pres={},hs={},peerH=[],mine={},seen={};
+ const snap=()=>Object.keys(pres).map(id=>({peer:id,by:null,isMe:false,sameTab:false,kind:'viewer',guest:false,presence:pres[id],updatedAt:seen[id]||0}));
+ const fire=()=>{const p=snap();peerH.forEach(h=>{try{h({peers:p,joined:[],left:[],updated:[]});}catch(e){}});};
+ const small=d=>{try{return d&&typeof d==='object'&&JSON.stringify(d).length<=4096;}catch(e){return false;}};
+ const act=n=>room.makeAction(n);const aP=act('pres'),aF=act('fx'),aC=act('chat');
+ aP.onMessage=(d,c)=>{if(!small(d)||!c||!c.peerId)return;pres[c.peerId]=d;seen[c.peerId]=Date.now();fire();};
+ const relay=t=>(d,c)=>{if(!small(d)||!c||!c.peerId)return;(hs[t]||[]).forEach(h=>{try{h({topic:t,data:d,peer:c.peerId,by:null,isMe:false,sameTab:false,kind:'viewer',guest:false});}catch(e){}});};
+ aF.onMessage=relay('fx');aC.onMessage=relay('chat');
+ room.onPeerJoin=id=>{if(Object.keys(mine).length)aP.send(mine,{target:id}).catch(()=>{});};
+ room.onPeerLeave=id=>{delete pres[id];fire();};
+ return{p2p:true,
+  presence:async p=>{Object.assign(mine,p);await aP.send(mine);},
+  emit:async(t,d)=>{if(t==='fx')await aF.send(d);else if(t==='chat')await aC.send(d);},
+  on:(t,h)=>{(hs[t]=hs[t]||[]).push(h);return()=>{};},
+  onPeers:h=>{peerH.push(h);setTimeout(()=>h({peers:snap(),joined:[],left:[],updated:[]}),0);return()=>{};},
+  connected:()=>true};
+}
 async function initNet(){
  try{
-  if(!window.claude||typeof window.claude.use!=='function')return;
-  const r=await window.claude.use('room');if(!r)return;NET.room=r;
+  let r=null;
+  if(window.claude&&typeof window.claude.use==='function')r=await window.claude.use('room');
+  if(!r)r=await p2pRoom();
+  if(!r)return;NET.room=r;
   r.onPeers(ch=>netPeers(ch.peers),()=>{netClear();NET.room=null;render();});
   r.on('fx',netFxIn);r.on('chat',netChatIn);
   if(typeof r.onConnection==='function')r.onConnection(()=>renderNet());

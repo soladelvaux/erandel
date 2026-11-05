@@ -12,7 +12,7 @@ Controls (phone): joystick to move · drag the screen to look around · Attack, 
 
 Controls (keyboard and mouse): W A S D move · drag to look · Space jump · Shift dodge · F or click a creature to attack · 1–4 spells · E talk · T chat · M journal · B build in Thorngate · wheel zoom.
 
-Multiplayer works when the game is opened as the published claude.ai page: everyone who has it open at the same time shares the world. A downloaded copy plays solo.
+Play online: **https://soladelvaux.github.io/erandel/**. Everyone who has that page open at the same time shares one world (peer-to-peer, no server). The published claude.ai page has its own separate shared world.
 
 ## What's in the repo
 

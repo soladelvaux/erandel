@@ -54,7 +54,8 @@ Dawn: `sleep() → dawn()` → weather, heal, conditions, hunger, companion bond
 | three.js r128 | cdnjs | 2D journal-only mode |
 | EffectComposer, RenderPass, ShaderPass, UnrealBloomPass, CopyShader, LuminosityHighPassShader | jsDelivr `three@0.128.0/examples/js` | render without bloom |
 | Google Fonts | fonts.googleapis.com | system serif/sans/mono |
-| Artifact `room` capability | `claude.use("room")` on claude.ai | single-player |
+| Artifact `room` capability | `claude.use("room")` on claude.ai | peer-to-peer world |
+| Trystero 0.26.0 (WebRTC over public Nostr relays) | jsDelivr `trystero@0.26.0/+esm`, loaded only when there is no claude.ai room | single-player |
 
 ## Testing
 
