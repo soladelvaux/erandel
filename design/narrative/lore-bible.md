@@ -29,7 +29,7 @@ These facts outrank everything else in this file. Nothing PROVISIONAL may contra
 
 | Fact | Category |
 |---|---|
-| Erandel is Sola's original fantasy world. The spelling "Aerandel" has also been used | CANON |
+| Erandel is Sola's original fantasy world. Spelling settled as Erandel (Sola, 2026-11-06); "Aerandel" is no longer used | CANON |
 | Souls arrive at the **Thorngate** and choose **rebirth or eternity** | CANON |
 | **Aelarion Silverbough** is the gatekeeper of Erandel. His portrait art was supplied by Sola | CANON |
 | **Caelithra**, **Runekar**, **Elash** are characters (with Aelarion they lead the children's book concept) | CANON (names only; roles not stated) |
@@ -191,7 +191,7 @@ Sola decides any further DEPRECATED lore, such as story content from older proto
 - [ ] Decide whether the six disciplines become in-world schools over the existing magic system.
 - [ ] Confirm the roles of Caelithra, Runekar and Elash, and the mermaid queen's name.
 - [ ] Choose the tone balance between the cozy lantern-lit play and Volume I's ancient-mystery darkness.
-- [ ] Decide the spelling: Erandel or Aerandel.
+- [x] Decide the spelling: **Erandel** (Sola, 2026-11-06).
 
 ## 6. Notes
 

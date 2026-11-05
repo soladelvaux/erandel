@@ -1,6 +1,6 @@
 # ERANDEL LORE REGISTRY
 
-**Owner**: Sola · **Updated**: 2026-11-05 · **Rule**: nothing PROVISIONAL becomes CANON without Sola's approval
+**Owner**: Sola · **Updated**: 2026-11-06 · **Rule**: nothing PROVISIONAL becomes CANON without Sola's approval
 
 This is the one place to review how every named piece of Erandel lore is classified. The explanations and fit notes for Master Lore Bible Volume I are in `design/narrative/lore-bible.md`. The original Volume I text is kept unedited in `design/narrative/sources/`.
 
@@ -12,13 +12,13 @@ This is the one place to review how every named piece of Erandel lore is classif
 
 **How to review:** change a row's category and tell Claude, or comment on a row. A row that moves to CANON keeps its source column, so the history stays visible. When a row is CANON only in part, the Note says which part is still PROVISIONAL.
 
-**Counts today:** 20 CANON rows, 106 PROVISIONAL rows, 13 DEPRECATED rows (139 rows in all). In section 4, a kind is CANON only because Sola named it as a kind; its legends, paths and traits are still PROVISIONAL.
+**Counts today:** 52 CANON rows, 75 PROVISIONAL rows, 13 DEPRECATED rows (140 rows in all). In section 4, every kind's name, group and element is CANON (Race Encyclopedia, 2026-11-06); its legends, paths and traits are still PROVISIONAL.
 
 ## 1. Core myth and world
 
 | # | Entry | Category | Source | Note |
 |---|---|---|---|---|
-| W1 | Erandel (also spelled Aerandel) is Sola's original fantasy world | **CANON** | Sola | Spelling to be decided |
+| W1 | Erandel is Sola's original fantasy world | **CANON** | Sola | Spelling settled as **Erandel** (Sola, 2026-11-06); "Aerandel" is no longer used |
 | W2 | Souls arrive at the Thorngate and choose rebirth or eternity | **CANON** | Sola |  |
 | W3 | Erandel spans a game, novels and stories, YouTube, biographies, maps, an encyclopedia | **CANON** | Sola (Volume I) | Scope of the IP |
 | W4 | Aelarion says Fate and Corruption "are the shape your deeds leave on the world" | PROVISIONAL | Game (`AEL_LORE`) |  |
@@ -65,43 +65,44 @@ This is the one place to review how every named piece of Erandel lore is classif
 
 | # | Entry | Category | Source | Note |
 |---|---|---|---|---|
-| K0 | Players choose their own kind; humans have many jobs | **CANON** | Sola (first design message) | The system is canon; the list below is mostly PROVISIONAL |
-| K1 | Merfolk (Sea) | **CANON** | Sola named this kind | In the game: legend Tide Sovereign, dark legend Drowned One; these names, paths and traits are PROVISIONAL |
-| K2 | Sirens (Sea): legend Voice of the Abyss, dark legend Drowning Chorus | PROVISIONAL | Game |  |
-| K3 | Selkies (Sea): legend Eternal Tide-Walker, dark legend Skinless Wraith | PROVISIONAL | Game |  |
-| K4 | Nereids (Sea): legend Daughter of the Sea God, dark legend Brine Witch | PROVISIONAL | Game |  |
-| K5 | Vampires (Night) | **CANON** | Sola named this kind | In the game: legend Daywalker Saint, dark legend Blood Tyrant; these names, paths and traits are PROVISIONAL |
-| K6 | Werewolves (Night) | **CANON** | Sola named this kind | In the game: legend Moon’s Chosen, dark legend Fenris-Born; these names, paths and traits are PROVISIONAL |
-| K7 | Ghouls (Night): legend Keeper of Lost Souls, dark legend Hollow King | PROVISIONAL | Game |  |
-| K8 | Shades (Night): legend Nightfall Incarnate, dark legend The Unlit | PROVISIONAL | Game |  |
-| K9 | Nymphs (Nature) | **CANON** | Sola named this kind | In the game: legend Spirit of the Land, dark legend Withered Dryad; these names, paths and traits are PROVISIONAL |
-| K10 | Elves (Nature): legend Starborn, dark legend Blightborne | PROVISIONAL | Game |  |
-| K11 | Fae (Nature): legend Fae Monarch, dark legend Unseelie Sovereign | PROVISIONAL | Game |  |
-| K12 | Treants (Nature): legend World-Tree Heart, dark legend Blight Colossus | PROVISIONAL | Game |  |
-| K13 | Satyrs (Nature): legend Lord of the Wild Feast, dark legend Maddened Piper | PROVISIONAL | Game |  |
-| K14 | Harpies (Sky): legend Queen of Tempests, dark legend Carrion Queen | PROVISIONAL | Game |  |
-| K15 | Birdfolk (Sky): legend Phoenix-Blooded, dark legend Ashwing | PROVISIONAL | Game |  |
-| K16 | Sylphs (Sky): legend Living Wind, dark legend Dead Calm | PROVISIONAL | Game |  |
-| K17 | Tengu (Sky): legend Great Tengu Lord, dark legend Black-Feather Demon | PROVISIONAL | Game |  |
-| K18 | Salamanders (Elemental): legend Living Volcano, dark legend Ashen Ruin | PROVISIONAL | Game |  |
-| K19 | Golems (Elemental): legend Titan of the Deep Earth, dark legend Rampaging Colossus | PROVISIONAL | Game |  |
-| K20 | Djinn (Elemental): legend Marid Emperor, dark legend Ifrit of Ruin | PROVISIONAL | Game |  |
-| K21 | Frostkin (Elemental): legend Eternal Winter, dark legend Heart of Black Ice | PROVISIONAL | Game |  |
-| K22 | Kitsune (Beastfolk): legend Nine-Tailed Celestial, dark legend Nine-Tailed Calamity | PROVISIONAL | Game |  |
-| K23 | Nekomata (Beastfolk): legend Cat Sovereign of Ten Lives, dark legend Bakeneko Curse | PROVISIONAL | Game |  |
-| K24 | Minotaurs (Beastfolk): legend Horned Colossus, dark legend Bloodhorn Tyrant | PROVISIONAL | Game |  |
-| K25 | Centaurs (Beastfolk): legend Sky-Hoof Ancient, dark legend Burning-Plain Warlord | PROVISIONAL | Game |  |
-| K26 | Lizardfolk (Beastfolk): legend Dragonblood Ascendant, dark legend Venom Wyrm | PROVISIONAL | Game |  |
-| K27 | Seraphs (Divine & cursed): legend Archangel, dark legend Fallen Archon | PROVISIONAL | Game |  |
-| K28 | Fallen (Divine & cursed): legend Morningstar, dark legend Lord of the Pit | PROVISIONAL | Game |  |
-| K29 | Demons (Divine & cursed): legend Demon Saint, dark legend Archdemon | PROVISIONAL | Game |  |
-| K30 | Tieflings (Divine & cursed): legend Crowned Heir of Two Worlds, dark legend Infernal Heir | PROVISIONAL | Game |  |
-| K31 | Liches (Divine & cursed): legend Death’s Equal, dark legend Eternal Lich | PROVISIONAL | Game |  |
-| K32 | Dwarves (Small folk & humans): legend Forge-Father, dark legend Greed-Bound King | PROVISIONAL | Game |  |
-| K33 | Gnomes (Small folk & humans): legend Grand Inventor, dark legend Mad Machinist | PROVISIONAL | Game |  |
-| K34 | Halflings (Small folk & humans): legend Fortune’s Favorite, dark legend Thief-Lord of Shadows | PROVISIONAL | Game |  |
-| K35 | Goblins (Small folk & humans): legend Goblin King of the Market, dark legend Warboss of Ruin | PROVISIONAL | Game |  |
-| K36 | Humans (Small folk & humans) | **CANON** | Sola named this kind | In the game: legend Legend of Erandel, dark legend Tyrant of Erandel; these names, paths and traits are PROVISIONAL |
+| K0 | Players choose their own kind; humans have many jobs | **CANON** | Sola (first design message) | The system is canon |
+| K0a | The 36 kinds, in 8 groups (Sea, Night, Nature, Sky, Elemental, Beastfolk, Divine & cursed, Small folk & humans), each with its element | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Image: `design/art/references/lore/ref_lore_race-encyclopedia.png`. The ice kind is **Frostkin** (the sheet's "Frostrin" is a typo, Sola 2026-11-06). The sheet's art is a reference, not an approved character design |
+| K1 | Merfolk (Sea; element: Water) | **CANON** | Sola named this kind; group and element: Sola (Race Encyclopedia, 2026-11-06) | In the game: legend Tide Sovereign, dark legend Drowned One; these names, paths and traits are PROVISIONAL |
+| K2 | Sirens (Sea; element: Water) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Voice of the Abyss, dark legend Drowning Chorus; these names, paths and traits are PROVISIONAL |
+| K3 | Selkies (Sea; element: Water) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Eternal Tide-Walker, dark legend Skinless Wraith; these names, paths and traits are PROVISIONAL |
+| K4 | Nereids (Sea; element: Water) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Daughter of the Sea God, dark legend Brine Witch; these names, paths and traits are PROVISIONAL |
+| K5 | Vampires (Night; element: Shadow) | **CANON** | Sola named this kind; group and element: Sola (Race Encyclopedia, 2026-11-06) | In the game: legend Daywalker Saint, dark legend Blood Tyrant; these names, paths and traits are PROVISIONAL |
+| K6 | Werewolves (Night; element: Moon) | **CANON** | Sola named this kind; group and element: Sola (Race Encyclopedia, 2026-11-06) | In the game: legend Moon’s Chosen, dark legend Fenris-Born; these names, paths and traits are PROVISIONAL |
+| K7 | Ghouls (Night; element: Death) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Keeper of Lost Souls, dark legend Hollow King; these names, paths and traits are PROVISIONAL |
+| K8 | Shades (Night; element: Shadow) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Nightfall Incarnate, dark legend The Unlit; these names, paths and traits are PROVISIONAL |
+| K9 | Nymphs (Nature; element: Nature) | **CANON** | Sola named this kind; group and element: Sola (Race Encyclopedia, 2026-11-06) | In the game: legend Spirit of the Land, dark legend Withered Dryad; these names, paths and traits are PROVISIONAL |
+| K10 | Elves (Nature; element: Nature) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Starborn, dark legend Blightborne; these names, paths and traits are PROVISIONAL |
+| K11 | Fae (Nature; element: Nature) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Fae Monarch, dark legend Unseelie Sovereign; these names, paths and traits are PROVISIONAL |
+| K12 | Treants (Nature; element: Nature) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend World-Tree Heart, dark legend Blight Colossus; these names, paths and traits are PROVISIONAL |
+| K13 | Satyrs (Nature; element: Nature) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Lord of the Wild Feast, dark legend Maddened Piper; these names, paths and traits are PROVISIONAL |
+| K14 | Harpies (Sky; element: Air) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Queen of Tempests, dark legend Carrion Queen; these names, paths and traits are PROVISIONAL |
+| K15 | Birdfolk (Sky; element: Air) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Phoenix-Blooded, dark legend Ashwing; these names, paths and traits are PROVISIONAL |
+| K16 | Sylphs (Sky; element: Air) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Living Wind, dark legend Dead Calm; these names, paths and traits are PROVISIONAL |
+| K17 | Tengu (Sky; element: Air) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Great Tengu Lord, dark legend Black-Feather Demon; these names, paths and traits are PROVISIONAL |
+| K18 | Salamanders (Elemental; element: Fire) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Living Volcano, dark legend Ashen Ruin; these names, paths and traits are PROVISIONAL |
+| K19 | Golems (Elemental; element: Earth) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Titan of the Deep Earth, dark legend Rampaging Colossus; these names, paths and traits are PROVISIONAL |
+| K20 | Djinn (Elemental; element: Fire) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Marid Emperor, dark legend Ifrit of Ruin; these names, paths and traits are PROVISIONAL |
+| K21 | Frostkin (Elemental; element: Ice) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Eternal Winter, dark legend Heart of Black Ice; these names, paths and traits are PROVISIONAL |
+| K22 | Kitsune (Beastfolk; element: Spirit) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Nine-Tailed Celestial, dark legend Nine-Tailed Calamity; these names, paths and traits are PROVISIONAL |
+| K23 | Nekomata (Beastfolk; element: Shadow) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Cat Sovereign of Ten Lives, dark legend Bakeneko Curse; these names, paths and traits are PROVISIONAL |
+| K24 | Minotaurs (Beastfolk; element: Earth) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Horned Colossus, dark legend Bloodhorn Tyrant; these names, paths and traits are PROVISIONAL |
+| K25 | Centaurs (Beastfolk; element: Nature) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Sky-Hoof Ancient, dark legend Burning-Plain Warlord; these names, paths and traits are PROVISIONAL |
+| K26 | Lizardfolk (Beastfolk; element: Water) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Dragonblood Ascendant, dark legend Venom Wyrm; these names, paths and traits are PROVISIONAL |
+| K27 | Seraphs (Divine & cursed; element: Light) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Archangel, dark legend Fallen Archon; these names, paths and traits are PROVISIONAL |
+| K28 | Fallen (Divine & cursed; element: Shadow) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Morningstar, dark legend Lord of the Pit; these names, paths and traits are PROVISIONAL |
+| K29 | Demons (Divine & cursed; element: Fire) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Demon Saint, dark legend Archdemon; these names, paths and traits are PROVISIONAL |
+| K30 | Tieflings (Divine & cursed; element: Fire) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Crowned Heir of Two Worlds, dark legend Infernal Heir; these names, paths and traits are PROVISIONAL |
+| K31 | Liches (Divine & cursed; element: Death) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Death’s Equal, dark legend Eternal Lich; these names, paths and traits are PROVISIONAL |
+| K32 | Dwarves (Small folk & humans; element: Earth) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Forge-Father, dark legend Greed-Bound King; these names, paths and traits are PROVISIONAL |
+| K33 | Gnomes (Small folk & humans; element: Lightning) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Grand Inventor, dark legend Mad Machinist; these names, paths and traits are PROVISIONAL |
+| K34 | Halflings (Small folk & humans; element: Nature) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Fortune’s Favorite, dark legend Thief-Lord of Shadows; these names, paths and traits are PROVISIONAL |
+| K35 | Goblins (Small folk & humans; element: Shadow) | **CANON** | Sola (Race Encyclopedia, 2026-11-06) | Name, group and element are CANON. In the game: legend Goblin King of the Market, dark legend Warboss of Ruin; these names, paths and traits are PROVISIONAL |
+| K36 | Humans (Small folk & humans; element: any element) | **CANON** | Sola named this kind; group and element: Sola (Race Encyclopedia, 2026-11-06) | In the game: legend Legend of Erandel, dark legend Tyrant of Erandel; these names, paths and traits are PROVISIONAL |
 
 ## 5. Creatures
 
@@ -218,7 +219,7 @@ No story content has been deprecated. Only Sola can deprecate lore.
 
 - [ ] Send the rest of Volume I and any original necromancer material.
 - [ ] Roles of Caelithra, Runekar and Elash; the mermaid queen's name; whether the elf mage is Elash.
-- [ ] Erandel or Aerandel.
+- [x] Erandel or Aerandel: **Erandel** (2026-11-06).
 - [ ] Which PROVISIONAL rows to promote, reject or deprecate.
 
 ## Change log
@@ -226,6 +227,7 @@ No story content has been deprecated. Only Sola can deprecate lore.
 | Date | Change |
 |---|---|
 | 2026-11-05 | Registry created from the v0.4.1 game data, Sola's stated canon, and Volume I |
+| 2026-11-06 | Sola's Race Encyclopedia: the 36 kind names, their 8 groups and their elements promoted to CANON (31 rows promoted, row K0a added); the name stays Frostkin; spelling settled as Erandel (W1). Legends, paths and traits unchanged (PROVISIONAL) |
 | 2026-11-05 | L11–L14 added as PROVISIONAL: the Erelian benchmark region's layout (Phase 3) |
 | 2026-11-05 | B20 note: the Lunar Stag also appears in Erelian as neutral wildlife (Phase 4, Sola's choice; PROVISIONAL) |
 | 2026-11-05 | Section 12 added: living-world schedules, lines, habits, events and discoveries (LW1-LW5, all PROVISIONAL) |
