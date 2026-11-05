@@ -41,6 +41,8 @@
     "entities/creature-ai.js",
     "entities/poses.js",
     "net/transports.js",
+    "net/protocol.js",
+    "sim/state.js",
     "ui/action-hud.js",
     "rendering/painted.js",
     "rendering/painted-materials.js",
