@@ -145,13 +145,14 @@ function initWorld(){
  setupComposer();
  erelianInit();
  charactersInit();
+ springInit();
  window.addEventListener('resize',()=>{renderer.setSize(window.innerWidth,window.innerHeight,false);camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix();if(W3.composer)W3.composer.setSize(window.innerWidth,window.innerHeight);});
  initPointer(canvas);
  requestAnimationFrame(loop);
 }
 function setupComposer(){
  const w=W3;w.composer=null;w.bloom=null;
- if(!PREFS.glow||!THREE.EffectComposer||!THREE.RenderPass||!THREE.UnrealBloomPass)return;
- try{const c=new THREE.EffectComposer(w.renderer);c.addPass(new THREE.RenderPass(w.scene,w.camera));const b=new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth/2,window.innerHeight/2),.6,.45,.8);c.addPass(b);c.setSize(window.innerWidth,window.innerHeight);w.composer=c;w.bloom=b;}catch(e){w.composer=null;}
+ if(!(PREFS.glow||SPRING)||!THREE.EffectComposer||!THREE.RenderPass||!(THREE.UnrealBloomPass||SPRING))return;
+ try{const c=new THREE.EffectComposer(w.renderer);c.addPass(new THREE.RenderPass(w.scene,w.camera));const b=PREFS.glow&&THREE.UnrealBloomPass?new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth/2,window.innerHeight/2),.6,.45,.8):null;if(b)c.addPass(b);w.grade=springComposer(c,w);c.setSize(window.innerWidth,window.innerHeight);w.composer=c;w.bloom=b;}catch(e){w.composer=null;}
 }
 

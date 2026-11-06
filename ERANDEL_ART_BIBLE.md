@@ -690,6 +690,30 @@ Every new region screenshot is placed side by side with an Erelian screenshot. T
 | D5 | Use AI concept and image-to-3D tools, with the same review? | **Yes** | §2.3 |
 | D6 | Phone budgets as targets until the real-device test? | **Yes** | §16.2 |
 
+## 19. Spring style (default look since 2026-11-06)
+
+Requested by Sola: "graphics like Witch Spring", built on Erandel. This takes the
+general look of bright storybook anime fantasy RPGs. It copies no characters, art,
+names or UI from any existing game. Code: `src/rendering/spring-style.js`, `src/ui/styles/spring-ui.css`.
+
+- **Sky**: a gradient dome. The horizon matches the fog colour and the top is a deeper
+  pastel blue (violet at night). Soft cloud sprites drift round the horizon.
+- **Light** (`SPRING_LIGHT`): pink-white mornings, clear pastel afternoons, rose dusk
+  (`#ff98b4`), lavender moonlit nights. Night still lights lanterns and bloom.
+- **Characters**: cel-shaded (`MeshToonMaterial`, 3-step ramp), larger eyes with a
+  white highlight.
+- **Ink lines**: a post pass finds depth edges and darkens them toward plum. Lines fade
+  out past 25 to 70 units, and are off on low-tier phones.
+- **Grade**: saturation x1.18, soft 4-band cel quantise at 22%, shadows lifted toward
+  violet (never black), warm highlights.
+- **Nature**: pastel flower clusters (pink, cream, yellow, lilac, sky) on the green
+  regions (Thorngate, Erelian, Moonwell, Dawnspire). Petals drift round the player
+  and turn into pale sparkles at night.
+- **UI**: translucent plum panels, sakura-pink edges, rounded corners, Fredoka and
+  Nunito fonts, flower bullets on dialog choices, a round portrait frame.
+- **Switch**: Settings › Style toggles Spring and the classic amber night diorama (§1
+  to §18) and reloads the page. `?style=night` or `?style=spring` overrides it.
+
 ## Change log
 
 | Date | Change |

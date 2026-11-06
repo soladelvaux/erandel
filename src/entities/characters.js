@@ -37,7 +37,7 @@ const NPC_SPEC={
  aelarion:{skin:'#f0dcc0',hair:'#ecdca0',robe:'#2f6a3a',robe2:'#c8a850',legs:'#1f4a28',eye:'#2a5a30',ears:'elf',longHair:true,staff:'#8af09a'},
 };
 const MAT={},GEO={};let GT=null;
-function mat(col,o){const k=col+'|'+(o?Object.keys(o).map(x=>x+':'+(o[x]&&o[x].isColor?o[x].getHexString():o[x])).join(','):'');if(!MAT[k])MAT[k]=new THREE.MeshLambertMaterial(Object.assign({color:col},o||{}));return MAT[k];}
+function mat(col,o){const k=col+'|'+(o?Object.keys(o).map(x=>x+':'+(o[x]&&o[x].isColor?o[x].getHexString():o[x])).join(','):'');if(!MAT[k])MAT[k]=charMaterial(Object.assign({color:col},o||{}));return MAT[k];}
 function bmat(col){const k='B'+col;if(!MAT[k])MAT[k]=new THREE.MeshBasicMaterial({color:col});return MAT[k];}
 function geo(k,f){return GEO[k]||(GEO[k]=f());}
 const DARK_EYES=['#1a1420','#2a5a30'];
@@ -58,7 +58,7 @@ function makeChibi(s,scale){
  const cap=P(geo('cap',()=>new THREE.SphereGeometry(.45,14,10,0,Math.PI*2,0,Math.PI*.5)),s.hair,0,.03,-.04,head);cap.rotation.x=-.3;
  if(s.longHair){const lh=P(geo('lh2',()=>new THREE.SphereGeometry(.4,14,10)),s.hair,0,-.22,-.2,head);lh.scale.set(1.02,1.1,.55);}
  const em=DARK_EYES.includes(s.eye)?mat(s.eye):bmat(s.eye);
- [-.14,.14].forEach(x=>{const e=P(geo('eye',()=>new THREE.SphereGeometry(.065,8,6)),em,x,-.03,.38,head);e.scale.set(1,1.35,.6);});
+ [-.14,.14].forEach(x=>{const e=P(geo('eye',()=>new THREE.SphereGeometry(.065,8,6)),em,x,-.03,.38,head);e.scale.set(1,1.35,.6);if(SPRING){e.scale.set(1.25,1.65,.6);P(geo('eyehi',()=>new THREE.SphereGeometry(.022,6,4)),bmat('#ffffff'),x+.025,.02,.425,head);}});
  [-.24,.24].forEach(x=>{const b=P(geo('blush',()=>new THREE.CircleGeometry(.06,10)),mat('#f0a0a0',{transparent:true,opacity:.5}),x,-.14,.37,head);b.rotation.y=x>0?.4:-.4;});
  if(s.ears==='elf')[-1,1].forEach(sd=>{const e=P(geo('ear',()=>new THREE.ConeGeometry(.08,.34,6)),s.skin,sd*.43,.02,0,head);e.rotation.z=-sd*1.25;});
  if(s.ears==='wolf'||s.ears==='fox')[-1,1].forEach(sd=>{P(geo('ear2',()=>new THREE.ConeGeometry(.13,.26,6)),s.hair,sd*.24,.4,0,head).rotation.z=-sd*.2;});

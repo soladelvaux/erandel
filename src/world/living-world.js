@@ -30,7 +30,7 @@ function clockLabel(){if(!S||!S.world)return'';const h=S.world.hour%24,hh=Math.f
 /** Light by hour: blends the game's morning, afternoon and night palettes through dawn and dusk. */
 function worldLight(ti){
  if(!LW.L){const C=(o)=>({sky:new THREE.Color(o.sky),gnd:new THREE.Color(o.gnd),sun:new THREE.Color(o.sun),fog:new THREE.Color(o.fog),water:new THREE.Color(o.water),hi:o.hi,si:o.si,night:o.night});
-  const M=C(LIGHT[0]),A=C(LIGHT[1]),N=C(LIGHT[2]),D=C(LIGHT[1]);['sky','gnd','sun','fog','water'].forEach(k=>D[k].lerp(N[k],.5).lerp(new THREE.Color('#e88a50'),k==='sky'||k==='fog'?.25:0));D.hi=(A.hi+N.hi)/2;D.si=(A.si+N.si)/2;D.night=.45;
+  const M=C(LIGHT[0]),A=C(LIGHT[1]),N=C(LIGHT[2]),D=C(LIGHT[1]);['sky','gnd','sun','fog','water'].forEach(k=>D[k].lerp(N[k],.5).lerp(new THREE.Color(LIGHT.dusk||'#e88a50'),k==='sky'||k==='fog'?.25:0));D.hi=(A.hi+N.hi)/2;D.si=(A.si+N.si)/2;D.night=.45;
   LW.L={keys:[[5,N],[7,M],[11,M],[13,A],[16.5,A],[18.4,D],[19.2,N],[28.6,N],[30,M]],out:C(LIGHT[1])};}
  if(!S||!S.world)return LIGHT[ti];
  const h=S.world.hour,K=LW.L.keys,o=LW.L.out;let i=0;while(i<K.length-2&&h>=K[i+1][0])i++;

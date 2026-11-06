@@ -24,7 +24,7 @@ function renderHud3(){
   <div class="hr">
    <div class="music pe"><div class="mcov"></div><div class="mt"><b>${T.n}</b><span>${T.sub}</span></div><button class="mb2" data-act="m-prev" aria-label="Previous track">${ic('prev')}</button><button class="mb2" data-act="m-play" aria-label="${MUS.playing?'Pause':'Play'} music">${ic(MUS.playing?'pause':'play')}</button><button class="mb2" data-act="m-next" aria-label="Next track">${ic('next')}</button></div>
    <div class="icol pe"><button class="ibtn" data-act="settings" aria-label="Settings">${ic('gear')}</button><button class="ibtn" data-act="journal-open" aria-label="Journal">${ic('book')}</button></div>
-   ${ui.settings?`<div class="settings pe"><div class="kicker">Settings</div><button class="btn" data-act="set-glow">Glow: ${PREFS.glow?'On':'Off'}</button><button class="btn" data-act="set-gfx">Graphics: ${(PREFS.gfx||'auto')==='auto'?'Auto ('+gfxTier()+')':gfxTier()}${REGION.on&&REGION.tier!==gfxTier()?' · reload':''}</button><button class="btn" data-act="set-tilt">Tilt-shift: ${PREFS.tilt?'On':'Off'}</button><label for="vol" class="kicker">Music volume</label><input type="range" id="vol" min="0" max="1" step=".05" value="${PREFS.vol}"></div>`:''}
+   ${ui.settings?`<div class="settings pe"><div class="kicker">Settings</div><button class="btn" data-act="set-style">Style: ${SPRING?'Spring':'Night diorama'}${artStyle()!==(SPRING?'spring':'night')?' · reload':''}</button><button class="btn" data-act="set-glow">Glow: ${PREFS.glow?'On':'Off'}</button><button class="btn" data-act="set-gfx">Graphics: ${(PREFS.gfx||'auto')==='auto'?'Auto ('+gfxTier()+')':gfxTier()}${REGION.on&&REGION.tier!==gfxTier()?' · reload':''}</button><button class="btn" data-act="set-tilt">Tilt-shift: ${PREFS.tilt?'On':'Off'}</button><label for="vol" class="kicker">Music volume</label><input type="range" id="vol" min="0" max="1" step=".05" value="${PREFS.vol}"></div>`:''}
   </div>
  </div>
  ${ui.build?'':`<div class="tools pe"><button class="ibtn${inTown?'':' dim'}" data-act="build-open" aria-label="Build">${ic('hammer')}</button><button class="ibtn" data-act="photo" aria-label="Photo mode">${ic('camera')}</button><button class="ibtn" data-act="sleep-ask" aria-label="Sleep">${ic('moon')}</button></div>`}`;
@@ -107,6 +107,6 @@ function render(){
  document.getElementById('mini').hidden=!world;document.getElementById('net').hidden=!(show&&NET.room);document.getElementById('chatbar').hidden=!(show&&NET.room&&NET.open);
  if(!show)document.getElementById('target').hidden=true;
  renderSkills();
- document.body.classList.toggle('notilt',!PREFS.tilt);
+ document.body.classList.toggle('notilt',!PREFS.tilt);document.body.classList.toggle('spring',SPRING);
 }
 

@@ -8,7 +8,7 @@ function charsWanted(){try{return !/[?&]chars=off\b/.test(location.search);}catc
 const CHR_EYE_DEFAULT='#1a1420';
 /** Shared painted material for skinned characters: vertex colour x slot tint, soft rim light (art bible §6, §11.3). */
 function chrMat(color,o){
- o=o||{};const m=new THREE.MeshLambertMaterial({color,vertexColors:true,map:o.map||null,alphaTest:o.map?.35:0,side:o.double?THREE.DoubleSide:THREE.FrontSide,emissive:o.emissive||'#000000'});
+ o=o||{};const m=charMaterial({color,vertexColors:true,map:o.map||null,alphaTest:o.map?.35:0,side:o.double?THREE.DoubleSide:THREE.FrontSide,emissive:o.emissive||'#000000'});
  m.onBeforeCompile=sh=>{sh.fragmentShader=sh.fragmentShader.replace('#include <output_fragment>','float rimK=pow(1.0-clamp(dot(normal,normalize(vViewPosition)),0.0,1.0),3.0);\noutgoingLight+=vec3(1.0,0.94,0.82)*rimK*0.22;\n#include <output_fragment>');};
  m.customProgramCacheKey=()=>'erandel-chr'+(o.map?'m':'')+(o.double?'d':'');return m;
 }

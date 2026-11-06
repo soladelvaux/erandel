@@ -1,0 +1,44 @@
+/* ===== Spring style UI: storybook anime fantasy (ERANDEL_ART_BIBLE.md §19). Active when body has .spring ===== */
+body.spring{
+  --bg:#2a2140; --panel:#3a2c55; --panel2:#46355f; --line:#6b5590;
+  --fg:#fff6fb; --mut:#d6c6e6; --gold:#ffb5d2; --fate:#9ff0dc; --corr:#ff86b0; --hp:#ff8f9a; --good:#a6f0b0;
+  --display:"Fredoka","Nunito","Alegreya Sans",system-ui,sans-serif;
+  --body:"Nunito","Alegreya Sans","Segoe UI",system-ui,sans-serif;
+  --sp-panel:linear-gradient(160deg,rgba(78,56,120,.9),rgba(50,36,84,.88));
+  --sp-edge:#ffc6dc;
+}
+body.spring h1,body.spring h2,body.spring h3,body.spring .hname,body.spring .bname,body.spring .dname{font-weight:600;letter-spacing:.01em}
+body.spring .hcard,body.spring .dialog,body.spring .settings,body.spring .buildtop,body.spring .speech,body.spring .music,body.spring .counters,body.spring .pill,body.spring .ibtn,body.spring .citem,body.spring #btns button{
+  background:var(--sp-panel);border-color:var(--sp-edge);color:var(--fg);
+  box-shadow:0 0 0 2px rgba(255,255,255,.08) inset,0 6px 18px rgba(60,20,80,.35)}
+body.spring .hcard{border-radius:16px;border-width:2px}
+body.spring .dialog{border-radius:22px;border:2px solid var(--sp-edge);box-shadow:0 0 0 4px rgba(255,198,220,.18),0 10px 30px rgba(60,20,90,.45)}
+body.spring .dialog::before{content:"\2727";position:absolute;top:-14px;left:28px;font-size:20px;color:#fff3a8;text-shadow:0 0 8px #ffb5d2}
+body.spring .dname{color:#ffd1e3;font-size:1.3rem}
+body.spring .portrait{border-radius:50%;border:3px solid var(--sp-edge);box-shadow:0 0 0 3px rgba(255,255,255,.15)}
+body.spring .choice{border-radius:12px}
+body.spring .choice::before{content:"\2740  ";color:#ffb5d2}
+body.spring .choice:hover:not(:disabled),body.spring .choice:focus-visible{background:rgba(255,181,210,.16);border-color:var(--sp-edge)}
+body.spring .settings,body.spring .music,body.spring .ibtn,body.spring .citem{border-radius:14px}
+body.spring .ibtn.on{background:linear-gradient(160deg,#ff8fb8,#c46ad8);border-color:#fff}
+body.spring .ibtn.ok{background:linear-gradient(160deg,#7fe0c0,#5aa8d8);border-color:#fff}
+body.spring .pill.on{background:linear-gradient(160deg,#ff9ec4,#b878e0)}
+body.spring .bar{background:rgba(255,255,255,.18);border-radius:99px}
+body.spring .mcov{background:linear-gradient(135deg,#ffb5d2,#b9a2ff 55%,#9ff0dc)}
+body.spring .banner{text-shadow:0 0 18px rgba(255,150,200,.8),0 2px 6px rgba(80,30,90,.6)}
+body.spring .bname{color:#fff;font-family:var(--display)}
+body.spring .bsub{color:#ffe0ef}
+body.spring .banner::before,body.spring .banner::after{height:2px;background:linear-gradient(90deg,transparent,#ffb5d2,#fff3a8,#9ff0dc,transparent)}
+body.spring #stick{background:radial-gradient(rgba(255,255,255,.12),rgba(80,50,120,.45));border-color:var(--sp-edge)}
+body.spring #knob{background:radial-gradient(circle at 35% 30%,#fff0f6,#ff9ec4 60%,#c46ad8);box-shadow:0 3px 12px rgba(120,40,120,.5)}
+body.spring #btns button{border-radius:18px}
+body.spring #btns .sk{--c:#ffc6dc;border-radius:50%;background:radial-gradient(circle at 50% 35%,color-mix(in srgb,var(--c) 45%,#4e3878),#3a2a5c 75%)}
+body.spring #b-atk{background:linear-gradient(160deg,#ff8fb8,#b45ad0)!important}
+body.spring #vignette{background:radial-gradient(ellipse at 50% 55%,transparent 60%,rgba(120,70,150,.28) 100%)}
+body.spring .journal{background:linear-gradient(170deg,rgba(52,38,86,.96),rgba(34,26,60,.97))}
+body.spring .threshold{background:linear-gradient(rgba(60,40,100,.35),rgba(42,30,72,.92) 32%)}
+body.spring .thero{border-radius:24px;border:3px solid var(--sp-edge);box-shadow:0 0 0 5px rgba(255,198,220,.15)}
+body.spring .thero-txt{background:linear-gradient(transparent,rgba(70,40,110,.85))}
+body.spring .thero h1{color:#fff;text-shadow:0 0 20px rgba(255,150,210,.9),0 3px 6px rgba(70,20,90,.7);font-family:var(--display)}
+body.spring .btn{border-radius:12px}
+body.spring .fade{background:#2a1f44}

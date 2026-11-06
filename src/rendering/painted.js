@@ -54,5 +54,6 @@ function updateSky(nf,dt){
  sk.body.position.set(c.x+dir[0]*R2,c.y+dir[1]*R2,c.z+dir[2]*R2);sk.halo.position.copy(sk.body.position);
  sk.body.material.color.lerp(_c2.set(night>.5?'#e8f0ff':'#fff4d0'),k);sk.halo.material.color.lerp(_c2.set(night>.5?'#9ab4ff':'#fff0c0'),k);
  sk.halo.material.opacity+=((night>.5?.22:.38)-sk.halo.material.opacity)*k;
+ springTick(dt,w.clock.elapsedTime,nf);
 }
 
