@@ -711,6 +711,13 @@ names or UI from any existing game. Code: `src/rendering/spring-style.js`, `src/
   and turn into pale sparkles at night.
 - **UI**: translucent plum panels, sakura-pink edges, rounded corners, Fredoka and
   Nunito fonts, flower bullets on dialog choices, a round portrait frame.
+- **Shadows**: soft sun shadows (PCF soft) in a box that follows the player and snaps to
+  shadow-map texels so edges do not shimmer. Medium tier: 1024 map, characters and
+  buildings cast. High tier: 2048 map, and trees and rocks cast too. Low tier: off. Pattern
+  from the `threejs-materials-lighting` skill in gamedev-skills/awesome-gamedev-agent-skills.
+- **Adaptive resolution**: the pixel ratio steps down 0.25 (floor 0.75) when frames average
+  over 30 ms for 3 s, and back up after three good windows under 19 ms, with a 6 s
+  cooldown. Pattern from that repo's `threejs-scene-setup` skill.
 - **Switch**: Settings › Style toggles Spring and the classic amber night diorama (§1
   to §18) and reloads the page. `?style=night` or `?style=spring` overrides it.
 
